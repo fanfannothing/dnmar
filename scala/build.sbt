@@ -1,4 +1,4 @@
-name := "Hello"
+name := "DNMAR"
 
 version := "0.1"
 
