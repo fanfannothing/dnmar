@@ -15,7 +15,6 @@ abstract class Hypothesis extends Ordered[Hypothesis] {
     } else {
       0
     }
-    pri
   }
 }
 
