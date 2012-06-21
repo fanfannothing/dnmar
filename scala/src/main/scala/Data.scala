@@ -1,8 +1,25 @@
 class Mention(features:Array[Int]) { 
 }
 
-class EntityPair(mentions:Array[Mention]) {
+class EntityPair(e1id:Int, e2id:Int, mentions:Array[Mention]) {
 }
 
-class Relation(instances:Array[EntityPair]) { 
+class Rel(id:Int, instances:Array[EntityPair]) { 
 }
+
+class ProtobufData(inFile:String) { 
+  
+
+  val is = new GZIPInputStream(new BufferedInputStream(new FileInputStream(inFile)))
+  var r = Relation.parseDelimitedFrom(is);
+  while(r != null) {
+    println(r.getRelType())
+
+    r.getSourceGuid
+    r.getDestGuid
+
+    r = Relation.parseDelimitedFrom(is)
+  }
+  sValue  
+}
+
