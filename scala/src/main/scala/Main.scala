@@ -1,3 +1,5 @@
+package dnamr;
+
 import java.util.zip.GZIPInputStream
 import java.io.FileInputStream
 import java.io.BufferedInputStream

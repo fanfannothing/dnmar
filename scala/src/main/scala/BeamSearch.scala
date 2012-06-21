@@ -1,3 +1,5 @@
+package dnmar;
+
 import scala.collection.mutable.PriorityQueue
 
 //A hypothesis has a score, in addition to an array of sucessors
@@ -18,7 +20,7 @@ abstract class Hypothesis extends Ordered[Hypothesis] {
   }
 }
 
-class BeamSearch1(h:Hypothesis, beamSize:Int) {
+class BeamSearch(h:Hypothesis, beamSize:Int) {
   def this(h:Hypothesis) = this(h, 3)
 
   val _BEAM_SIZE=beamSize
@@ -28,7 +30,7 @@ class BeamSearch1(h:Hypothesis, beamSize:Int) {
   def Head:Hypothesis = hypothesisQueue.head
 
   def UpdateQ() {
-    //Utils.Timer.start
+    Utils.Timer.start
     val next = hypothesisQueue.dequeue
     hypothesisQueue ++= next.sucessors
     
@@ -39,6 +41,6 @@ class BeamSearch1(h:Hypothesis, beamSize:Int) {
       }
       hypothesisQueue = newQ
     }
-    //Utils.Timer.stop("UpdateQ")
+    Utils.Timer.stop("UpdateQ")
   }
 }

@@ -1,3 +1,5 @@
+package dnmar;
+
 import scala.collection.mutable.HashMap
 import scala.collection.mutable.HashSet
 

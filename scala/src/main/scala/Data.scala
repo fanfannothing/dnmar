@@ -1,3 +1,5 @@
+package dnmar;
+
 import scalala.scalar._;
 import scalala.tensor.::;
 import scalala.tensor.mutable._;
