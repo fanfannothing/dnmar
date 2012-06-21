@@ -28,7 +28,7 @@ class BeamSearch1(h:Hypothesis, beamSize:Int) {
   def Head:Hypothesis = hypothesisQueue.head
 
   def UpdateQ() {
-    Utils.Timer.start
+    //Utils.Timer.start
     val next = hypothesisQueue.dequeue
     hypothesisQueue ++= next.sucessors
     
@@ -39,6 +39,6 @@ class BeamSearch1(h:Hypothesis, beamSize:Int) {
       }
       hypothesisQueue = newQ
     }
-    Utils.Timer.stop("UpdateQ")
+    //Utils.Timer.stop("UpdateQ")
   }
 }

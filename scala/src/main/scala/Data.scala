@@ -9,6 +9,15 @@ import scalala.library.Statistics._;
 import scalala.library.Plotting._;
 import scalala.operators.Implicits._;
 
+import java.util.zip.GZIPInputStream
+import java.io.FileInputStream
+import java.io.BufferedInputStream
+import java.io.InputStream
+
+import cc.factorie.protobuf.DocumentProtos.Relation
+import cc.factorie.protobuf.DocumentProtos.Relation.RelationMentionRef
+
+
 class Mention(features:Array[Int]) { 
 }
 
@@ -33,5 +42,4 @@ class ProtobufData(inFile:String) {
 
     r = Relation.parseDelimitedFrom(is)
   }
-  sValue  
 }

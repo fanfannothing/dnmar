@@ -1,10 +1,10 @@
-import cc.factorie.protobuf.DocumentProtos.Relation
-import cc.factorie.protobuf.DocumentProtos.Relation.RelationMentionRef
-
 import java.util.zip.GZIPInputStream
 import java.io.FileInputStream
 import java.io.BufferedInputStream
 import java.io.InputStream
+
+import cc.factorie.protobuf.DocumentProtos.Relation
+import cc.factorie.protobuf.DocumentProtos.Relation.RelationMentionRef
 
 import org.clapper.argot._
 
