@@ -57,14 +57,23 @@ object Utils {
 
   object Timer {
     var begin = new HashMap[String,Long]
+    var sum   = new HashMap[String,Long]
     //var begin:Long = 0L
     //var end:Long = 0L
     def start(s:String) = {
       begin(s) = System.currentTimeMillis
     }
+
     def stop(s:String) = {
       val end = System.currentTimeMillis
-      println(s + ">   " + (end - begin(s))/ 1000.0 + " s")
+      sum(s) = sum.getOrElse(s, 0L) + (end - begin(s))
+      //println(s + ">   " + (end - begin(s))/ 1000.0 + " s")
+    }
+
+    def print {
+      for((s,t) <- sum.toList.sortBy(_._2).reverse) {
+	println(s + "\t" + t / 1000.0 + " s")
+      }
     }
   }
 }
@@ -173,6 +182,25 @@ object MathUtils {
       }
     }
     0
+  }
+
+  //Not the most efficient...
+  def Mode[T](d:Array[T]) {
+    var maxCount = 0
+    var maxVal = d(0)
+
+    for(i <- 0 until d.length) {
+      var count = 0
+      for(j <- (i+1) until d.length) {
+	if(d(j) == d(i)) {
+	  count += 1
+	}
+      }
+      if(count > maxCount) {
+	maxCount = count
+	maxVal = d(i)
+      }
+    }
   }
 
   //NOTE: seems to work...  might be a couple boundary cases.

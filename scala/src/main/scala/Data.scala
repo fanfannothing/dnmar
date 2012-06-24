@@ -25,7 +25,8 @@ import cc.factorie.protobuf.DocumentProtos.Relation.RelationMentionRef
  * of entities (e1id,e2id)
  **************************************************************************
  */
-class EntityPair(val e1id:Int, val e2id:Int, val xCond:Array[SparseVectorCol[Double]], val rel:DenseVector[Double]) {
+class EntityPair(val e1id:Int, val e2id:Int, val xCond:Array[SparseVectorCol[Double]], val rel:DenseVectorRow[Double]) {
+//class EntityPair(val e1id:Int, val e2id:Int, val xCond:Array[DenseVectorCol[Double]], val rel:DenseVector[Double]) {
   val obs = rel.toDense							//Which variables are observed, just copy
   val z   = DenseVector.randi(rel.length, xCond.length)			//Sentence level classification
 }
@@ -97,8 +98,10 @@ class ProtobufData(inFile:String) extends EntityPairData {
     }
 
     val mentions = new Array[SparseVectorCol[Double]](r.getMentionCount)
+    //val mentions = new Array[DenseVectorCol[Double]](r.getMentionCount)
     for(i <- 0 until r.getMentionCount) {
       mentions(i) = SparseVector.zeros[Double](featureVocab.VocabSize + 1)
+      //mentions(i) = DenseVector.zeros[Double](featureVocab.VocabSize + 1)
       mentions(i)(featureVocab.VocabSize) = 1.0	//Bias feature
       val m = r.getMention(i)
       for(j <- 0 until m.getFeatureCount) {
@@ -106,7 +109,7 @@ class ProtobufData(inFile:String) extends EntityPairData {
       }
     }
     
-    data(nEntityPairs) = new EntityPair(e1, e2, mentions, relations)
+    data(nEntityPairs) = new EntityPair(e1, e2, mentions, relations.t)
 
     nEntityPairs += 1
     r = Relation.parseDelimitedFrom(is)

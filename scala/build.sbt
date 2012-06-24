@@ -6,7 +6,8 @@ libraryDependencies  ++= Seq(
             // other dependencies here
             "org.scalala" %% "scalala" % "1.0.0.RC3-SNAPSHOT",
 	    "org.clapper" %% "argot" % "0.4",
-	    "org.scalacheck" %% "scalacheck" % "1.9" % "test"
+	    "org.scalacheck" %% "scalacheck" % "1.9" % "test",
+	    "org.apache.commons" % "commons-math" % "2.2"
 )
 
 resolvers ++= Seq(
@@ -16,3 +17,7 @@ resolvers ++= Seq(
 )
 
 scalaVersion := "2.9.2"
+
+javaOptions ++= Seq(
+	    "-Xmx12G"
+)

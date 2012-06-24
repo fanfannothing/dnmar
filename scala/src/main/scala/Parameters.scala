@@ -47,10 +47,13 @@ abstract class Parameters(data:EntityPairData) {
     //Update the weights
     for(r <- 0 until nRel) {
       theta(r,::) :+= thetaExpectation(iHidden, r) - thetaExpectation(iAll, r)
+
+      /*
       if(Constants.DEBUG) {
 	println("theta(" + data.relVocab(r) + ").max=" + theta(r,::).max)
 	println("theta(" + data.relVocab(r) + ").argmax=" + data.featureVocab(theta(r,::).argmax))
       }
+      */
     }
 
     if(Constants.TIMING) {

@@ -42,9 +42,16 @@ object Main {
 
     val p = new MultiR(train.value.getOrElse(null))
     
-    for(i <- 0 until train.value.getOrElse(null).data.length) {
-      println("Entity Pair " + i)
-      p.updateTheta(i)
+    //for(i <- 0 until train.value.getOrElse(null).data.length) {
+    for(i <- 0 until 100) {
+      //val j = scala.util.Random.nextInt(train.value.getOrElse(null).data.length)
+      val j = i
+      println("Entity Pair " + j)
+      p.updateTheta(j)
+    }
+    
+    if(Constants.TIMING) {
+      Utils.Timer.print
     }
   }
 }
