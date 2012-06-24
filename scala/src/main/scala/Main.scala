@@ -1,4 +1,4 @@
-package dnamr;
+package dnmar;
 
 import java.util.zip.GZIPInputStream
 import java.io.FileInputStream
@@ -10,6 +10,11 @@ import cc.factorie.protobuf.DocumentProtos.Relation.RelationMentionRef
 
 import org.clapper.argot._
 
+object Constants {
+  val DEBUG = false
+  val TIMING = true
+}
+
 object Main {
   import ArgotConverters._
   
@@ -19,26 +24,12 @@ object Main {
                   "2012, Alan Ritter.")
   )
 
-  val trainProto = parser.option[String](List("trainProto"), "n", "Training data (in google protobuf format).") { 
-    (sValue, opt) =>
-    val is = new GZIPInputStream(new BufferedInputStream(new FileInputStream(sValue)))
-    var r = Relation.parseDelimitedFrom(is);
-    while(r != null) {
-      println(r.getRelType())
-      r = Relation.parseDelimitedFrom(is)
-    }
-    sValue
+  val train = parser.option[ProtobufData](List("trainProto"), "n", "Training data (in google protobuf format).") { 
+    (sValue, opt) => new ProtobufData(sValue)
   }
 
-  val testProto  = parser.option[String](List("testProto"), "n", "Test data (in google protobuf format).") {
-    (sValue, opt) =>
-    val is = new GZIPInputStream(new BufferedInputStream(new FileInputStream(sValue)))
-    var r = Relation.parseDelimitedFrom(is);
-    while(r != null) {
-      println(r.getRelType())
-      r = Relation.parseDelimitedFrom(is)
-    }
-    sValue
+  val test  = parser.option[ProtobufData](List("testProto"), "n", "Test data (in google protobuf format).") {
+    (sValue, opt) => new ProtobufData(sValue)
   }
 
   def main(args: Array[String]) {
@@ -49,5 +40,11 @@ object Main {
       case e: ArgotUsageException => println(e.message)
     }
 
+    val p = new MultiR(train.value.getOrElse(null))
+    
+    for(i <- 0 until train.value.getOrElse(null).data.length) {
+      println("Entity Pair " + i)
+      p.updateTheta(i)
+    }
   }
 }

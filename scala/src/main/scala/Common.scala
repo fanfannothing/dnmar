@@ -56,14 +56,15 @@ object Utils {
   }
 
   object Timer {
-    var begin:Long = 0L
-    var end:Long = 0L
-    def start = {
-      begin = System.currentTimeMillis
+    var begin = new HashMap[String,Long]
+    //var begin:Long = 0L
+    //var end:Long = 0L
+    def start(s:String) = {
+      begin(s) = System.currentTimeMillis
     }
     def stop(s:String) = {
-      end = System.currentTimeMillis
-      println(s + ">   " + (end - begin)/ 1000.0 + " s")
+      val end = System.currentTimeMillis
+      println(s + ">   " + (end - begin(s))/ 1000.0 + " s")
     }
   }
 }

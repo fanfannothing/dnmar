@@ -30,7 +30,7 @@ class BeamSearch(h:Hypothesis, beamSize:Int) {
   def Head:Hypothesis = hypothesisQueue.head
 
   def UpdateQ() {
-    Utils.Timer.start
+    Utils.Timer.start("UpdateQ")
     val next = hypothesisQueue.dequeue
     hypothesisQueue ++= next.sucessors
     

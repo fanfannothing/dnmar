@@ -7,13 +7,13 @@ import scala.collection.mutable.HashSet
 class Vocab {
   var string2Int = new HashMap[String, Int]
   var int2String = new HashMap[Int, String]
-  val unk = 0
-  var nextInt = 1;
+  val unk = -1
+  var nextInt = 0
   var locked = false
   
   def apply(str:String):Int = {
     if(!string2Int.contains(str) && locked) {
-      return 0  //UNK is 0
+      return -1  //UNK is -1
     }
     else if(!string2Int.contains(str)) {
       string2Int += str -> nextInt
@@ -30,4 +30,6 @@ class Vocab {
       int2String(i)
     }
   }
+
+  def VocabSize() = nextInt
 }
