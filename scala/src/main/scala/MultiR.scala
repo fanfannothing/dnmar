@@ -25,7 +25,6 @@ class MultiR(data:EntityPairData) extends Parameters(data) {
     val result = new EntityPair(ep.e1id, ep.e2id, ep.xCond, ep.rel)
     val postZ = new Array[DenseVector[Double]](result.xCond.length)
     for(i <- 0 until result.xCond.length) {
-      //postZ(i) = DenseVector[Double](theta.map((t) => t(result.xCond(i)).sum))
       postZ(i) = theta * result.xCond(i).toDense
 
       //TODO: this is kind of a hack... probably need to do what was actually done in the multiR paper...
@@ -49,7 +48,6 @@ class MultiR(data:EntityPairData) extends Parameters(data) {
     val result = new EntityPair(ep.e1id, ep.e2id, ep.xCond, ep.rel)
     val postZ = new Array[DenseVector[Double]](result.xCond.length)
     for(i <- 0 until result.xCond.length) {
-      //postZ(i) = DenseVector(theta.map((t) => t(result.xCond(i)).sum))
       postZ(i) = theta * result.xCond(i).toDense
       result.z(i) = postZ(i).argmax
     }
@@ -61,5 +59,4 @@ class MultiR(data:EntityPairData) extends Parameters(data) {
 
     result
   }
-
 }
