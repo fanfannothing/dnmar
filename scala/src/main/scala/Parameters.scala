@@ -23,7 +23,9 @@ abstract class Parameters(data:EntityPairData) {
   val nRel  = data.nRel
   val nFeat = data.nFeat
 
-  val theta = DenseMatrix.zeros[Double](nRel,nFeat+1)
+  val theta         = DenseMatrix.zeros[Double](nRel,nFeat+1)
+  val thetaAveraged = DenseMatrix.zeros[Double](nRel,nFeat+1)
+  var thetaAvCount  = 0.0
   val phi = DenseVector.zeros[Double](3)	//Observation parameters (just 3 parameters for now - e1, e2, rel)
 
   def inferHidden(ep:EntityPair):EntityPair
@@ -39,9 +41,6 @@ abstract class Parameters(data:EntityPairData) {
 
     //Run inference
     val iAll    = inferAll(ep)
-
-    //TODO: check if we're violating any constraints and skip the rest if we're not (for efficiency)?
-
     val iHidden = inferHidden(ep)
 
     //Update the weights
@@ -55,6 +54,9 @@ abstract class Parameters(data:EntityPairData) {
       }
       */
     }
+
+    thetaAveraged :+= theta
+    thetaAvCount += 1.0
 
     if(Constants.TIMING) {
       Utils.Timer.stop("updateTheta")

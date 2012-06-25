@@ -12,7 +12,19 @@ import scalala.library.Plotting._;
 import scalala.operators.Implicits._;
 
 class MultiR(data:EntityPairData) extends Parameters(data) {
-  val relRange = DenseVector((0 until nRel).toArray)
+  def train(nIter:Int) = { 
+    for(i <- 0 until nIter) {
+      println("iteration " + i)
+      for(e12 <- 0 until data.data.length) { 
+	//Throw out 10% of negative data...
+	if(data.data(i).rel(data.relVocab("NA")) == 0.0 || scala.util.Random.nextDouble > 0.1) {
+	  println("EntityPair " + e12)
+	  updateTheta(e12)
+	}
+      }
+    }
+  }
+
   def inferHidden(ep:EntityPair):EntityPair = {
     if(Constants.TIMING) {
       Utils.Timer.start("inferHidden")
@@ -49,10 +61,12 @@ class MultiR(data:EntityPairData) extends Parameters(data) {
       postZ(i) = theta * result.xCond(i)
       result.z(i) = postZ(i).argmax
 
+      /*
       if(Constants.DEBUG) {
 	val maxFeature = (theta(result.z(i),::) :* result.xCond(i).toDense).argmax
 	println("maxFeature(" + data.relVocab(result.z(i)) + ").argmax=" + data.featureVocab(maxFeature))
       }
+      */
     }
     if(Constants.DEBUG) {
       println("unconstrained result.z=" + result.z.toList.map((r) => data.relVocab(r)))

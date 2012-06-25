@@ -51,17 +51,20 @@ facts missing in the database with hidden variables, and introducing an observat
 
 \subsection{List of variables}
 \begin{center}
-\begin{tabular}{|c|p{4in}|}
+\begin{tabular}{|c|p{2in}|p{2in}|}
 \hline
-$(e_1,e_2)$ & Entity pair \\
+Variable & Description & Example Value \\
 \hline
-$\mathbf{x}^{(e_1,e_2)}_i$ & (Observed) sentence for mention $i$ of pair $(e_1,e_2)$ \\
 \hline
-$z^{(e_1,e_2)}_i$ & (Hidden) relation expressed in mention $i$ or {\tt NIL} if no relation is expressed (categorical) \\
+$(e_1,e_2)$ & Entity pair & (Barak Obama, Honolulu)\\
 \hline
-$r^{(e_1,e_2)}_k$ & (Partially Observed) variable indicating whether relation $k$ holds between $e_1$ and $e_2$ (binary). \\
+$\mathbf{x}^{(e_1,e_2)}_i$ & (Observed) sentence for mention $i$ of pair $(e_1,e_2)$ & Barak Obama grew up in Honolulu. \\
 \hline
-$o^{(e_1,e_2)}_k$ & (Observed) variable indicating whether $r^{(e_1,e_2)}_k$ is observed or hidden (binary). \\
+$z^{(e_1,e_2)}_i$ & (Hidden) relation expressed in mention $i$ or {\tt NIL} if no relation is expressed (categorical) & $k$ (indexes a relation, e.g. {\sc LivedIn($x,y$)}) \\
+\hline
+$r^{(e_1,e_2)}_k$ & (Partially Observed) variable indicating whether relation $k$ holds between $e_1$ and $e_2$ (binary). & {\sc True} \\
+\hline
+$o^{(e_1,e_2)}_k$ & (Observed) variable indicating whether $r^{(e_1,e_2)}_k$ is observed or hidden (binary). & {\sc True} \\
 \hline
 \end{tabular}
 \end{center}
@@ -77,6 +80,21 @@ $o^{(e_1,e_2)}_k$ & (Observed) variable indicating whether $r^{(e_1,e_2)}_k$ is 
 \[
 P(z^{(e_1,e_2)}_i=k|\mathbf{x}^{(e_1,e_2)}_i) \propto \text{exp}\left(\theta \cdot f(k,\mathbf{x}^{(e_1,e_2)}_i)\right)
 \]
+
+$f(k,\mathbf{x}^{(e_1,e_2)}_i)$ is a vector of binary variables indicating the presence / absence of a wide range of textual patterns which
+could be correlated with relation $r_k$.  These include features based on a dependency parser, part of speech tags, etc... and
+are highly correlated (e.g. different parts of a dependency path are not independent).  
+For example, given the sentence:
+\begin{quotation}
+  The inn is not far from the boyhood home of the author {\bf Thomas Wolfe}, who was born and raised in {\bf Asheville} and used his mother's boarding house as the setting for the novel ``Look Homeward, Angel''.
+\end{quotation}
+A few example features are listed below:
+\begin{verbatim}
+|PERSON|, who was born and raised in|LOCATION|
+|PERSON|, who was born and raised in|LOCATION|and 
+author[NMOD]->|PERSON|[PMOD]<-was[NMOD]<-born[VC]<-in[ADV]<-|LOCATION|
+of[NMOD]<-|PERSON|[PMOD]<-was[NMOD]<-born[VC]<-in[ADV]<-|LOCATION|
+\end{verbatim}
 
 \subsubsection{Aggregate Factors}
 \label{deterministic_or}

@@ -40,15 +40,8 @@ object Main {
       case e: ArgotUsageException => println(e.message)
     }
 
-    val p = new MultiR(train.value.getOrElse(null))
-    
-    //for(i <- 0 until train.value.getOrElse(null).data.length) {
-    for(i <- 0 until 100) {
-      //val j = scala.util.Random.nextInt(train.value.getOrElse(null).data.length)
-      val j = i
-      println("Entity Pair " + j)
-      p.updateTheta(j)
-    }
+    val multiR = new MultiR(train.value.getOrElse(null))
+    multiR.train(30)
     
     if(Constants.TIMING) {
       Utils.Timer.print
