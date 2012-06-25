@@ -16,13 +16,14 @@ class MultiR(data:EntityPairData) extends Parameters(data) {
     for(i <- 0 until nIter) {
       println("iteration " + i)
       for(e12 <- 0 until data.data.length) { 
-	//Throw out 10% of negative data...
-	if(data.data(i).rel(data.relVocab("NA")) == 0.0 || scala.util.Random.nextDouble > 0.1) {
+	//Throw out 90% of negative data...
+	if(data.data(e12).rel(data.relVocab("NA")) == 0.0 || scala.util.Random.nextDouble < 0.1) {
 	  //println("EntityPair " + e12)
 	  updateTheta(e12)
 	}
       }
     }
+    averageParameters
   }
 
   def inferHidden(ep:EntityPair):EntityPair = {

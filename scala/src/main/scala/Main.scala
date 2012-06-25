@@ -30,7 +30,7 @@ object Main {
 
   val test  = parser.option[ProtobufData](List("testProto"), "n", "Test data (in google protobuf format).") {
     (sValue, opt) => new ProtobufData(sValue, 
-				      train.value.getOrElse(null).entityVocab.lock, 
+				      train.value.getOrElse(null).entityVocab, 
 				      train.value.getOrElse(null).relVocab.lock, 
 				      train.value.getOrElse(null).featureVocab.lock)
   }

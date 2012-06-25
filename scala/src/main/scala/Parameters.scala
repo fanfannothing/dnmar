@@ -35,6 +35,12 @@ abstract class Parameters(data:EntityPairData) {
 
   def inferAll(ep:EntityPair):EntityPair
 
+  def averageParameters { 
+    for(r <- 0 until nRel) { 
+      theta(r,::) := (thetaAveraged(r) :/ thetaAvCount)
+    }
+  }
+
   def updateTheta(i:Int) {
     if(Constants.TIMING) {
       Utils.Timer.start("updateTheta")
