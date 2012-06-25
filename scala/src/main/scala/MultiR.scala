@@ -18,7 +18,7 @@ class MultiR(data:EntityPairData) extends Parameters(data) {
       for(e12 <- 0 until data.data.length) { 
 	//Throw out 10% of negative data...
 	if(data.data(i).rel(data.relVocab("NA")) == 0.0 || scala.util.Random.nextDouble > 0.1) {
-	  println("EntityPair " + e12)
+	  //println("EntityPair " + e12)
 	  updateTheta(e12)
 	}
       }

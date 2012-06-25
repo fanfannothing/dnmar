@@ -24,7 +24,10 @@ abstract class Parameters(data:EntityPairData) {
   val nFeat = data.nFeat
 
   val theta         = DenseMatrix.zeros[Double](nRel,nFeat+1)
-  val thetaAveraged = DenseMatrix.zeros[Double](nRel,nFeat+1)
+  val thetaAveraged = new Array[SparseVector[Double]](nRel)
+  for(i <- 0 until thetaAveraged.length) {
+    thetaAveraged(i) = SparseVector.zeros[Double](nFeat+1)
+  }
   var thetaAvCount  = 0.0
   val phi = DenseVector.zeros[Double](3)	//Observation parameters (just 3 parameters for now - e1, e2, rel)
 
@@ -45,7 +48,10 @@ abstract class Parameters(data:EntityPairData) {
 
     //Update the weights
     for(r <- 0 until nRel) {
-      theta(r,::) :+= thetaExpectation(iHidden, r) - thetaExpectation(iAll, r)
+      val update = thetaExpectation(iHidden, r) - thetaExpectation(iAll, r)
+      theta(r,::)      :+= update
+      thetaAveraged(r) :+= update
+      thetaAvCount      += 1.0
 
       /*
       if(Constants.DEBUG) {
@@ -54,9 +60,6 @@ abstract class Parameters(data:EntityPairData) {
       }
       */
     }
-
-    thetaAveraged :+= theta
-    thetaAvCount += 1.0
 
     if(Constants.TIMING) {
       Utils.Timer.stop("updateTheta")
