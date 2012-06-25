@@ -55,11 +55,14 @@ class MultiR(data:EntityPairData) extends Parameters(data) {
     if(Constants.TIMING) {
       Utils.Timer.start("inferAll")
     }
-    val result = new EntityPair(ep.e1id, ep.e2id, ep.xCond, ep.rel)
+    val result = new EntityPair(ep.e1id, ep.e2id, ep.xCond, DenseVector.zeros[Double](data.nRel).t)
     val postZ = new Array[SparseVector[Double]](result.xCond.length)
     for(i <- 0 until result.xCond.length) {
       postZ(i) = theta * result.xCond(i)
       result.z(i) = postZ(i).argmax
+
+      //Set the aggregate variables
+      result.rel(result.z(i)) = 1.0
 
       /*
       if(Constants.DEBUG) {

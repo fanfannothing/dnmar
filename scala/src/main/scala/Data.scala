@@ -42,43 +42,48 @@ abstract class EntityPairData {
 }
 
 //Class to read and manage data from google protobuf file format
-class ProtobufData(inFile:String) extends EntityPairData { 
-  val entityVocab  = new Vocab
-  val relVocab     = new Vocab
-  val featureVocab = new Vocab
+class ProtobufData(inFile:String, evoc:Vocab, rvoc:Vocab, fvoc:Vocab) extends EntityPairData { 
+  def this(inFile:String) = this(inFile, null, null, null)
+
+  val entityVocab  = if(evoc != null) { evoc } else { new Vocab }
+  val relVocab     = if(rvoc != null) { rvoc } else { new Vocab }
+  val featureVocab = if(fvoc != null) { fvoc } else { new Vocab }
 
   var is = new GZIPInputStream(new BufferedInputStream(new FileInputStream(inFile)))
   var r = Relation.parseDelimitedFrom(is);
   var nEntityPairs = 0
+
   //First pass: figure out vocabulary sizes
-  while(r != null) {
-    //println(r.getRelType())
+  if(featureVocab.size == 0) {
+    while(r != null) {
+      //println(r.getRelType())
 
-    entityVocab(r.getSourceGuid)
-    entityVocab(r.getDestGuid)
+      entityVocab(r.getSourceGuid)
+      entityVocab(r.getDestGuid)
 
-    for(rel <- r.getRelType.split(",")) {
-      relVocab(rel)
-    }
-
-    for(i <- 0 until r.getMentionCount) {
-      val m = r.getMention(i)
-      for(j <- 0 until m.getFeatureCount) {
-	//println(m.getFeature(j))
-	featureVocab(m.getFeature(j))
+      for(rel <- r.getRelType.split(",")) {
+	relVocab(rel)
       }
-    }
 
-    nEntityPairs += 1
-    r = Relation.parseDelimitedFrom(is)
+      for(i <- 0 until r.getMentionCount) {
+	val m = r.getMention(i)
+	for(j <- 0 until m.getFeatureCount) {
+	  //println(m.getFeature(j))
+	  featureVocab(m.getFeature(j))
+	}
+      }
+
+      nEntityPairs += 1
+      r = Relation.parseDelimitedFrom(is)
+    }
   }
 
-  println("f: " + featureVocab.VocabSize)
-  println("e: " + entityVocab.VocabSize)
-  println("r: " + relVocab.VocabSize)
+  println("f: " + featureVocab.size)
+  println("e: " + entityVocab.size)
+  println("r: " + relVocab.size)
 
-  val nRel  = relVocab.VocabSize
-  val nFeat = featureVocab.VocabSize
+  val nRel  = relVocab.size
+  val nFeat = featureVocab.size
 
   val data = new Array[EntityPair](nEntityPairs)
 
@@ -92,20 +97,25 @@ class ProtobufData(inFile:String) extends EntityPairData {
     val e1 = entityVocab(r.getSourceGuid)
     val e2 = entityVocab(r.getDestGuid)
 
-    val relations = DenseVector.zeros[Double](relVocab.VocabSize)
+    val relations = DenseVector.zeros[Double](relVocab.size)
     for(rel <- r.getRelType.split(",")) {
-      relations(relVocab(rel)) = 1.0
+      val r = relVocab(rel)
+      if(r >= 0) {
+	relations(r) = 1.0
+      }
     }
 
     val mentions = new Array[SparseVectorCol[Double]](r.getMentionCount)
     //val mentions = new Array[DenseVectorCol[Double]](r.getMentionCount)
     for(i <- 0 until r.getMentionCount) {
-      mentions(i) = SparseVector.zeros[Double](featureVocab.VocabSize + 1)
-      //mentions(i) = DenseVector.zeros[Double](featureVocab.VocabSize + 1)
-      mentions(i)(featureVocab.VocabSize) = 1.0	//Bias feature
+      mentions(i) = SparseVector.zeros[Double](featureVocab.size + 1)
+      mentions(i)(featureVocab.size) = 1.0	//Bias feature
       val m = r.getMention(i)
       for(j <- 0 until m.getFeatureCount) {
-	mentions(i)(featureVocab(m.getFeature(j))) = 1.0
+	val f = featureVocab(m.getFeature(j))
+	if(f >= 0) {
+	  mentions(i)(f) = 1.0
+	}
       }
     }
     

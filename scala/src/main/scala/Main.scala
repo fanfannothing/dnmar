@@ -29,7 +29,10 @@ object Main {
   }
 
   val test  = parser.option[ProtobufData](List("testProto"), "n", "Test data (in google protobuf format).") {
-    (sValue, opt) => new ProtobufData(sValue)
+    (sValue, opt) => new ProtobufData(sValue, 
+				      train.value.getOrElse(null).entityVocab.lock, 
+				      train.value.getOrElse(null).relVocab.lock, 
+				      train.value.getOrElse(null).featureVocab.lock)
   }
 
   def main(args: Array[String]) {
@@ -41,7 +44,9 @@ object Main {
     }
 
     val multiR = new MultiR(train.value.getOrElse(null))
-    multiR.train(30)
+    multiR.train(5)
+
+    Eval.AggregateEval(multiR, test.value.getOrElse(null))
     
     if(Constants.TIMING) {
       Utils.Timer.print

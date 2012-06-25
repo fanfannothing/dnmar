@@ -31,5 +31,10 @@ class Vocab {
     }
   }
 
-  def VocabSize() = nextInt
+  def lock = { 
+    locked = true
+    this
+  }
+
+  def size() = nextInt
 }
