@@ -44,7 +44,8 @@ object Main {
     }
 
     val multiR = new MultiR(train.value.getOrElse(null))
-    multiR.train(5)
+    multiR.train(50)
+    //multiR.train(5)
 
     Eval.AggregateEval(multiR, test.value.getOrElse(null))
     
