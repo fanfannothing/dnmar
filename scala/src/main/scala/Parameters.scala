@@ -19,25 +19,45 @@ import java.io.InputStream
 import cc.factorie.protobuf.DocumentProtos.Relation
 import cc.factorie.protobuf.DocumentProtos.Relation.RelationMentionRef
 
+import scala.util.Random
+
 abstract class Parameters(data:EntityPairData) {
   val nRel  = data.nRel
   val nFeat = data.nFeat
 
+  /*********************************************************************
+   * THETA
+   *********************************************************************
+   */
   val theta         = DenseMatrix.zeros[Double](nRel,nFeat+1)
   val thetaAveraged = new Array[SparseVector[Double]](nRel)
-  for(i <- 0 until thetaAveraged.length) {
+  //val thetaAveraged = DenseMatrix.zeros[Double](nRel,nFeat+1)
+  val sparseTheta   = new Array[SparseVector[Double]](nRel)
+  for(i <- 0 until nRel) {
+    sparseTheta(i)   = SparseVector.zeros[Double](nFeat+1)
     thetaAveraged(i) = SparseVector.zeros[Double](nFeat+1)
   }
   var thetaAvCount  = 0.0
-  val phi = DenseVector.zeros[Double](3)	//Observation parameters (just 3 parameters for now - e1, e2, rel)
 
-  def inferHidden(ep:EntityPair):EntityPair
-
-  def inferAll(ep:EntityPair):EntityPair
-
-  def averageParameters { 
+  def averageTheta { 
     for(r <- 0 until nRel) { 
       theta(r,::) := (thetaAveraged(r) :/ thetaAvCount)
+    }
+  }
+
+  def updateThetaAverage {
+    if(Constants.TIMING) {
+      Utils.Timer.start("updateThetaAverage")
+    }
+
+    for(r <- 0 until nRel) {
+      //thetaAveraged(r) += theta(r,::)
+      thetaAveraged(r) += sparseTheta(r)
+    }
+    thetaAvCount += 1.0
+
+    if(Constants.TIMING) {
+      Utils.Timer.stop("updateThetaAverage")
     }
   }
 
@@ -48,24 +68,23 @@ abstract class Parameters(data:EntityPairData) {
 
     val ep = data.data(i)
 
-    //Run inference
+    //Run le inference
     val iAll    = inferAll(ep)
     val iHidden = inferHidden(ep)
 
-    //Update the weights
-    for(r <- 0 until nRel) {
-      val update = thetaExpectation(iHidden, r) - thetaExpectation(iAll, r)
-      theta(r,::)      :+= update
-      thetaAveraged(r) :+= update
-      thetaAvCount      += 1.0
+    //Update le weights
+    for(m <- 0 until iAll.xCond.length) {
+      if(iAll.z(m) != iHidden.z(m)) {
+	theta(iHidden.z(m),::)    :+= iHidden.xCond(m)
+	theta(iAll.z(m),   ::)    :-= iAll.xCond(m)
 
-      /*
-      if(Constants.DEBUG) {
-	println("theta(" + data.relVocab(r) + ").max=" + theta(r,::).max)
-	println("theta(" + data.relVocab(r) + ").argmax=" + data.featureVocab(theta(r,::).argmax))
+	//sparseTheta(iHidden.z(m)) :+= iHidden.xCond(m)
+	//sparseTheta(iAll.z(m))    :-= iAll.xCond(m)
       }
-      */
     }
+//    if(scala.util.Random.nextDouble < 0.01) {	//Update average on 1% of weights (for efficiency...)
+//      updateThetaAverage
+//    }
 
     if(Constants.TIMING) {
       Utils.Timer.stop("updateTheta")
@@ -74,13 +93,17 @@ abstract class Parameters(data:EntityPairData) {
     //Compute conditional likelihood?
   }
 
-  def thetaExpectation(ep:EntityPair, rel:Int):SparseVector[Double] = {
-    var result = SparseVector.zeros[Double](nFeat+1)
-    for(k <- 0 until ep.xCond.length) {
-      if(ep.z(k) == rel) {
-	result :+= ep.xCond(k)
-      }
-    }
-    result
-  }
+  /*********************************************************************
+   * PHI
+   *********************************************************************
+   */
+  val phi = DenseVector.zeros[Double](3)	//Observation parameters (just 3 parameters for now - e1, e2, rel)
+
+  /*********************************************************************
+   * Inference (Must be implemented in implementation class)
+   *********************************************************************
+   */
+  def inferHidden(ep:EntityPair):EntityPair
+
+  def inferAll(ep:EntityPair):EntityPair
 }

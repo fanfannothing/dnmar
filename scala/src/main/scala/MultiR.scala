@@ -12,19 +12,30 @@ import scalala.library.Statistics._;
 import scalala.library.Plotting._;
 import scalala.operators.Implicits._;
 
+import scala.util.Random
+
 class MultiR(data:EntityPairData) extends Parameters(data) {
+  //Randomly permute the training data
+  //Throw out about 90% of negative data...
+  //val training = Random.shuffle((0 until data.data.length).toList).filter((e12) => data.data(e12).rel(data.relVocab("NA")) == 0.0 || scala.util.Random.nextDouble < 0.2)
+  val training = Random.shuffle((0 until data.data.length).toList).filter((e12) => data.data(e12).rel(data.relVocab("NA")) == 0.0 || scala.util.Random.nextDouble < 0.1)
+
   def train(nIter:Int) = { 
+    //Randomly permute the training data
+    //Throw out about 90% of negative data...
+    //val training = Random.shuffle((0 until data.data.length).toList).filter((e12) => data.data(e12).rel(data.relVocab("NA")) == 0.0 || scala.util.Random.nextDouble < 0.1)
+    
     for(i <- 0 until nIter) {
-      println("iteration " + i)
-      for(e12 <- 0 until data.data.length) { 
-	//Throw out 90% of negative data...
-	if(data.data(e12).rel(data.relVocab("NA")) == 0.0 || scala.util.Random.nextDouble < 0.1) {
-	  //println("EntityPair " + e12)
+      //println("iteration " + i)
+
+      //if(i % 10 == 0) updateThetaAverage
+      //updateThetaAverage
+      
+      for(e12 <- training) {
 	  updateTheta(e12)
-	}
       }
     }
-    //averageParameters
+    //averageTheta
   }
 
   def inferHidden(ep:EntityPair):EntityPair = {
@@ -41,10 +52,12 @@ class MultiR(data:EntityPairData) extends Parameters(data) {
     for(i <- 0 until ep.xCond.length) {
       //postZ(i) = MathUtils.LogNormalize((theta * ep.xCond(i)).toArray)
       postZ(i) = theta * ep.xCond(i)
+      println(postZ(i).toList)
 
       //TODO: this is kind of a hack... probably need to do what was actually done in the multiR paper...
       val min = postZ(i).min
-      postZ(i)(ep.rel :== 0) := postZ(i).min - 1
+      //postZ(i)(ep.rel :== 0) := postZ(i).min - 1
+      postZ(i)(ep.rel :== 0) := Double.MinValue
 
       z(i)      = postZ(i).argmax
       zScore(i) = postZ(i).max

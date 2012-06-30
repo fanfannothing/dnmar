@@ -11,8 +11,8 @@ import cc.factorie.protobuf.DocumentProtos.Relation.RelationMentionRef
 import org.clapper.argot._
 
 object Constants {
-  val DEBUG = false
-  val TIMING = true
+  var DEBUG = false
+  var TIMING = true
 }
 
 object Main {
@@ -44,10 +44,12 @@ object Main {
     }
 
     val multiR = new MultiR(train.value.getOrElse(null))
-    multiR.train(50)
-    //multiR.train(5)
 
-    Eval.AggregateEval(multiR, test.value.getOrElse(null))
+    for(i <- 0 until 100) {
+      println("iteration " + i)
+      multiR.train(1)
+      Eval.AggregateEval(multiR, test.value.getOrElse(null))
+    }
     
     if(Constants.TIMING) {
       Utils.Timer.print

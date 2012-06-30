@@ -6,43 +6,6 @@ import scala.io._
 import java.io.FileWriter
 import scala.util.Random
 
-//class Type(entityVocab:Int, eventVocab:Int, alpha:Double) {
-class Type(env:Vocab, evv:Vocab, enc:HashMap[Int,Int], evc:HashMap[Int,Int], alpha:Double) {
-
-  def this() = this(new Vocab, new Vocab, new HashMap[Int,Int], new HashMap[Int,Int], 1.0)
-
-  val rnd    = new Random
-  val ALPHA  = alpha
-
-  val enVoc = env
-  val evVoc = evv
-
-  val enCounts = enc
-  val enSum    = enCounts.values.sum
-  val evCounts = evc
-  val evSum    = evCounts.values.sum
-
-  //TODO: update inference code to update thetaCounts (don't hold as fixed) 
-
-  val thetaEn = new Array[Double](enVoc.nextInt)
-  val thetaEv = new Array[Double](evVoc.nextInt)
-
-  def UpdateThetaEn() = {
-    for(i <- 0 to enVoc.nextInt-1) {
-      thetaEn(i) = (enCounts.getOrElse(i, 0) + ALPHA) / (enSum + ALPHA*enVoc.nextInt)
-    }
-  }
-
-  def UpdateThetaEv() = {
-    for(i <- 0 to evVoc.nextInt-1) {
-      thetaEv(i) = (evCounts.getOrElse(i, 0) + ALPHA) / (evSum + ALPHA*evVoc.nextInt)
-    }
-  }
-
-  UpdateThetaEn()
-  UpdateThetaEv()
-}
-
 object Utils {
   def deepCopy[A](a: A)(implicit m: reflect.Manifest[A]): A =
     util.Marshal.load[A](util.Marshal.dump(a))
@@ -53,6 +16,16 @@ object Utils {
       result(x) = result.getOrElse(x, 0) + 1
     }
     return result
+  }
+
+  def bin2int(b:Array[Double]):List[Int] = {
+    var result = List[Int]()
+    for(i <- 0 until b.length) {
+      if(b(i) == 1.0) {
+	result ::= i
+      }
+    }
+    return result.reverse
   }
 
   object Timer {
@@ -67,6 +40,7 @@ object Utils {
     def stop(s:String) = {
       val end = System.currentTimeMillis
       sum(s) = sum.getOrElse(s, 0L) + (end - begin(s))
+      sum(s)
       //println(s + ">   " + (end - begin(s))/ 1000.0 + " s")
     }
 
@@ -75,69 +49,6 @@ object Utils {
 	println(s + "\t" + t / 1000.0 + " s")
       }
     }
-  }
-}
-
-object FileUtils {
-  //Reads in a file containing tuples, filtering out those which fall outside of a specific date range
-  def filterTuplesByDate(inFile:String, outFile:String, startDate:Int, endDate:Int) {
-    val out = new FileWriter(outFile);
-    for(line <- Source.fromFile(inFile).getLines) {
-      val Array(sid, creation_seconds, date, eventS, entityS) = StringUtils.stripWS(line).split('\t')
-      if(date != "__NONE__" && entityS != "__NONE__" && date.toInt >= startDate && date.toInt <= endDate) {
-	out.write(line + "\n");
-      }
-    }
-    out.close
-  }
-
-  //TODO: Change this to read from doc-topic and arg1-topic-word files...
-  def readTypes(entityFile:String, eventPhraseFile:String, enVoc:Vocab, evVoc:Vocab, alpha:Double):Array[Type] = {
-    var result = List()
-    var nTypes = 0
-    
-    //First Pass - Figure out how many types
-    for(line <- Source.fromFile(entityFile).getLines) {
-      nTypes += 1
-    }
-
-    val countMatch = """(.+):(\d+)""".r
-    val zEnCounts = new HashMap[Int, HashMap[Int,Int]]
-    Source.fromFile(entityFile).getLines.foreach((line) => {
-      val fields = StringUtils.stripWS(line).split('\t')
-      val z      = fields(0).toInt
-      for(i <- 1 to fields.length-1) {
-	val countMatch(entity, count) = fields(i)
-	if(!zEnCounts.contains(z)) {
-	  zEnCounts(z) = new HashMap[Int,Int]
-	}
-	zEnCounts(z)(enVoc(entity)) = count.toInt
-      }
-    })
-
-    val zEvCounts = new HashMap[Int, HashMap[Int,Int]]
-    Source.fromFile(eventPhraseFile).getLines.foreach((line) => {
-      val fields = StringUtils.stripWS(line).split('\t')
-      val eventPhrase = evVoc(fields(0))
-      for(i <- 1 to fields.length-1) {
-	val Array(zStr, count) = fields(i).split(":")
-	val Array(z1, z2) = zStr.split("-")
-	if(!zEvCounts.contains(z1.toInt)) {
-	  zEvCounts(z1.toInt) = new HashMap[Int,Int]
-	}
-	zEvCounts(z1.toInt)(eventPhrase) = count.toInt
-	if(!zEvCounts.contains(z2.toInt)) {
-	  zEvCounts(z2.toInt) = new HashMap[Int,Int]
-	}
-	zEvCounts(z2.toInt)(eventPhrase) = count.toInt
-      }
-    })
-    
-    val types = (0 to zEvCounts.keys.size-1).map((z) => {
-      new Type(enVoc, evVoc, zEnCounts(z), zEvCounts(z), alpha)
-    }).toArray
-    
-    return(types)
   }
 }
 

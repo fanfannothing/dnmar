@@ -10,8 +10,10 @@ object Eval {
     var sortedPredictions = List[Prediction]()
     for(ep <- test.data) { 
       val predicted = param.inferAll(ep)
-      //println("predicted:\t" + predicted.rel.toList)
-      //println("observed:\t"  + ep.rel.toList)
+      if(Constants.DEBUG) {
+	println("predicted:\t" + Utils.bin2int(predicted.rel.toArray).map((r) => test.relVocab(r)))
+	println("observed:\t"  + Utils.bin2int(ep.rel.toArray).map((r) => test.relVocab(r)))
+      }
       for(r <- 0 until test.nRel) {
 	if(test.relVocab(r) != "NA") {
 	  if(ep.rel(r) == 1.0) {
@@ -29,7 +31,10 @@ object Eval {
       }
     }
 
-    for(prediction <- sortedPredictions.sortBy(_.score).reverse) {
+    var maxF, maxFp, maxFr = 0.0
+    var maxP, maxPr, maxPf = 0.0
+    for(prediction <- sortedPredictions.sortBy(-_.score)) {
+      //println(Prediction(-prediction.score, prediction.correct))
       if(prediction.correct) {
 	tp += 1.0
       } else {
@@ -41,9 +46,19 @@ object Eval {
       val r = tp / (tp + fn)
       val f = 2 * p * r / (p + r)
 
-      println("P:" + p + "\tR:" + r + "\tF:" + f)
-      //println("R:" + r)
-      //println("F:" + f)
+      if(f > maxF) {
+	maxF  = f
+	maxFp = p
+	maxFr = r
+      }
+
+      if(p > maxP) {
+	maxP  = p
+	maxPr = r
+	maxPf = f
+      }
     }
+    println("P:" + maxFp + "\tR:" + maxFr + "\tF:" + maxF)
+    println("P:" + maxP  + "\tR:" + maxPr + "\tF:" + maxPf)
   }
 }
