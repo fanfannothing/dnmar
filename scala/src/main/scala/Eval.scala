@@ -34,7 +34,6 @@ object Eval {
     var maxF, maxFp, maxFr = 0.0
     var maxP, maxPr, maxPf = 0.0
     for(prediction <- sortedPredictions.sortBy(-_.score)) {
-      //println(Prediction(-prediction.score, prediction.correct))
       if(prediction.correct) {
 	tp += 1.0
       } else {

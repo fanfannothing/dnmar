@@ -105,6 +105,7 @@ class ProtobufData(inFile:String, evoc:Vocab, rvoc:Vocab, fvoc:Vocab) extends En
     val mentions = new Array[SparseVectorCol[Double]](r.getMentionCount)
     //val mentions = new Array[DenseVectorCol[Double]](r.getMentionCount)
     for(i <- 0 until r.getMentionCount) {
+      var nFeatures = 0.0
       mentions(i) = SparseVector.zeros[Double](featureVocab.size + 1)
       mentions(i)(featureVocab.size) = 1.0	//Bias feature
       val m = r.getMention(i)
@@ -112,6 +113,7 @@ class ProtobufData(inFile:String, evoc:Vocab, rvoc:Vocab, fvoc:Vocab) extends En
 	val f = featureVocab(m.getFeature(j))
 	if(f >= 0) {
 	  mentions(i)(f) = 1.0
+	  nFeatures += 1.0
 	}
       }
     }

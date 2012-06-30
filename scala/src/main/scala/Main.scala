@@ -25,10 +25,12 @@ object Main {
   )
 
   val train = parser.option[ProtobufData](List("trainProto"), "n", "Training data (in google protobuf format).") { 
+    println("Loading train")
     (sValue, opt) => new ProtobufData(sValue)
   }
 
   val test  = parser.option[ProtobufData](List("testProto"), "n", "Test data (in google protobuf format).") {
+    println("Loading test")
     (sValue, opt) => new ProtobufData(sValue, 
 				      train.value.getOrElse(null).entityVocab, 
 				      train.value.getOrElse(null).relVocab.lock, 

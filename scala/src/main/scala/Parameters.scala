@@ -78,13 +78,13 @@ abstract class Parameters(data:EntityPairData) {
 	theta(iHidden.z(m),::)    :+= iHidden.xCond(m)
 	theta(iAll.z(m),   ::)    :-= iAll.xCond(m)
 
-	//sparseTheta(iHidden.z(m)) :+= iHidden.xCond(m)
-	//sparseTheta(iAll.z(m))    :-= iAll.xCond(m)
+	sparseTheta(iHidden.z(m)) :+= iHidden.xCond(m)
+	sparseTheta(iAll.z(m))    :-= iAll.xCond(m)
       }
     }
-//    if(scala.util.Random.nextDouble < 0.01) {	//Update average on 1% of weights (for efficiency...)
-//      updateThetaAverage
-//    }
+    if(scala.util.Random.nextDouble < 0.01) {	//Update average on 1% of weights (for efficiency...)
+      updateThetaAverage
+    }
 
     if(Constants.TIMING) {
       Utils.Timer.stop("updateTheta")
