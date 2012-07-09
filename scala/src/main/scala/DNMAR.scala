@@ -14,7 +14,7 @@ import scalala.operators.Implicits._;
 
 import scala.util.Random
 
-class MultiR(data:EntityPairData) extends Parameters(data) {
+class DNMAR(data:EntityPairData) extends Parameters(data) {
   //Randomly permute the training data
   //Throw out about 90% of negative data...
   val training = Random.shuffle((0 until data.data.length).toList).filter((e12) => data.data(e12).rel(data.relVocab("NA")) == 0.0 || scala.util.Random.nextDouble < 0.2)
@@ -46,11 +46,9 @@ class MultiR(data:EntityPairData) extends Parameters(data) {
     for(i <- 0 until ep.xCond.length) {
       //postZ(i) = MathUtils.LogNormalize((theta * ep.xCond(i)).toArray)
       postZ(i) = theta * ep.xCond(i)
-      //println(postZ(i).toList)
 
       //TODO: this is kind of a hack... probably need to do what was actually done in the multiR paper...
       val min = postZ(i).min
-      //postZ(i)(ep.rel :== 0) := postZ(i).min - 1
       postZ(i)(ep.rel :== 0) := Double.MinValue
 
       z(i)      = postZ(i).argmax
@@ -81,14 +79,7 @@ class MultiR(data:EntityPairData) extends Parameters(data) {
 
     for(i <- 0 until ep.xCond.length) {
       postZ(i) = theta * ep.xCond(i)
-      /**********************************************************************************************
-       * NOTE: After uncommenting this line, performance was *really* good
-       * I think this may have just been an issue with the sorting function, because the
-       * Majority of predictions seemed to be zero
-       * -- May need more investigation/debugging...
-       **********************************************************************************************
-       */
-      //postZ(i) = postZ(i) - logSum(postZ(i).toList)	TODO: does this even make sense?
+
       z(i) = postZ(i).argmax
       zScore(i) = postZ(i).max
 

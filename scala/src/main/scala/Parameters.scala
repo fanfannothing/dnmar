@@ -29,18 +29,12 @@ abstract class Parameters(data:EntityPairData) {
    * THETA
    *********************************************************************
    */
-  val theta         = DenseMatrix.zeros[Double](nRel,nFeat+1)
+  val theta = DenseMatrix.zeros[Double](nRel,nFeat+1)
 
-  def updateTheta(i:Int) {
+  def updateTheta(i:Int, iAll:EntityPair, iHidden:EntityPair) {
     if(Constants.TIMING) {
       Utils.Timer.start("updateTheta")
     }
-
-    val ep = data.data(i)
-
-    //Run le inference
-    val iAll    = inferAll(ep)
-    val iHidden = inferHidden(ep)
 
     //Update le weights
     for(m <- 0 until iAll.xCond.length) {
@@ -61,10 +55,32 @@ abstract class Parameters(data:EntityPairData) {
    * PHI
    *********************************************************************
    */
-  val phi = SparseVector.zeros[Double](data.entityVocab.size + data.relVocab.size + 1)	//Observation parameters (just 3 parameters for now - e1, e2, rel)
+  val phi = SparseVector.zeros[Double](data.entityVocab.size + data.relVocab.size)	//Observation parameters (just 3 parameters for now - e1, e2, rel)
 
-  def updatePhi(i:Int) { 
-    //TODO
+
+  //TODO
+  def updatePhi(i:Int, iAll:EntityPair, iHidden:EntityPair) { 
+    if(Constants.TIMING) {
+      Utils.Timer.start("updatePhi")
+    }
+
+    //Update le weights
+    //TODO: not quite sure about this...  Probably need to write inference code...
+    for(r <- 0 until iAll.rel.length) {
+      if(iAll.obs(r) != iHidden.obs(r)) {
+	phi(iHidden.e1id)              += iHidden.obs(r)
+	phi(iHidden.e2id)              += iHidden.obs(r)
+	phi(data.entityVocab.size + r) += iHidden.rel(r)
+
+	phi(iAll.e1id)                 -= iAll.obs(r)
+	phi(iAll.e2id)                 -= iAll.obs(r)
+	phi(data.entityVocab.size + r) -= iAll.rel(r)
+      }
+    }    
+
+    if(Constants.TIMING) {
+      Utils.Timer.stop("updatePhi")
+    }
   }
   
 
