@@ -27,7 +27,6 @@ class MultiR(data:EntityPairData) extends Parameters(data) {
 	  updateTheta(e12)
       }
     }
-    //averageTheta
   }
 
   def inferHidden(ep:EntityPair):EntityPair = {

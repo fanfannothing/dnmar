@@ -30,36 +30,6 @@ abstract class Parameters(data:EntityPairData) {
    *********************************************************************
    */
   val theta         = DenseMatrix.zeros[Double](nRel,nFeat+1)
-  val thetaAveraged = new Array[SparseVector[Double]](nRel)
-  //val thetaAveraged = DenseMatrix.zeros[Double](nRel,nFeat+1)
-  val sparseTheta   = new Array[SparseVector[Double]](nRel)
-  for(i <- 0 until nRel) {
-    sparseTheta(i)   = SparseVector.zeros[Double](nFeat+1)
-    thetaAveraged(i) = SparseVector.zeros[Double](nFeat+1)
-  }
-  var thetaAvCount  = 0.0
-
-  def averageTheta { 
-    for(r <- 0 until nRel) { 
-      theta(r,::) := (thetaAveraged(r) :/ thetaAvCount)
-    }
-  }
-
-  def updateThetaAverage {
-    if(Constants.TIMING) {
-      Utils.Timer.start("updateThetaAverage")
-    }
-
-    for(r <- 0 until nRel) {
-      //thetaAveraged(r) += theta(r,::)
-      thetaAveraged(r) += sparseTheta(r)
-    }
-    thetaAvCount += 1.0
-
-    if(Constants.TIMING) {
-      Utils.Timer.stop("updateThetaAverage")
-    }
-  }
 
   def updateTheta(i:Int) {
     if(Constants.TIMING) {
@@ -77,13 +47,7 @@ abstract class Parameters(data:EntityPairData) {
       if(iAll.z(m) != iHidden.z(m)) {
 	theta(iHidden.z(m),::)    :+= iHidden.xCond(m)
 	theta(iAll.z(m),   ::)    :-= iAll.xCond(m)
-
-	sparseTheta(iHidden.z(m)) :+= iHidden.xCond(m)
-	sparseTheta(iAll.z(m))    :-= iAll.xCond(m)
       }
-    }
-    if(scala.util.Random.nextDouble < 0.01) {	//Update average on 1% of weights (for efficiency...)
-      updateThetaAverage
     }
 
     if(Constants.TIMING) {
@@ -97,7 +61,12 @@ abstract class Parameters(data:EntityPairData) {
    * PHI
    *********************************************************************
    */
-  val phi = DenseVector.zeros[Double](3)	//Observation parameters (just 3 parameters for now - e1, e2, rel)
+  val phi = SparseVector.zeros[Double](data.entityVocab.size + data.relVocab.size + 1)	//Observation parameters (just 3 parameters for now - e1, e2, rel)
+
+  def updatePhi(i:Int) { 
+    //TODO
+  }
+  
 
   /*********************************************************************
    * Inference (Must be implemented in implementation class)
