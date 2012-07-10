@@ -31,7 +31,7 @@ abstract class Parameters(data:EntityPairData) {
    */
   val theta = DenseMatrix.zeros[Double](nRel,nFeat+1)
 
-  def updateTheta(i:Int, iAll:EntityPair, iHidden:EntityPair) {
+  def updateTheta(iAll:EntityPair, iHidden:EntityPair) {
     if(Constants.TIMING) {
       Utils.Timer.start("updateTheta")
     }
@@ -55,11 +55,11 @@ abstract class Parameters(data:EntityPairData) {
    * PHI
    *********************************************************************
    */
-  val phi = SparseVector.zeros[Double](data.entityVocab.size + data.relVocab.size)	//Observation parameters (just 3 parameters for now - e1, e2, rel)
+  val phi = SparseVector.zeros[Double](data.entityVocab.size + data.relVocab.size)	//Observation parameters (just 3 things for now - e1, e2, rel)
 
 
   //TODO
-  def updatePhi(i:Int, iAll:EntityPair, iHidden:EntityPair) { 
+  def updatePhi(iAll:EntityPair, iHidden:EntityPair) { 
     if(Constants.TIMING) {
       Utils.Timer.start("updatePhi")
     }

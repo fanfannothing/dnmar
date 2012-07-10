@@ -27,7 +27,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	//Run le inference
 	val iAll    = inferAll(data.data(e12))
 	val iHidden = inferHidden(data.data(e12))
-	updateTheta(e12, iAll, iHidden)
+	updateTheta(iAll, iHidden)
+	updatePhi(iAll, iHidden)
       }
     }
   }
@@ -40,20 +41,21 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 
     val z      = DenseVector.zeros[Int](ep.xCond.length)
     val zScore = DenseVector.zeros[Double](ep.xCond.length)
-    val postZ  = new Array[SparseVector[Double]](ep.xCond.length)
-    //val postZ  = new Array[Array[Double]](ep.xCond.length)
+    val postZ  = new Array[DenseVector[Double]](ep.xCond.length)
 
     for(i <- 0 until ep.xCond.length) {
       //postZ(i) = MathUtils.LogNormalize((theta * ep.xCond(i)).toArray)
-      postZ(i) = theta * ep.xCond(i)
+      postZ(i) = exp((theta * ep.xCond(i)).toDense)
 
       //TODO: this is kind of a hack... probably need to do what was actually done in the multiR paper...
-      val min = postZ(i).min
-      postZ(i)(ep.rel :== 0) := Double.MinValue
+      //postZ(i)(ep.rel :== 0) := Double.MinValue
 
       z(i)      = postZ(i).argmax
       zScore(i) = postZ(i).max
+
+      ep.rel(z(i)) = 1.0
     }
+
     if(Constants.DEBUG) {
       println("constrained result.z=" + z.toList.map((r) => data.relVocab(r)))
     }
@@ -73,26 +75,35 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     //val result = new EntityPair(ep.e1id, ep.e2id, ep.xCond, DenseVector.zeros[Double](data.nRel).t)
 
     val z      = DenseVector.zeros[Int](ep.xCond.length)
-    val postZ  = new Array[SparseVector[Double]](ep.xCond.length)
+    val postZ  = new Array[DenseVector[Double]](ep.xCond.length)
     val zScore = DenseVector.zeros[Double](ep.xCond.length)
     val rel    = DenseVector.zeros[Double](data.nRel).t
 
     for(i <- 0 until ep.xCond.length) {
-      postZ(i) = theta * ep.xCond(i)
+      postZ(i) = exp((theta * ep.xCond(i)).toDense)
 
       z(i) = postZ(i).argmax
       zScore(i) = postZ(i).max
 
       //Set the aggregate variables
       rel(z(i)) = 1.0
-
-      /*
-      if(Constants.DEBUG) {
-	val maxFeature = (theta(z(i),::) :* ep.xCond(i).toDense).argmax
-	println("maxFeature(" + data.relVocab(z(i)) + ").argmax=" + data.featureVocab(maxFeature))
-      }
-      */
     }
+
+    //predict observation variables
+    for(r <- 0 until ep.rel.length) {
+      if(ep.obs(r) == 0.0) {
+	var s = 0.0
+	s += phi(ep.e1id)
+	s += phi(ep.e2id)
+	s += phi(data.entityVocab.size + r)
+	val p = 1.0 / (1.0 + exp(s))
+
+	if(p > 0.5) {
+	  ep.obs(r) = 1.0
+	}
+      }
+    }
+
     if(Constants.DEBUG) {
       println("unconstrained result.z=" + z.toList.map((r) => data.relVocab(r)))
     }

@@ -45,7 +45,8 @@ object Main {
       case e: ArgotUsageException => println(e.message)
     }
 
-    val multiR = new MultiR(train.value.getOrElse(null))
+    //val multiR = new MultiR(train.value.getOrElse(null))
+    val multiR = new DNMAR(train.value.getOrElse(null))
 
     for(i <- 0 until 100) {
       println("iteration " + i)
