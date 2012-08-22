@@ -46,12 +46,12 @@ object Main {
     }
 
     //val multiR = new MultiR(train.value.getOrElse(null))
-    val multiR = new DNMAR(train.value.getOrElse(null))
+    val dnmar = new DNMAR(train.value.getOrElse(null))
 
     for(i <- 0 until 100) {
       println("iteration " + i)
-      multiR.train(1)
-      Eval.AggregateEval(multiR, test.value.getOrElse(null))
+      dnmar.train(1)
+      Eval.AggregateEval(dnmar, test.value.getOrElse(null))
     }
     
     if(Constants.TIMING) {

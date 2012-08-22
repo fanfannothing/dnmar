@@ -55,6 +55,9 @@ abstract class Parameters(data:EntityPairData) {
    * PHI
    *********************************************************************
    */
+  /*
+   * TODO: split phi into different categories rather than having a single large vector
+   */
   val phi = SparseVector.zeros[Double](data.entityVocab.size + data.relVocab.size)	//Observation parameters (just 3 things for now - e1, e2, rel)
 
 
