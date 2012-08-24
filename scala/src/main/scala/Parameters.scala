@@ -30,6 +30,7 @@ abstract class Parameters(data:EntityPairData) {
    *********************************************************************
    */
   val theta = DenseMatrix.zeros[Double](nRel,nFeat+1)
+  //val theta = DenseMatrix.rand(nRel,nFeat+1)
 
   def updateTheta(iAll:EntityPair, iHidden:EntityPair) {
     if(Constants.TIMING) {
@@ -58,7 +59,8 @@ abstract class Parameters(data:EntityPairData) {
   /*
    * TODO: split phi into different categories rather than having a single large vector
    */
-  val phi = SparseVector.zeros[Double](data.entityVocab.size + data.relVocab.size)	//Observation parameters (just 3 things for now - e1, e2, rel)
+  val phi = SparseVector.zeros[Double](data.entityVocab.size + data.relVocab.size)
+  //val phi = DenseVector.rand(data.entityVocab.size + data.relVocab.size)	//Observation parameters (just 3 things for now - e1, e2, rel)
 
 
   //TODO

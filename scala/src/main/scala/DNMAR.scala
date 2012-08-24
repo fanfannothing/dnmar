@@ -15,18 +15,20 @@ import scalala.operators.Implicits._;
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
-class AllVariablesHypothesis(postZ:DenseMatrix[Double], postObs:DenseVector[Double], zPartial:ListBuffer[Int], obs:Array[Double], sPartial:Double) extends Hypothesis {
+class AllVariablesHypothesis(postZ:DenseMatrix[Double], postObs:DenseVector[Double], zPartial:ListBuffer[Int], val obs:Array[Double], sPartial:Double) extends Hypothesis {
   val score = sPartial
   val z = zPartial
 
   def sucessors:Array[Hypothesis] = {
     val result = new ListBuffer[Hypothesis]
 
+    //TODO: something doesn't seem quite right here, need to go through and think about when aggregate variables and obs variables changes...
     for(rel <- 0 until postZ.numCols) {
       //Add in factor for next item
-      var newScore = score + log(postZ(z.length, rel))	      //Use log score
-      val newZ = z + rel
+      val newZ = z.clone + rel
       var newObs = obs
+      var newScore = score * postZ(z.length, rel)	      //Use log score?
+      //println("postZ=" + postZ(z.length, rel).toString)
 
       //Did we change one of the observation variables?
       if(newObs(rel) == 1.0) {
@@ -34,9 +36,12 @@ class AllVariablesHypothesis(postZ:DenseMatrix[Double], postObs:DenseVector[Doub
 	newObs(rel) = 0.0
 	val pObs  = postObs(rel)
 	val pNobs = 1.0 - postObs(rel)
-	newScore = newScore - log(pObs) + log(pNobs)
+	println(pObs)
+	println(pNobs)
+	newScore = newScore * pNobs / pObs
       }
-      
+
+      //println("newScore =" + newScore.toString)
       result += new AllVariablesHypothesis(postZ, postObs, newZ, newObs, newScore)
     }
     return result.toArray
@@ -56,9 +61,8 @@ class HiddenVariablesHypothesis(postZ:DenseMatrix[Double], z:ListBuffer[Int]) ex
 
 class DNMAR(data:EntityPairData) extends Parameters(data) {
   //Randomly permute the training data
-  //Throw out about 90% of negative data...
+  //Throw out 80% of negative data...
   val training = Random.shuffle((0 until data.data.length).toList).filter((e12) => data.data(e12).rel(data.relVocab("NA")) == 0.0 || scala.util.Random.nextDouble < 0.2)
-  //val training = Random.shuffle((0 until data.data.length).toList).filter((e12) => data.data(e12).rel(data.relVocab("NA")) == 0.0 || scala.util.Random.nextDouble < 0.1)
 
   def train(nIter:Int) = { 
     for(i <- 0 until nIter) {
@@ -126,34 +130,38 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     for(i <- 0 until ep.xCond.length) {
       postZ(i,::) := exp((theta * ep.xCond(i)).toDense)
 
-      z(i) = postZ(i,::).argmax
+      //z(i) = postZ(i,::).argmax
       zScore(i) = postZ(i,::).max
 
       //Set the aggregate variables
-      rel(z(i)) = 1.0
+      //rel(z(i)) = 1.0
     }
 
     //predict observation variables
     val postObs = DenseVector.zeros[Double](data.nRel)
-    for(r <- 0 until ep.rel.length) {
-      if(ep.obs(r) == 0.0) {
-	var s = 0.0
-	s += phi(ep.e1id)
-	s += phi(ep.e2id)
-	s += phi(data.entityVocab.size + r)
-	val p = 1.0 / (1.0 + exp(s))
-	postObs(r) = p
+    for(r <- 0 until data.nRel) {
+      var s = 0.0
+      s += phi(ep.e1id)
+      s += phi(ep.e2id)
+      s += phi(data.entityVocab.size + r)
+      val p = 1.0 / (1.0 + exp(s))
+      postObs(r) = p
 
-	if(p > 0.5) {
-	  ep.obs(r) = 1.0
-	}
+      if(p > 0.5) {
+	ep.obs(r) = 1.0
+      } else {
+	ep.obs(r) = 0.0
       }
     }
 
     //TODO: Create AllVariablesHypothesis and do beam search
-    val bs = new BeamSearch(new AllVariablesHypothesis(postZ, postObs, new ListBuffer[Int], Array.fill[Double](data.nRel)(0.0), 0.0), 20);
+    //val bs = new BeamSearch(new AllVariablesHypothesis(postZ, postObs, new ListBuffer[Int], Array.fill[Double](data.nRel)(0.0), 0.0), 100);
+    //println(postObs.toList)
+    //val bs = new BeamSearch(new AllVariablesHypothesis(postZ, postObs, new ListBuffer[Int], ep.obs.toArray, 0.0), 100);
+    val bs = new BeamSearch(new AllVariablesHypothesis(postZ, postObs, new ListBuffer[Int], ep.obs.toArray, 1.0), 100);
     
     while(bs.Head.asInstanceOf[AllVariablesHypothesis].z.length < ep.xCond.length) {
+      //println(bs.Head.asInstanceOf[AllVariablesHypothesis].z.length)
       bs.UpdateQ
     }
 
@@ -161,8 +169,14 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       println("unconstrained result.z=" + z.toList.map((r) => data.relVocab(r)))
     }
 
+    //TODO: a bit of reorganizing/refactoring here maybe...
+    for(r <- bs.Head.asInstanceOf[AllVariablesHypothesis].z.toArray) {
+      rel(r) = 1.0
+    }
+
     //TODO: get rid of zScore, replace with postZ...
-    val result = new EntityPair(ep.e1id, ep.e2id, ep.xCond, rel, z, zScore)
+    //val result = new EntityPair(ep.e1id, ep.e2id, ep.xCond, rel, z, zScore)
+    val result = new EntityPair(ep.e1id, ep.e2id, ep.xCond, rel, DenseVector(bs.Head.asInstanceOf[AllVariablesHypothesis].z.toArray), zScore, DenseVector(bs.Head.asInstanceOf[AllVariablesHypothesis].obs))
 
     if(Constants.TIMING) {
       Utils.Timer.stop("inferAll")

@@ -25,10 +25,10 @@ import cc.factorie.protobuf.DocumentProtos.Relation.RelationMentionRef
  * of entities (e1id,e2id)
  **************************************************************************
  */
-class EntityPair(val e1id:Int, val e2id:Int, val xCond:Array[SparseVectorCol[Double]], val rel:DenseVectorRow[Double], val z:DenseVector[Int], val zScore:DenseVector[Double]) {
-  def this(e1id:Int, e2id:Int, xCond:Array[SparseVectorCol[Double]], rel:DenseVectorRow[Double]) = this(e1id, e2id, xCond, rel, null, null)
-//class EntityPair(val e1id:Int, val e2id:Int, val xCond:Array[DenseVectorCol[Double]], val rel:DenseVector[Double]) {
-  val obs = rel.toDense							//Which variables are observed, just copy
+class EntityPair(val e1id:Int, val e2id:Int, val xCond:Array[SparseVectorCol[Double]], val rel:DenseVectorRow[Double], val z:DenseVector[Int], val zScore:DenseVector[Double], val obs:DenseVector[Double]) {
+  def this(e1id:Int, e2id:Int, xCond:Array[SparseVectorCol[Double]], rel:DenseVectorRow[Double]) = this(e1id, e2id, xCond, rel, null, null, rel.toDense)
+  def this(e1id:Int, e2id:Int, xCond:Array[SparseVectorCol[Double]], rel:DenseVectorRow[Double], z:DenseVector[Int], zScore:DenseVector[Double]) = this(e1id, e2id, xCond, rel, z, zScore, rel.toDense)
+  //val obs = rel.toDense							
 }
 
 abstract class EntityPairData {
