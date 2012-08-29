@@ -15,6 +15,8 @@ import scalala.operators.Implicits._;
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
+//TODO: should predict MAP values for both aggregate extraction variables and observation variables
+//TODO: recursively stored score shouldn't include these factors...
 class AllVariablesHypothesis(postZ:DenseMatrix[Double], postObs:DenseVector[Double], zPartial:ListBuffer[Int], val obs:Array[Double], sPartial:Double) extends Hypothesis {
   val score = sPartial
   val z = zPartial
@@ -22,13 +24,11 @@ class AllVariablesHypothesis(postZ:DenseMatrix[Double], postObs:DenseVector[Doub
   def sucessors:Array[Hypothesis] = {
     val result = new ListBuffer[Hypothesis]
 
-    //TODO: something doesn't seem quite right here, need to go through and think about when aggregate variables and obs variables changes...
     for(rel <- 0 until postZ.numCols) {
       //Add in factor for next item
       val newZ = z.clone + rel
       var newObs = obs
       var newScore = score * postZ(z.length, rel)	      //Use log score?
-      //println("postZ=" + postZ(z.length, rel).toString)
 
       //Did we change one of the observation variables?
       if(newObs(rel) == 1.0) {
@@ -48,6 +48,8 @@ class AllVariablesHypothesis(postZ:DenseMatrix[Double], postObs:DenseVector[Doub
   }
 }
 
+//TODO: need to actually implement this part
+//TODO: should take database into account
 class HiddenVariablesHypothesis(postZ:DenseMatrix[Double], z:ListBuffer[Int]) extends Hypothesis { 
   def score:Double = { 
     return 1.0
@@ -119,10 +121,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     if(Constants.TIMING) {
       Utils.Timer.start("inferAll")
     }
-    //val result = new EntityPair(ep.e1id, ep.e2id, ep.xCond, DenseVector.zeros[Double](data.nRel).t)
 
     val z      = DenseVector.zeros[Int](ep.xCond.length)
-    //val postZ  = new Array[DenseVector[Double]](ep.xCond.length)
     val postZ  = DenseMatrix.zeros[Double](ep.xCond.length, data.nRel)
     val zScore = DenseVector.zeros[Double](ep.xCond.length)
     val rel    = DenseVector.zeros[Double](data.nRel).t
