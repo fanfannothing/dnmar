@@ -46,7 +46,8 @@ object Main {
     }
 
     //val multiR = new MultiR(train.value.getOrElse(null))
-    val dnmar = new DNMAR(train.value.getOrElse(null))
+    //val dnmar = new DNMAR(train.value.getOrElse(null))
+    val dnmar = new MultiR(train.value.getOrElse(null))
 
     for(i <- 0 until 100) {
       println("iteration " + i)

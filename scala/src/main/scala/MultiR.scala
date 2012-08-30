@@ -16,8 +16,9 @@ import scala.util.Random
 
 class MultiR(data:EntityPairData) extends Parameters(data) {
   //Randomly permute the training data
-  //Throw out about 80% of negative data...
-  val training = Random.shuffle((0 until data.data.length).toList).filter((e12) => data.data(e12).rel(data.relVocab("NA")) == 0.0 || scala.util.Random.nextDouble < 0.2)
+  //Throw out X% of negative data...
+  //val training = Random.shuffle((0 until data.data.length).toList).filter((e12) => data.data(e12).rel(data.relVocab("NA")) == 0.0 || scala.util.Random.nextDouble < 0.2)
+  val training = Random.shuffle((0 until data.data.length).toList).filter((e12) => data.data(e12).rel(data.relVocab("NA")) == 0.0 || scala.util.Random.nextDouble < 0.1)
 
   def train(nIter:Int) = { 
     for(i <- 0 until nIter) {
