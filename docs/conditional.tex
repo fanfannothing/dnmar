@@ -36,7 +36,7 @@ the training data.
 To address the issue of false negatives, we propose to explicitly model the possibility that a fact missing from the database could
 be true.  Because the truth of a fact is highly correlated with it's probability of inclusion in the database, the
 \emph{Missing at Random} (MAR) assumption is not valid  \citep{Schafer02}, and we therefore need to explicitly model
-the process by which data are included in the database.
+the process by which data are included.
 
 An initial observation model might simply assume that the probability of observing a fact (in the database) given that it is false is zero, whereas
 the probability of observation given that the fact is true is some parameter $\theta$.  Because different relations are likely

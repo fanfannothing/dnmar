@@ -17,32 +17,52 @@ import scala.util.Random
 
 //TODO: should predict MAP values for both aggregate extraction variables and observation variables
 //TODO: recursively stored score shouldn't include these factors...
-class AllVariablesHypothesis(postZ:DenseMatrix[Double], postObs:DenseVector[Double], zPartial:ListBuffer[Int], val obs:Array[Double], sPartial:Double) extends Hypothesis {
-  val score = sPartial
+class AllVariablesHypothesis(postZ:DenseMatrix[Double], postObs:DenseVector[Double], zPartial:ListBuffer[Int], val rPartial:Array[Double], var sPartial:Double, var score:Double) extends Hypothesis {
   val z = zPartial
+
+  //println(z.length + "\t" + score)
+
+  def obs:DenseVector[Double] = {
+    val result = DenseVector.zeros[Double](postZ.numCols)
+    //compute MAP observation variables based on rPartial
+    for(rel <- 0 until postZ.numCols) {
+      if(rPartial(rel) == 1.0) {
+        if(postObs(rel) > 0.5) {
+          result(rel) = 1.0
+        }
+      }
+    }
+    result
+  }
 
   def sucessors:Array[Hypothesis] = {
     val result = new ListBuffer[Hypothesis]
 
     for(rel <- 0 until postZ.numCols) {
-      //Add in factor for next item
-      val newZ = z.clone + rel
-      var newObs = obs
-      var newScore = score * postZ(z.length, rel)	      //Use log score?
 
-      //Did we change one of the observation variables?
-      if(newObs(rel) == 1.0) {
-	newObs = obs.clone
-	newObs(rel) = 0.0
-	val pObs  = postObs(rel)
-	val pNobs = 1.0 - postObs(rel)
-	println(pObs)
-	println(pNobs)
-	newScore = newScore * pNobs / pObs
+      val newZ = z.clone + rel
+      var newRpartial = rPartial.clone
+      //TODO: probably need to use a log score here...
+      //var newSpartial = sPartial * postZ(z.length, rel)
+      var newSpartial = sPartial + math.log(postZ(z.length, rel))
+      var newScore = newSpartial
+
+      newRpartial(rel) = 1.0
+
+      for(rel <- 0 until postZ.numCols) {
+        if(newRpartial(rel) == 1.0) {
+          //newScore *= math.max(postObs(rel), 1-postObs(rel))
+          newScore += math.log(math.max(postObs(rel), 1-postObs(rel)))
+        }
+      }
+
+      for(i <- newZ.length until postZ.numRows) {
+        //newScore *= postZ(i,::).max
+        newScore += math.log(postZ(i,::).max)
       }
 
       //println("newScore =" + newScore.toString)
-      result += new AllVariablesHypothesis(postZ, postObs, newZ, newObs, newScore)
+      result += new AllVariablesHypothesis(postZ, postObs, newZ, newRpartial, newSpartial, newScore)
     }
     return result.toArray
   }
@@ -98,7 +118,11 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       //TODO: Create AllVariablesHypothesis and do beam search
 
       //TODO: this is kind of a hack... probably need to do what was actually done in the multiR paper...
-      //postZ(i)(ep.rel :== 0) := Double.MinValue
+      for(r <- 0 until ep.rel.length) {
+        if(ep.rel(r) == 0.0) {
+          postZ(i,r) = Double.MinValue          
+        }
+      }
 
       z(i)      = postZ(i,::).argmax
       zScore(i) = postZ(i,::).max
@@ -130,6 +154,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 
     for(i <- 0 until ep.xCond.length) {
       postZ(i,::) := exp((theta * ep.xCond(i)).toDense)
+      postZ(i,::) /= postZ(i,::).sum        //normalize
 
       //z(i) = postZ(i,::).argmax
       zScore(i) = postZ(i,::).max
@@ -155,11 +180,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       }
     }
 
-    //TODO: Create AllVariablesHypothesis and do beam search
-    //val bs = new BeamSearch(new AllVariablesHypothesis(postZ, postObs, new ListBuffer[Int], Array.fill[Double](data.nRel)(0.0), 0.0), 100);
-    //println(postObs.toList)
-    //val bs = new BeamSearch(new AllVariablesHypothesis(postZ, postObs, new ListBuffer[Int], ep.obs.toArray, 0.0), 100);
-    val bs = new BeamSearch(new AllVariablesHypothesis(postZ, postObs, new ListBuffer[Int], ep.obs.toArray, 1.0), 100);
+    //val bs = new BeamSearch(new AllVariablesHypothesis(postZ, postObs, new ListBuffer[Int], Array.fill[Double](data.nRel)(0.0), 1.0, 1.0), 10);
+    val bs = new BeamSearch(new AllVariablesHypothesis(postZ, postObs, new ListBuffer[Int], Array.fill[Double](data.nRel)(0.0), 0.0, 0.0), 10);
     
     while(bs.Head.asInstanceOf[AllVariablesHypothesis].z.length < ep.xCond.length) {
       //println(bs.Head.asInstanceOf[AllVariablesHypothesis].z.length)
@@ -175,9 +197,19 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       rel(r) = 1.0
     }
 
-    //TODO: get rid of zScore, replace with postZ...
+    /* Some Debugging code...
+     * /
+    for(r <- 0 until ep.rel.length) {
+      if(rel(r) == 1.0) {
+        println(rel(r) + "\t" + data.entityVocab(ep.e1id) + "\t" + data.entityVocab(ep.e2id) + "\t" + data.relVocab(r))
+      }
+    }
+    println("score = " + math.exp(bs.Head.asInstanceOf[AllVariablesHypothesis].score))
+    */
+
     //val result = new EntityPair(ep.e1id, ep.e2id, ep.xCond, rel, z, zScore)
-    val result = new EntityPair(ep.e1id, ep.e2id, ep.xCond, rel, DenseVector(bs.Head.asInstanceOf[AllVariablesHypothesis].z.toArray), zScore, DenseVector(bs.Head.asInstanceOf[AllVariablesHypothesis].obs))
+    //val result = new EntityPair(ep.e1id, ep.e2id, ep.xCond, rel, DenseVector(bs.Head.asInstanceOf[AllVariablesHypothesis].z.toArray), zScore, DenseVector(bs.Head.asInstanceOf[AllVariablesHypothesis].obs))
+    val result = new EntityPair(ep.e1id, ep.e2id, ep.xCond, rel, DenseVector(bs.Head.asInstanceOf[AllVariablesHypothesis].z.toArray), zScore, bs.Head.asInstanceOf[AllVariablesHypothesis].obs)
 
     if(Constants.TIMING) {
       Utils.Timer.stop("inferAll")
