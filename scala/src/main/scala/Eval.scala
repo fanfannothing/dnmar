@@ -7,6 +7,7 @@ object Eval {
 
   //var useObsPredictions = true
   var useObsPredictions = false
+  var useAveragedParameters = false
 
   def AggregateEval(param:Parameters, test:EntityPairData) = {
     var tp, fp, fn = 0.0
@@ -14,7 +15,7 @@ object Eval {
 
     var sortedPredictions = List[Prediction]()
     for(ep <- Random.shuffle(test.data.toList)) { 
-      val predicted = param.inferAll(ep)
+      val predicted = param.inferAll(ep, useAveragedParameters)
       if(Constants.DEBUG) {
 	println("predicted:\t" + Utils.bin2int(predicted.rel.toArray).map((r) => test.relVocab(r)))
 	println("observed:\t"  + Utils.bin2int(ep.rel.toArray).map((r) => test.relVocab(r)))

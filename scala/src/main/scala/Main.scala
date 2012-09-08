@@ -45,14 +45,42 @@ object Main {
       case e: ArgotUsageException => println(e.message)
     }
 
-    val dnmar = new DNMAR(train.value.getOrElse(null))
     //val dnmar = new DNMAR_greedy(train.value.getOrElse(null))
-    //val dnmar = new MultiR(train.value.getOrElse(null))
 
+    /*
+     * MultiR
+     * /
+    val multir = new MultiR(train.value.getOrElse(null))
+    for(i <- 0 until 100) {
+      println("iteration " + i)
+
+      multir.train(1)
+
+      Eval.useAveragedParameters = false
+      Eval.AggregateEval(multir, test.value.getOrElse(null))
+
+      if(i % 10 == 0) {
+	println("averaged parameters")
+	multir.computeThetaAverage
+	Eval.useAveragedParameters = true
+	Eval.AggregateEval(multir, test.value.getOrElse(null))
+      }
+
+      if(Constants.TIMING) {
+	Utils.Timer.print
+	Utils.Timer.reset
+      }
+    }
+    */
+        
+
+    /*
+     * DNMAR
+     */
+    val dnmar = new DNMAR(train.value.getOrElse(null))
     for(i <- 0 until 100) {
       println("iteration " + i)
       dnmar.trainSimple      = i < 10
-      //dnmar.updatePhi        = i >= 10
       
       dnmar.updateTheta = i <  10 || i % 2 == 1
       dnmar.updatePhi   = i >= 10 && i % 2 == 0
@@ -61,11 +89,28 @@ object Main {
       println("updatePhi=\t" +   dnmar.updatePhi)
 
       dnmar.train(1)
+
       Eval.useObsPredictions = i >= 10
-      //Eval.useObsPredictions = true
       Eval.AggregateEval(dnmar, test.value.getOrElse(null))
       Eval.useObsPredictions = false
       Eval.AggregateEval(dnmar, test.value.getOrElse(null))
+
+      if(i % 10 == 0 && i > 10) {
+	println("averaged parameters")
+	dnmar.computeThetaAverage
+	Eval.useAveragedParameters = true
+
+	Eval.useObsPredictions = i >= 10
+	Eval.AggregateEval(dnmar, test.value.getOrElse(null))
+	Eval.useObsPredictions = false
+	Eval.AggregateEval(dnmar, test.value.getOrElse(null))
+      }
+
+
+      if(Constants.TIMING) {
+	Utils.Timer.print
+	Utils.Timer.reset
+      }
     }
     
     if(Constants.TIMING) {

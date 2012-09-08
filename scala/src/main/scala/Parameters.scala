@@ -29,8 +29,25 @@ abstract class Parameters(data:EntityPairData) {
    * THETA
    *********************************************************************
    */
-  val theta = DenseMatrix.zeros[Double](nRel,nFeat+1)
-  //val theta = DenseMatrix.rand(nRel,nFeat+1)
+  val theta         = DenseMatrix.zeros[Double](nRel,nFeat+1)
+  val theta_sum     = DenseMatrix.zeros[Double](nRel,nFeat+1)
+
+  var theta_average = DenseMatrix.zeros[Double](nRel,nFeat+1)
+
+  var nUpdates = 1.0
+
+
+  def computeThetaAverage {
+    if(Constants.TIMING) {
+      Utils.Timer.start("computeThetaAverage")
+    }
+
+    theta_average = (theta - theta_sum) / nUpdates
+
+    if(Constants.TIMING) {
+      Utils.Timer.stop("computeThetaAverage")
+    }
+  }
 
   def updateTheta(iAll:EntityPair, iHidden:EntityPair) {
     if(Constants.TIMING) {
@@ -40,16 +57,20 @@ abstract class Parameters(data:EntityPairData) {
     //Update le weights
     for(m <- 0 until iAll.xCond.length) {
       if(iAll.z(m) != iHidden.z(m)) {
-	theta(iHidden.z(m),::)    :+= iHidden.xCond(m)
-	theta(iAll.z(m),   ::)    :-= iAll.xCond(m)
+	theta(iHidden.z(m),::)     :+= iHidden.xCond(m)
+	theta(iAll.z(m),   ::)     :-= iAll.xCond(m)
+
+	theta_sum(iHidden.z(m),::) :+= (nUpdates :* iHidden.xCond(m))
+	theta_sum(iAll.z(m),   ::) :-= (nUpdates :* iAll.xCond(m))
       }
     }
+
+    nUpdates += 1.0
+    //Compute conditional likelihood?
 
     if(Constants.TIMING) {
       Utils.Timer.stop("updateTheta")
     }
-    
-    //Compute conditional likelihood?
  }
 
   /*********************************************************************
@@ -106,4 +127,5 @@ abstract class Parameters(data:EntityPairData) {
   def inferHidden(ep:EntityPair):EntityPair
 
   def inferAll(ep:EntityPair):EntityPair
+  def inferAll(ep:EntityPair, useAverage:Boolean):EntityPair
 }

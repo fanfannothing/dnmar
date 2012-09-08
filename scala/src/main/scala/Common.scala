@@ -31,8 +31,12 @@ object Utils {
   object Timer {
     var begin = new HashMap[String,Long]
     var sum   = new HashMap[String,Long]
-    //var begin:Long = 0L
-    //var end:Long = 0L
+
+    def reset {
+      begin = new HashMap[String,Long]
+      sum   = new HashMap[String,Long]
+    }
+
     def start(s:String) = {
       begin(s) = System.currentTimeMillis
     }

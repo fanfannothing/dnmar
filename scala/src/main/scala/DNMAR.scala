@@ -125,6 +125,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 
     for(i <- 0 until ep.xCond.length) {
       postZ(i,::) := (theta * ep.xCond(i)).toDense
+      //TODO: should we really be doing this?  locally normalized?  not so sure...
       postZ(i,::) -= MathUtils.LogExpSum(postZ(i,::).toArray)        //normalize
 
       zScore(i) = postZ(i,::).max
@@ -138,6 +139,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       s += phi(ep.e2id)
       s += phi(data.entityVocab.size + r)
       s += phi(phi.length-1)	//Bias feature
+      //TODO: should we really be doing this?  locally normalized?  not so sure...
       val p = 1.0 / (1.0 + exp(-s))
       postObs(r) = p
       //postObs(r) = 0.9
@@ -236,6 +238,10 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
    * (3) predict max observation value for each fact 
    */
   def inferAll(ep:EntityPair):EntityPair = {
+    inferAll(ep, false)
+  }
+
+  def inferAll(ep:EntityPair, useAverage:Boolean):EntityPair = {
     if(Constants.TIMING) {
       Utils.Timer.start("inferAll")
     }
@@ -245,7 +251,11 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     val rel    = DenseVector.zeros[Double](data.nRel).t
 
     for(i <- 0 until ep.xCond.length) {
-      postZ(i) = theta * ep.xCond(i)
+      if(useAverage) {
+	postZ(i) = theta_average * ep.xCond(i)	
+      } else {
+	postZ(i) = theta * ep.xCond(i)
+      }
 
       z(i) = postZ(i).argmax
       zScore(i) = postZ(i).max

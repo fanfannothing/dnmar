@@ -63,6 +63,10 @@ class MultiR(data:EntityPairData) extends Parameters(data) {
   }
 
   def inferAll(ep:EntityPair):EntityPair = {
+    inferAll(ep, false)
+  }
+
+  def inferAll(ep:EntityPair, useAverage:Boolean):EntityPair = {
     if(Constants.TIMING) {
       Utils.Timer.start("inferAll")
     }
@@ -72,7 +76,11 @@ class MultiR(data:EntityPairData) extends Parameters(data) {
     val rel    = DenseVector.zeros[Double](data.nRel).t
 
     for(i <- 0 until ep.xCond.length) {
-      postZ(i) = theta * ep.xCond(i)
+      if(useAverage) {
+	postZ(i) = theta_average * ep.xCond(i)	
+      } else {
+	postZ(i) = theta * ep.xCond(i)
+      }
 
       z(i) = postZ(i).argmax
       zScore(i) = postZ(i).max
