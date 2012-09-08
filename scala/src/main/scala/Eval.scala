@@ -1,14 +1,19 @@
 package dnmar;
 
+import scala.util.Random;
+
 object Eval {
   case class Prediction(val score:Double, val correct:Boolean) 
+
+  //var useObsPredictions = true
+  var useObsPredictions = false
 
   def AggregateEval(param:Parameters, test:EntityPairData) = {
     var tp, fp, fn = 0.0
     var totalRelations = 0.0	//For computing fn
 
     var sortedPredictions = List[Prediction]()
-    for(ep <- test.data) { 
+    for(ep <- Random.shuffle(test.data.toList)) { 
       val predicted = param.inferAll(ep)
       if(Constants.DEBUG) {
 	println("predicted:\t" + Utils.bin2int(predicted.rel.toArray).map((r) => test.relVocab(r)))
@@ -19,13 +24,18 @@ object Eval {
 	  if(ep.rel(r) == 1.0) {
 	    totalRelations += 1.0
 	  }
-	  if(ep.rel(r) == 1.0 && predicted.rel(r) == 1.0) { 
-	    sortedPredictions ::= Prediction(predicted.zScore(predicted.z :== r).max, true)
-	    //tp += 1.0
+
+	  val prediction = if(useObsPredictions) { 
+	    predicted.obs(r)
+	  } else {
+	    predicted.rel(r)
 	  }
-	  else if(ep.rel(r) == 0.0 && predicted.rel(r) == 1.0) {
+
+	  if(ep.rel(r) == 1.0 && prediction == 1.0) { 
+	    sortedPredictions ::= Prediction(predicted.zScore(predicted.z :== r).max, true)
+	  }
+	  else if(ep.rel(r) == 0.0 && prediction == 1.0) {
 	    sortedPredictions ::= Prediction(predicted.zScore(predicted.z :== r).max, false)
-	    //fp += 1.0
 	  }
 	}
       }
@@ -51,7 +61,7 @@ object Eval {
 	maxFr = r
       }
 
-      if(p > maxP) {
+      if(r > 0.05 && p > maxP) {
 	maxP  = p
 	maxPr = r
 	maxPf = f

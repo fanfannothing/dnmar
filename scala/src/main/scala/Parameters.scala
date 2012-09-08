@@ -50,17 +50,17 @@ abstract class Parameters(data:EntityPairData) {
     }
     
     //Compute conditional likelihood?
-  }
+ }
 
   /*********************************************************************
    * PHI
    *********************************************************************
    */
   /*
-   * TODO: split phi into different categories rather than having a single large vector
+   * TODO: split phi into different categories rather than having a single large vector?
    */
-  val phi = SparseVector.zeros[Double](data.entityVocab.size + data.relVocab.size)
-  //val phi = DenseVector.rand(data.entityVocab.size + data.relVocab.size)	//Observation parameters (just 3 things for now - e1, e2, rel)
+  val phi = SparseVector.zeros[Double](data.entityVocab.size + data.relVocab.size + 1)	//Add space for bias feature...
+  //val phi = DenseVector.rand(data.entityVocab.size + data.relVocab.size + 1)	//Observation parameters (just 3 things for now - e1, e2, rel)
 
 
   //TODO
@@ -69,17 +69,27 @@ abstract class Parameters(data:EntityPairData) {
       Utils.Timer.start("updatePhi")
     }
 
-    //Update le weights
-    //TODO: not quite sure about this...  Probably need to write inference code...
-    for(r <- 0 until iAll.rel.length) {
-      if(iAll.obs(r) != iHidden.obs(r)) {
-	phi(iHidden.e1id)              += iHidden.obs(r)
-	phi(iHidden.e2id)              += iHidden.obs(r)
-	phi(data.entityVocab.size + r) += iHidden.rel(r)
+    assert(iAll.e1id == iHidden.e1id && iAll.e2id == iHidden.e2id, "updatePhi: iAll and iHidden are different...")
 
-	phi(iAll.e1id)                 -= iAll.obs(r)
-	phi(iAll.e2id)                 -= iAll.obs(r)
-	phi(data.entityVocab.size + r) -= iAll.rel(r)
+    //Update le weights
+    val e1id = iHidden.e1id
+    val e2id = iHidden.e2id
+
+    for(r <- 0 until iAll.rel.length) {
+      if(iAll.rel(r) == 1.0) {						//If we think this fact is true, then update parameters...
+	if(iHidden.obs(r) >= 0.5) {
+	  phi(iHidden.e1id)              += 1.0
+	  phi(iHidden.e2id)              += 1.0
+	  phi(data.entityVocab.size + r) += 1.0
+	  phi(phi.length-1)              += 1.0
+	}
+
+	if(iAll.postObs(r) >= 0.5) {
+	  phi(iAll.e1id)                 -= 1.0
+	  phi(iAll.e2id)                 -= 1.0
+	  phi(data.entityVocab.size + r) -= 1.0
+	  phi(phi.length-1)              -= 1.0
+	}
       }
     }    
 

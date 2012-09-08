@@ -51,7 +51,20 @@ object Main {
 
     for(i <- 0 until 100) {
       println("iteration " + i)
+      dnmar.trainSimple      = i < 10
+      //dnmar.updatePhi        = i >= 10
+      
+      dnmar.updateTheta = i <  10 || i % 2 == 1
+      dnmar.updatePhi   = i >= 10 && i % 2 == 0
+
+      println("updateTheta=\t" + dnmar.updateTheta)
+      println("updatePhi=\t" +   dnmar.updatePhi)
+
       dnmar.train(1)
+      Eval.useObsPredictions = i >= 10
+      //Eval.useObsPredictions = true
+      Eval.AggregateEval(dnmar, test.value.getOrElse(null))
+      Eval.useObsPredictions = false
       Eval.AggregateEval(dnmar, test.value.getOrElse(null))
     }
     

@@ -29,6 +29,7 @@ class EntityPair(val e1id:Int, val e2id:Int, val xCond:Array[SparseVectorCol[Dou
   def this(e1id:Int, e2id:Int, xCond:Array[SparseVectorCol[Double]], rel:DenseVectorRow[Double]) = this(e1id, e2id, xCond, rel, null, null, rel.toDense)
   def this(e1id:Int, e2id:Int, xCond:Array[SparseVectorCol[Double]], rel:DenseVectorRow[Double], z:DenseVector[Int], zScore:DenseVector[Double]) = this(e1id, e2id, xCond, rel, z, zScore, rel.toDense)
   //val obs = rel.toDense							
+  var postObs:DenseVector[Double] = null
 }
 
 abstract class EntityPairData {
