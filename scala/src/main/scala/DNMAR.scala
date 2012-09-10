@@ -41,16 +41,16 @@ class HiddenVariablesHypothesis(postZ:DenseMatrix[Double], postObs:DenseVector[D
       //Observation factors
       for(rel <- 0 until postZ.numCols) {
         if(newRpartial(rel) == 1.0) {
-	  if(obs(rel) == 1.0) {
-            newScore += math.log(postObs(rel))
-	  } else {
-	    newScore += math.log(1.0 - postObs(rel))
+	  //TODO: Not so sure here...
+	  if(obs(rel) > 0.5) {
+            //newScore += math.log(postObs(rel))
+	    newScore += postObs(rel)
 	  }
+//	  } else {
+//	    newScore += math.log(1.0 - postObs(rel))
+//	  }
         }
       }
-
-      //println("newScore2=" + newScore)
-
 
       //Need to extract all true facts...?
       if(obs(rel) == 1.0 && newRpartial(rel) == 0.0) {
@@ -120,32 +120,30 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 
     val postZ  = DenseMatrix.zeros[Double](ep.xCond.length, data.nRel)
     //TODO: zScore doesn't really make sense when we are using beam search, but this is how evaluation is done...
-    val zScore = DenseVector.zeros[Double](ep.xCond.length)
     val rel    = DenseVector.zeros[Double](data.nRel).t
 
     for(i <- 0 until ep.xCond.length) {
       postZ(i,::) := (theta * ep.xCond(i)).toDense
       //TODO: should we really be doing this?  locally normalized?  not so sure...
-      postZ(i,::) -= MathUtils.LogExpSum(postZ(i,::).toArray)        //normalize
-
-      zScore(i) = postZ(i,::).max
+      //postZ(i,::) -= MathUtils.LogExpSum(postZ(i,::).toArray)
     }
 
     //Posterior distribution over observations
     val postObs = DenseVector.zeros[Double](data.nRel)
     for(r <- 0 until data.nRel) {
       var s = 0.0
-      s += phi(ep.e1id)
-      s += phi(ep.e2id)
+      //s += phi(ep.e1id)
+      //s += phi(ep.e2id)
       s += phi(data.entityVocab.size + r)
       s += phi(phi.length-1)	//Bias feature
       //TODO: should we really be doing this?  locally normalized?  not so sure...
-      val p = 1.0 / (1.0 + exp(-s))
-      postObs(r) = p
+      //val p = 1.0 / (1.0 + exp(-s))
+      //postObs(r) = p
+      postObs(r) = s
       //postObs(r) = 0.9
       //postObs(r) = 1.0
     }
-    
+
     //println("constrained postObs=" + postObs.toList)
 
     val bs = new BeamSearch(new HiddenVariablesHypothesis(postZ, postObs, new ListBuffer[Int], Array.fill[Double](data.nRel)(0.0), ep.obs.toArray, 0.0, 0.0), 10);
@@ -183,7 +181,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     */
 
     //val result = new EntityPair(ep.e1id, ep.e2id, ep.xCond, rel, DenseVector(bs.Head.asInstanceOf[HiddenVariablesHypothesis].z.toArray), zScore, DenseVector(bs.Head.asInstanceOf[HiddenVariablesHypothesis].obs))
-    val result = new EntityPair(ep.e1id, ep.e2id, ep.xCond, rel, DenseVector(bs.Head.asInstanceOf[HiddenVariablesHypothesis].z.toArray), zScore, ep.obs)
+    val result = new EntityPair(ep.e1id, ep.e2id, ep.xCond, rel, DenseVector(bs.Head.asInstanceOf[HiddenVariablesHypothesis].z.toArray), null, ep.obs)
 
     if(Constants.TIMING) {
       Utils.Timer.stop("inferHidden")
@@ -204,7 +202,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 
     for(i <- 0 until ep.xCond.length) {
       //postZ(i) = MathUtils.LogNormalize((theta * ep.xCond(i)).toArray)
-      postZ(i,::) := exp((theta * ep.xCond(i)).toDense)
+      //postZ(i,::) := exp((theta * ep.xCond(i)).toDense)
+      postZ(i,::) := (theta * ep.xCond(i)).toDense
 
       //TODO: this is kind of a hack... probably need to do what was actually done in the multiR paper...
       for(r <- 0 until ep.rel.length) {
@@ -246,19 +245,24 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       Utils.Timer.start("inferAll")
     }
     val z      = DenseVector.zeros[Int](ep.xCond.length)
-    val postZ  = new Array[SparseVector[Double]](ep.xCond.length)
+    //val postZ  = new Array[SparseVector[Double]](ep.xCond.length)
+    val postZ  = DenseMatrix.zeros[Double](ep.xCond.length, data.nRel)
     val zScore = DenseVector.zeros[Double](ep.xCond.length)
     val rel    = DenseVector.zeros[Double](data.nRel).t
 
     for(i <- 0 until ep.xCond.length) {
       if(useAverage) {
-	postZ(i) = theta_average * ep.xCond(i)	
+	//postZ(i) = theta_average * ep.xCond(i)	
+	postZ(i,::) := (theta_average * ep.xCond(i)).toDense
       } else {
-	postZ(i) = theta * ep.xCond(i)
+	//postZ(i) = theta * ep.xCond(i)
+	postZ(i,::) := (theta * ep.xCond(i)).toDense
       }
 
-      z(i) = postZ(i).argmax
-      zScore(i) = postZ(i).max
+      //z(i) = postZ(i).argmax
+      z(i) = postZ(i,::).argmax
+      //zScore(i) = postZ(i).max
+      zScore(i) = postZ(i,::).max
 
       //Set the aggregate variables
       rel(z(i)) = 1.0
@@ -271,14 +275,16 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     val newObs  = DenseVector.zeros[Double](data.nRel)
     for(r <- 0 until data.nRel) {
       var s = 0.0
-      s += phi(ep.e1id)
-      s += phi(ep.e2id)
+      //s += phi(ep.e1id)
+      //s += phi(ep.e2id)
       s += phi(data.entityVocab.size + r)
       s += phi(phi.length-1)	//Bias feature
-      val p = 1.0 / (1.0 + exp(-s))
-      postObs(r) = p
+      //val p = 1.0 / (1.0 + exp(-s))
+      //postObs(r) = p
+      postObs(r) = s
 
-      if(rel(r) == 1.0 && postObs(r) > 0.5) {
+      //if(rel(r) == 1.0 && postObs(r) > 0.5) {
+      if(rel(r) == 1.0 && postObs(r) > 0.0) {
 	newObs(r) = 1.0
       }
     }

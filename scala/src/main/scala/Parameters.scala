@@ -36,7 +36,6 @@ abstract class Parameters(data:EntityPairData) {
 
   var nUpdates = 1.0
 
-
   def computeThetaAverage {
     if(Constants.TIMING) {
       Utils.Timer.start("computeThetaAverage")
@@ -77,14 +76,12 @@ abstract class Parameters(data:EntityPairData) {
    * PHI
    *********************************************************************
    */
-  /*
-   * TODO: split phi into different categories rather than having a single large vector?
-   */
   val phi = SparseVector.zeros[Double](data.entityVocab.size + data.relVocab.size + 1)	//Add space for bias feature...
   //val phi = DenseVector.rand(data.entityVocab.size + data.relVocab.size + 1)	//Observation parameters (just 3 things for now - e1, e2, rel)
 
+  //Innitialize bias feature
+  phi(phi.length-1) = 100
 
-  //TODO
   def updatePhi(iAll:EntityPair, iHidden:EntityPair) { 
     if(Constants.TIMING) {
       Utils.Timer.start("updatePhi")
@@ -99,15 +96,15 @@ abstract class Parameters(data:EntityPairData) {
     for(r <- 0 until iAll.rel.length) {
       if(iAll.rel(r) == 1.0) {						//If we think this fact is true, then update parameters...
 	if(iHidden.obs(r) >= 0.5) {
-	  phi(iHidden.e1id)              += 1.0
-	  phi(iHidden.e2id)              += 1.0
+	  //phi(iHidden.e1id)              += 1.0
+	  //phi(iHidden.e2id)              += 1.0
 	  phi(data.entityVocab.size + r) += 1.0
 	  phi(phi.length-1)              += 1.0
 	}
 
-	if(iAll.postObs(r) >= 0.5) {
-	  phi(iAll.e1id)                 -= 1.0
-	  phi(iAll.e2id)                 -= 1.0
+	if(iAll.obs(r) >= 0.5) {
+	  //phi(iAll.e1id)                 -= 1.0
+	  //phi(iAll.e2id)                 -= 1.0
 	  phi(data.entityVocab.size + r) -= 1.0
 	  phi(phi.length-1)              -= 1.0
 	}
@@ -118,10 +115,21 @@ abstract class Parameters(data:EntityPairData) {
       Utils.Timer.stop("updatePhi")
     }
   }
+
+  def printPhi {
+    println("bias\t" + phi(phi.length-1))
+    for(i <- (0 until phi.length).toList.sortBy((j) => -phi(j)).slice(0,10)) {
+      if(i < data.entityVocab.size) {
+	println(data.entityVocab(i) + "\t" + phi(i))
+      } else if(i < data.entityVocab.size + data.relVocab.size) {
+	println(data.relVocab(i - data.entityVocab.size) + "\t" + phi(i))
+      }
+    }
+  }
   
 
   /*********************************************************************
-   * Inference (Must be implemented in implementation class)
+   * Inference (Must be in implementation class)
    *********************************************************************
    */
   def inferHidden(ep:EntityPair):EntityPair
