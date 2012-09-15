@@ -41,7 +41,7 @@ abstract class Parameters(data:EntityPairData) {
       Utils.Timer.start("computeThetaAverage")
     }
 
-    theta_average = (theta - theta_sum) / nUpdates
+    theta_average = theta - (theta_sum / nUpdates)
 
     if(Constants.TIMING) {
       Utils.Timer.stop("computeThetaAverage")

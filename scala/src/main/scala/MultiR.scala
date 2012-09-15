@@ -38,17 +38,41 @@ class MultiR(data:EntityPairData) extends Parameters(data) {
     }
     val z      = DenseVector.zeros[Int](ep.xCond.length)
     val zScore = DenseVector.zeros[Double](ep.xCond.length)
-    val postZ  = new Array[SparseVector[Double]](ep.xCond.length)
+    val postZ  = DenseMatrix.zeros[Double](ep.xCond.length, data.nRel)
+
+    //First pre-compute postZ
+    for(i <- 0 until ep.xCond.length) {
+      postZ(i,::) := (theta * ep.xCond(i)).toDense
+    }
+
+    val covered = DenseVector.zeros[Boolean](ep.xCond.length)     //Indicates whether each mention is already assigned...
+    var nCovered = 0
+    for(rel <- 0 until ep.rel.length) {
+      if(ep.rel(rel) == 1.0 && nCovered < ep.xCond.length) {
+	val scores = postZ(::,rel)
+	scores(covered) := Double.NegativeInfinity
+	val best   = scores.argmax
+	z(best)      = rel
+	zScore(best) = scores.max
+	covered(best) = true
+	nCovered += 1
+      }
+    }
 
     for(i <- 0 until ep.xCond.length) {
-      postZ(i) = theta * ep.xCond(i)
+      if(!covered(i)) {
+	//postZ(i) = theta * ep.xCond(i)
 
-      //TODO: this is kind of a hack... probably need to do what was actually done in the multiR paper...
-      val min = postZ(i).min
-      postZ(i)(ep.rel :== 0) := Double.MinValue
+	//Whatever....
+	for(rel <- 0 until ep.rel.length) {
+	  if(ep.rel(rel) == 0 && rel != data.relVocab("NA")) {
+	    postZ(i,rel) = Double.MinValue
+	  }
+	}
 
-      z(i)      = postZ(i).argmax
-      zScore(i) = postZ(i).max
+	z(i)      = postZ(i,::).argmax
+	zScore(i) = postZ(i,::).max
+      }
     }
     if(Constants.DEBUG) {
       println("constrained result.z=" + z.toList.map((r) => data.relVocab(r)))

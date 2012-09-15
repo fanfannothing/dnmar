@@ -25,9 +25,11 @@ import cc.factorie.protobuf.DocumentProtos.Relation.RelationMentionRef
  * of entities (e1id,e2id)
  **************************************************************************
  */
-class EntityPair(val e1id:Int, val e2id:Int, val xCond:Array[SparseVectorCol[Double]], val rel:DenseVectorRow[Double], val z:DenseVector[Int], val zScore:DenseVector[Double], val obs:DenseVector[Double]) {
-  def this(e1id:Int, e2id:Int, xCond:Array[SparseVectorCol[Double]], rel:DenseVectorRow[Double]) = this(e1id, e2id, xCond, rel, null, null, rel.toDense)
-  def this(e1id:Int, e2id:Int, xCond:Array[SparseVectorCol[Double]], rel:DenseVectorRow[Double], z:DenseVector[Int], zScore:DenseVector[Double]) = this(e1id, e2id, xCond, rel, z, zScore, rel.toDense)
+class EntityPair(val e1id:Int, val e2id:Int, val xCond:Array[SparseVectorCol[Double]], val rel:DenseVectorRow[Double], val z:DenseVector[Int], val zScore:DenseVector[Double], val obs:DenseVector[Double], val sentences:Array[String]) {
+  def this(e1id:Int, e2id:Int, xCond:Array[SparseVectorCol[Double]], rel:DenseVectorRow[Double], z:DenseVector[Int], zScore:DenseVector[Double], obs:DenseVector[Double]) = this(e1id, e2id, xCond, rel, z, zScore, obs, null)
+  def this(e1id:Int, e2id:Int, xCond:Array[SparseVectorCol[Double]], rel:DenseVectorRow[Double]) = this(e1id, e2id, xCond, rel, null, null, rel.toDense, null)
+  def this(e1id:Int, e2id:Int, xCond:Array[SparseVectorCol[Double]], rel:DenseVectorRow[Double], sentences:Array[String]) = this(e1id, e2id, xCond, rel, null, null, rel.toDense, sentences)
+  def this(e1id:Int, e2id:Int, xCond:Array[SparseVectorCol[Double]], rel:DenseVectorRow[Double], z:DenseVector[Int], zScore:DenseVector[Double]) = this(e1id, e2id, xCond, rel, z, zScore, rel.toDense, null)
   //val obs = rel.toDense							
   var postObs:DenseVector[Double] = null
 }
@@ -43,8 +45,9 @@ abstract class EntityPairData {
 }
 
 //Class to read and manage data from google protobuf file format
-class ProtobufData(inFile:String, evoc:Vocab, rvoc:Vocab, fvoc:Vocab) extends EntityPairData { 
-  def this(inFile:String) = this(inFile, null, null, null)
+class ProtobufData(inFile:String, evoc:Vocab, rvoc:Vocab, fvoc:Vocab, readSentences:Boolean) extends EntityPairData { 
+  def this(inFile:String, readSentences:Boolean) = this(inFile, null, null, null, readSentences)
+  def this(inFile:String) = this(inFile, null, null, null, false)
 
   var newVocab = true
   val entityVocab  = if(evoc != null) { evoc } else { new Vocab }
@@ -103,13 +106,16 @@ class ProtobufData(inFile:String, evoc:Vocab, rvoc:Vocab, fvoc:Vocab) extends En
       }
     }
 
-    val mentions = new Array[SparseVectorCol[Double]](r.getMentionCount)
+    val mentions  = new Array[SparseVectorCol[Double]](r.getMentionCount)
+    val sentences = new Array[String](r.getMentionCount)
     //val mentions = new Array[DenseVectorCol[Double]](r.getMentionCount)
     for(i <- 0 until r.getMentionCount) {
       var nFeatures = 0.0
       mentions(i) = SparseVector.zeros[Double](featureVocab.size + 1)
       mentions(i)(featureVocab.size) = 1.0	//Bias feature
       val m = r.getMention(i)
+      sentences(i) = m.getSentence
+      //println(m.getSentence)
       for(j <- 0 until m.getFeatureCount) {
 	val f = featureVocab(m.getFeature(j))
 	if(f >= 0) {
@@ -118,8 +124,12 @@ class ProtobufData(inFile:String, evoc:Vocab, rvoc:Vocab, fvoc:Vocab) extends En
 	}
       }
     }
-    
-    data(nEntityPairs) = new EntityPair(e1, e2, mentions, relations.t)
+
+    if(readSentences) {
+      data(nEntityPairs) = new EntityPair(e1, e2, mentions, relations.t, sentences)
+    } else {
+      data(nEntityPairs) = new EntityPair(e1, e2, mentions, relations.t)
+    }
 
     nEntityPairs += 1
     r = Relation.parseDelimitedFrom(is)
