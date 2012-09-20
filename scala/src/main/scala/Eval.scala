@@ -23,6 +23,10 @@ object Eval {
   var useAveragedParameters = false
 
   def HumanEval(param:Parameters, test:EntityPairData, annotatedFile:String) {
+    if(Constants.TIMING) {
+      Utils.Timer.start("HumanEval")
+    }
+
     /*
      * Read in the features and labels
      */
@@ -35,24 +39,26 @@ object Eval {
 	sentence = sentence.substring(1,sentence.length-1)	//strip quotes
       }
 
-      test.entityVocab.lock
-      val e1id = test.entityVocab(e1id_str)
-      val e2id = test.entityVocab(e2id_str)
+      if(is_mention_str != "n") {
+	test.entityVocab.lock      
+	val e1id = test.entityVocab(e1id_str)
+	val e2id = test.entityVocab(e2id_str)
 
-      //OK, now let's find the sentence in the test data, so we can get it's features
-      val ep    = test.data.filter((ep) => ep.e1id == e1id && ep.e2id == e2id)(0)
-      val index = ep.sentences.indexOf(sentence)
-      if(index >= 0) {
-	features += ep.xCond(index)
-	labels   += test.relVocab(relation_str)
-      } else {
-	if(Constants.DEBUG) {
-	  println("Threw out an annotated example...")
-	  println(e1id_str + "\t" + e1id)
-	  println(e2id_str + "\t" + e2id)
-	  println(sentence)
-	  println(ep.sentences.toList)
-	  println(ep.sentences.indexOf(sentence))
+	//OK, now let's find the sentence in the test data, so we can get it's features
+	val ep    = test.data.filter((ep) => ep.e1id == e1id && ep.e2id == e2id)(0)
+	val index = ep.sentences.indexOf(sentence)
+	if(index >= 0) {
+	  features += ep.xCond(index)
+	  labels   += test.relVocab(relation_str)
+	} else {
+	  if(Constants.DEBUG) {
+	    println("Threw out an annotated example...")
+	    println(e1id_str + "\t" + e1id)
+	    println(e2id_str + "\t" + e2id)
+	    println(sentence)
+	    println(ep.sentences.toList)
+	    println(ep.sentences.indexOf(sentence))
+	  }
 	}
       }
     }
@@ -75,9 +81,17 @@ object Eval {
     }
 
     PrintPR(sortedPredictions, features.length)
+
+    if(Constants.TIMING) {
+      Utils.Timer.stop("HumanEval")
+    }
   }
 
   def AggregateEval(param:Parameters, test:EntityPairData) = {
+    if(Constants.TIMING) {
+      Utils.Timer.start("AggregateEval")
+    }
+
     var totalRelations = 0.0	//For computing fn
 
     var sortedPredictions = List[Prediction]()
@@ -110,6 +124,10 @@ object Eval {
     }
 
     PrintPR(sortedPredictions, totalRelations)
+
+    if(Constants.TIMING) {
+      Utils.Timer.stop("AggregateEval")
+    }
   }
 
   def PrintPR(sortedPredictions:List[Prediction], maxResults:Double) {
