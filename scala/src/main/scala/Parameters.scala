@@ -21,7 +21,7 @@ import cc.factorie.protobuf.DocumentProtos.Relation.RelationMentionRef
 
 import scala.util.Random
 
-abstract class Parameters(data:EntityPairData) {
+abstract class Parameters(val data:EntityPairData) {
   val nRel  = data.nRel
   val nFeat = data.nFeat
 
@@ -136,4 +136,5 @@ abstract class Parameters(data:EntityPairData) {
 
   def inferAll(ep:EntityPair):EntityPair
   def inferAll(ep:EntityPair, useAverage:Boolean):EntityPair
+  def train(iterations:Int)
 }

@@ -48,7 +48,7 @@ class MultiR(data:EntityPairData) extends Parameters(data) {
     val covered = DenseVector.zeros[Boolean](ep.xCond.length)     //Indicates whether each mention is already assigned...
     var nCovered = 0
     for(rel <- 0 until ep.rel.length) {
-      if(ep.rel(rel) == 1.0 && nCovered < ep.xCond.length) {
+      if(ep.obs(rel) == 1.0 && nCovered < ep.xCond.length) {
 	val scores = postZ(::,rel)
 	scores(covered) := Double.NegativeInfinity
 	val best   = scores.argmax
@@ -61,11 +61,9 @@ class MultiR(data:EntityPairData) extends Parameters(data) {
 
     for(i <- 0 until ep.xCond.length) {
       if(!covered(i)) {
-	//postZ(i) = theta * ep.xCond(i)
-
 	//Whatever....
 	for(rel <- 0 until ep.rel.length) {
-	  if(ep.rel(rel) == 0 && rel != data.relVocab("NA")) {
+	  if(ep.obs(rel) == 0 && rel != data.relVocab("NA")) {
 	    postZ(i,rel) = Double.MinValue
 	  }
 	}
@@ -76,6 +74,7 @@ class MultiR(data:EntityPairData) extends Parameters(data) {
     }
     if(Constants.DEBUG) {
       println("constrained result.z=" + z.toList.map((r) => data.relVocab(r)))
+      println("constrained obs=\t" + (0 until ep.rel.length).filter((r) => ep.obs(r) == 1.0).map((r) => data.relVocab(r)))
     }
 
     val result = new EntityPair(ep.e1id, ep.e2id, ep.xCond, ep.rel, z, zScore)

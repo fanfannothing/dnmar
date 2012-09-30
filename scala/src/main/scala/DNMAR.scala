@@ -24,6 +24,8 @@ class HiddenVariablesHypothesis(constraints:DenseVector[Boolean], postZ:DenseMat
 
   var zPartial = zPart 
 
+
+
   def sucessors:Array[Hypothesis] = {
     val result = new ListBuffer[Hypothesis]
 
@@ -78,6 +80,62 @@ class HiddenVariablesHypothesis(constraints:DenseVector[Boolean], postZ:DenseMat
   }
 }
 
+class HiddenVariablesHypothesisTwoSided(postZ:DenseMatrix[Double], postObs:DenseVector[Double], zPart:List[Int], rPart:Array[Double], obs:Array[Double], sPartial:Double, val score:Double) extends Hypothesis {
+  def z:Array[Int] = {
+    return zPartial.reverse.toArray
+  }
+
+  var rPartial = rPart
+
+  var zPartial = zPart 
+
+  def sucessors:Array[Hypothesis] = {
+    val result = new ListBuffer[Hypothesis]
+
+    if(zPartial.length == postZ.numRows) {
+      return result.toArray
+    }
+
+    for(rel <- 0 until postZ.numCols) {
+      val newZ = rel :: zPartial
+      var newSpartial = sPartial + postZ(z.length, rel)
+      var newScore = newSpartial
+
+      //Update rPartial
+      val newRpartial = rPartial.clone
+      newRpartial(rel) = 1.0
+
+      //Add max scores for rest of z's (note: this is an upper bound / admissible heuristic)
+      for(i <- newZ.length until postZ.numRows) {
+	newScore += postZ(i,::).max
+      }
+
+      //Observation factors
+      for(rel <- 0 until postZ.numCols) {
+	if(newRpartial(rel) == 1.0) {
+	  newScore += postObs(rel)
+	} else if(postObs(rel) > 0.0) {
+	  //Find the bess possible way of changing one of the remaining z's (note: it is possible we could use the same z to satisfy 2 different relations, but hey this is an upper bound!)
+	  var maxValue = Double.NegativeInfinity
+	  for(i <- newZ.length until postZ.numRows) {
+	    val possibleValue = postObs(rel) + postZ(i,rel) - postZ(i,::).max
+	    if(possibleValue > maxValue) {
+	      maxValue = possibleValue
+	    }
+	  }
+	  if(maxValue > 0.0) {
+	    newScore += maxValue
+	  }
+	}
+      }
+
+      result += new HiddenVariablesHypothesisTwoSided(postZ, postObs, newZ, newRpartial, obs, newSpartial, newScore)
+    }
+
+    return result.toArray
+  }
+}
+
 class DNMAR(data:EntityPairData) extends Parameters(data) {
   //TODO: without the assumption that unobserved data are negatives, shouldn't need to throw out 80% of negative data...
 
@@ -108,7 +166,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	if(trainSimple) {
 	  iHidden = inferHiddenSimple(data.data(e12))
 	} else {
-	  iHidden = inferHidden(data.data(e12))
+	  //iHidden = inferHidden(data.data(e12))
+	  iHidden = inferHiddenTwoSided(data.data(e12))
 	}
 
 	if(updateTheta) {
@@ -156,14 +215,18 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     //Posterior distribution over observations
     val postObs     = DenseVector.zeros[Double](data.nRel)
     for(r <- 0 until data.nRel) {
-      var s = 0.0
-      //s += phi(ep.e1id)
-      //s += phi(ep.e2id)
-      s += phi(data.entityVocab.size + r)
-      s += phi(phi.length-1)	//Bias feature
-      if(r != data.relVocab("NA")) {
-	postObs(r)     = -1000
-	//postObs(r)     = -100
+      if(ep.obs(r) == 0.0) {
+	var s = 0.0
+	//s += phi(ep.e1id)
+	//s += phi(ep.e2id)
+	s += phi(data.entityVocab.size + r)
+	s += phi(phi.length-1)	//Bias feature
+	if(r != data.relVocab("NA")) {
+	  postObs(r)     = -1000.0
+	  //postObs(r)     = -100
+	}
+      } else {
+	postObs(r) = 0.0
       }
     }
 
@@ -201,6 +264,67 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 
     if(Constants.TIMING) {
       Utils.Timer.stop("inferHidden")
+    }
+    result
+  }
+
+  def inferHiddenTwoSided(ep:EntityPair):EntityPair = {
+    if(Constants.TIMING) {
+      Utils.Timer.start("inferHiddenTwoSided")
+    }
+
+    val postZ  = DenseMatrix.zeros[Double](ep.xCond.length, data.nRel)
+
+    for(i <- 0 until ep.xCond.length) {
+      postZ(i,::) := (theta * ep.xCond(i)).toDense
+    }
+
+    //Posterior distribution over observations
+    val postObs     = DenseVector.zeros[Double](data.nRel)
+    for(r <- 0 until data.nRel) {
+      if(r == data.relVocab("NA")) {
+	postObs(r) = 0.0
+      } else if(ep.obs(r) == 0.0) {
+	postObs(r) = Double.NegativeInfinity
+	//postObs(r) = -5.0
+      } else {
+	postObs(r) = 1000000000.0
+	//postObs(r) = 100.0
+      }
+    }
+
+    //println("constrained postObs=" + postObs.toList)
+
+    val rPartial = new Array[Double](data.nRel)
+    var sPartial = 0.0
+    val bs = new BeamSearch(new HiddenVariablesHypothesisTwoSided(postZ, postObs, Nil, rPartial, ep.obs.toArray, sPartial, sPartial), 1000);
+
+    //println("new beam search--------------------------------------------------------------------------")
+    while(bs.Head.asInstanceOf[HiddenVariablesHypothesisTwoSided].z.length < ep.xCond.length) {
+      //println("hypothesis size:\t" + bs.Head.asInstanceOf[HiddenVariablesHypothesisTwoSided].z.length + "/" + ep.xCond.length)
+      bs.UpdateQ
+    }
+
+    val rel    = DenseVector.zeros[Double](data.nRel).t
+    for(r <- bs.Head.asInstanceOf[HiddenVariablesHypothesisTwoSided].z.toArray) {
+      rel(r) = 1.0
+    }
+
+    if(Constants.DEBUG) {
+      val z         = bs.Head.asInstanceOf[HiddenVariablesHypothesisTwoSided].z
+      val rPartial  = bs.Head.asInstanceOf[HiddenVariablesHypothesisTwoSided].rPartial
+      val score     = bs.Head.asInstanceOf[HiddenVariablesHypothesisTwoSided].score
+      println("constrained score=\t"  + score)
+      println("constrained result.z=\t" + z.toList.map((r) => data.relVocab(r)))
+      println("constrained rel=\t"      + (0 until rel.length).filter((r) => rel(r) == 1.0).map((r) => data.relVocab(r)))
+      println("constrained rPartial=\t" + (0 until rel.length).filter((r) => rPartial(r) == 1.0).map((r) => data.relVocab(r)))
+      println("constrained obs=\t" + (0 until rel.length).filter((r) => ep.obs(r) == 1.0).map((r) => data.relVocab(r)))
+    }
+
+    val result = new EntityPair(ep.e1id, ep.e2id, ep.xCond, rel, DenseVector(bs.Head.asInstanceOf[HiddenVariablesHypothesisTwoSided].z.toArray), null, ep.obs)
+
+    if(Constants.TIMING) {
+      Utils.Timer.stop("inferHiddenTwoSided")
     }
     result
   }

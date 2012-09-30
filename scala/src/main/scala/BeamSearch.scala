@@ -33,7 +33,7 @@ class BeamSearch(h:Hypothesis, beamSize:Int) {
     val next = hypothesisQueue.dequeue
     hypothesisQueue ++= next.sucessors
 
-    if(hypothesisQueue.size > _BEAM_SIZE) {
+    if(_BEAM_SIZE > 0 && hypothesisQueue.size > _BEAM_SIZE) {
       val newQ = hypothesisQueue.take(_BEAM_SIZE)
       hypothesisQueue = newQ
     }

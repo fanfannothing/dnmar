@@ -23,6 +23,10 @@ object Eval {
   var useAveragedParameters = false
 
   def HumanEval(param:Parameters, test:EntityPairData, annotatedFile:String) {
+    HumanEval(param, test, annotatedFile, -1)
+  }
+
+  def HumanEval(param:Parameters, test:EntityPairData, annotatedFile:String, rel:Int) {
     if(Constants.TIMING) {
       Utils.Timer.start("HumanEval")
     }
@@ -39,7 +43,7 @@ object Eval {
 	sentence = sentence.substring(1,sentence.length-1)	//strip quotes
       }
 
-      if(is_mention_str != "n") {
+      if(is_mention_str != "n" && (rel == -1 || test.relVocab(relation_str) == rel)) {
 	test.entityVocab.lock      
 	val e1id = test.entityVocab(e1id_str)
 	val e2id = test.entityVocab(e2id_str)
@@ -73,6 +77,9 @@ object Eval {
 	postZ = (param.theta * features(i)).toDense
       }
       val predicted = postZ.argmax
+
+      //println(param.data.relVocab(predicted))
+
       if(predicted == labels(i)) {
 	sortedPredictions ::= Prediction(postZ(predicted), true)
       } else {
@@ -87,7 +94,11 @@ object Eval {
     }
   }
 
-  def AggregateEval(param:Parameters, test:EntityPairData) = {
+  def AggregateEval(param:Parameters, test:EntityPairData) {
+    AggregateEval(param, test, -1)
+  }
+
+  def AggregateEval(param:Parameters, test:EntityPairData, rel:Int) {
     if(Constants.TIMING) {
       Utils.Timer.start("AggregateEval")
     }
@@ -102,7 +113,7 @@ object Eval {
 	println("observed:\t"  + Utils.bin2int(ep.rel.toArray).map((r) => test.relVocab(r)))
       }
       for(r <- 0 until test.nRel) {
-	if(test.relVocab(r) != "NA") {
+	if(test.relVocab(r) != "NA" && (rel == -1 || r == rel)) {
 	  if(ep.rel(r) == 1.0) {
 	    totalRelations += 1.0
 	  }

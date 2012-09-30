@@ -46,107 +46,85 @@ object Main {
       case e: ArgotUsageException => println(e.message)
     }
 
-    //val dnmar = new DNMAR_greedy(train.value.getOrElse(null))
+    val multir = new MultiR(train.value.getOrElse(null))
+    val dnmar  = new DNMAR(train.value.getOrElse(null))
 
-    /*
-     * MultiR
-     */
-    if(false) {
-      println("evaulating MultiR")
-      val multir = new MultiR(train.value.getOrElse(null))
-      for(i <- 0 to 100) {
-	println("iteration " + i)
+    println("evaluating MultiR")
+    EvalIterations(multir)
 
-	multir.train(1)
+    //println("evaluating DNMAR")
+    //EvalIterations(dnmar)
+  }
 
-	println("rel predictions:")
-	Eval.useObsPredictions = false
-	Eval.AggregateEval(multir, test.value.getOrElse(null))
+  def EvalIterations(dnmar:Parameters) {
+    val nrel     = train.value.getOrElse(null).relVocab.size
+    val relVocab = train.value.getOrElse(null).relVocab
 
-	println("rel predictions (training):")
-	Eval.AggregateEval(multir, train.value.getOrElse(null))
+    for(i <- 0 to 150) {
+      println("*********************************************")
+      println("iteration " + i)
+      println("*********************************************")
 
-	if(i % 10 == 0 && i > 0) {
-	  println("averaged parameters")
-	  multir.computeThetaAverage
-	  Eval.useAveragedParameters = true
-	  println("test")
-	  Eval.AggregateEval(multir, test.value.getOrElse(null))
-	  println("train")
-	  Eval.AggregateEval(multir, train.value.getOrElse(null))
-	  Eval.useAveragedParameters = false
-	}
+      dnmar.train(1)
 
-	if(Constants.TIMING) {
-	  Utils.Timer.print
-	  Utils.Timer.reset
+      println("rel predictions:")
+      Eval.useObsPredictions = false
+      Eval.AggregateEval(dnmar, test.value.getOrElse(null))
+      if(i % 10 && i >= 10) {
+	for(r <- 0 until nrel) {
+	  println(relVocab(r))
+	  Eval.AggregateEval(dnmar, test.value.getOrElse(null), r)
 	}
       }
-    }        
 
-    /*
-     * DNMAR
-     */
-    if(true) {
-      println("evaluating DNMAR")
-      val dnmar = new DNMAR(train.value.getOrElse(null))
-      for(i <- 0 to 150) {
-	println("iteration " + i)
-	//      dnmar.trainSimple      = i == 0
-	//      dnmar.updatePhi        = i > 0
-	
-	//dnmar.updateTheta = i <  10 || i % 2 == 1
-	//dnmar.updatePhi   = i >= 10 && i % 2 == 0
+      println("*********************************************")
+      println("* rel predictions (training):")
+      println("*********************************************")
+      Eval.useObsPredictions = false
+      Eval.AggregateEval(dnmar, train.value.getOrElse(null))
 
-	//println("updateTheta=\t" + dnmar.updateTheta)
-	//println("updatePhi=\t" +   dnmar.updatePhi)
-
-	println("Human annotated evaluation")
-	Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt")
-
-	dnmar.train(1)
-
-	//      println("PHI:")
-	//      dnmar.printPhi
-
-	//      println("obs predictions:")
-	//      Eval.useObsPredictions = true
-	//      Eval.AggregateEval(dnmar, test.value.getOrElse(null))
-	println("rel predictions:")
-	Eval.useObsPredictions = false
-	Eval.AggregateEval(dnmar, test.value.getOrElse(null))
-
-	println("rel predictions (training):")
-	Eval.useObsPredictions = false
-	Eval.AggregateEval(dnmar, test.value.getOrElse(null))
-
-	println("Human annotated evaluation")
-	Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt")
-
-	if(i % 10 == 0 && i >= 10) {
-	  println("averaged parameters")
-	  dnmar.computeThetaAverage
-	  Eval.useAveragedParameters = true
-
-	  Eval.useObsPredictions = false
-	  Eval.AggregateEval(dnmar, test.value.getOrElse(null))
-	  //	Eval.useObsPredictions = false
-	  //	Eval.AggregateEval(dnmar, test.value.getOrElse(null))
-	  println("Human annotated evaluation (averaged)")
-	  Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt")
-	  Eval.useAveragedParameters = false
-	}
-
-
-	if(Constants.TIMING) {
-	  Utils.Timer.print
-	  Utils.Timer.reset
+      println("*********************************************")
+      println("* Human annotated evaluation")
+      println("*********************************************")
+      Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt")
+      if(i % 10 && i >= 10) {
+	for(r <- 0 until nrel) {
+	  println(relVocab(r))
+	  Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt", r)
 	}
       }
+
+      if(i % 10 == 0 && i >= 10) {
+	println("*********************************************")
+	println("* averaged parameters")
+	println("*********************************************")
+	dnmar.computeThetaAverage
+	Eval.useAveragedParameters = true
+
+	Eval.useObsPredictions = false
+	Eval.AggregateEval(dnmar, test.value.getOrElse(null))
+	for(r <- 0 until nrel) {
+	  println(relVocab(r))
+	  Eval.AggregateEval(dnmar, test.value.getOrElse(null), r)
+	}
+
+	println("Human annotated evaluation (averaged)")
+	Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt")
+	for(r <- 0 until nrel) {
+	  println(relVocab(r))
+	  Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt", r)
+	}
+	Eval.useAveragedParameters = false
+      }
+
+      if(Constants.TIMING) {
+	Utils.Timer.print
+	Utils.Timer.reset
+      }
     }
-    
-    if(Constants.TIMING) {
-      Utils.Timer.print
-    }
+  }
+  
+  if(Constants.TIMING) {
+    Utils.Timer.print
   }
 }
