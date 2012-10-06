@@ -15,6 +15,8 @@ import scalala.operators.Implicits._;
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
+import math._
+
 class HiddenVariablesHypothesis(constraints:DenseVector[Boolean], postZ:DenseMatrix[Double], postObs:DenseVector[Double], zPart:List[Int], rPart:Array[Double], obs:Array[Double], sPartial:Double, val score:Double) extends Hypothesis {
   def z:Array[Int] = {
     return zPartial.reverse.toArray
@@ -158,7 +160,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       //println("iteration " + i)
       var j = 0
       for(e12 <- training) {
-	//print("entity pair " + j + "/" + training.length)
+	//print("entity pair " + j + "/" + training.length + ":" + data.data(e12).features.length)
 	//Run le inference
 	val iAll    = inferAll(data.data(e12))
 	var iHidden = iAll  //Just needed to asign it something temporarily...
@@ -167,7 +169,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	  iHidden = inferHiddenSimple(data.data(e12))
 	} else {
 	  //iHidden = inferHidden(data.data(e12))
-	  iHidden = inferHiddenTwoSided(data.data(e12))
+	  //iHidden = inferHiddenTwoSided(data.data(e12))
+	  iHidden = inferHiddenLocalSearch(data.data(e12))
 	}
 
 	if(updateTheta) {
@@ -186,19 +189,19 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       Utils.Timer.start("inferHidden")
     }
 
-    val postZ  = DenseMatrix.zeros[Double](ep.xCond.length, data.nRel)
+    val postZ  = DenseMatrix.zeros[Double](ep.features.length, data.nRel)
 
-    for(i <- 0 until ep.xCond.length) {
-      postZ(i,::) := (theta * ep.xCond(i)).toDense
+    for(i <- 0 until ep.features.length) {
+      postZ(i,::) := (theta * ep.features(i)).toDense
     }
 
     //Hoffmann-style greedy covering of facts observed in the DB
-    val covered = DenseVector.zeros[Boolean](ep.xCond.length)     //Indicates whether each mention is already assigned...
+    val covered = DenseVector.zeros[Boolean](ep.features.length)     //Indicates whether each mention is already assigned...
     var nCovered = 0
     var sPartial = 0.0
     val rPartial = new Array[Double](data.nRel)
     for(rel <- 0 until ep.rel.length) {
-      if(rel != data.relVocab("NA") && ep.rel(rel) == 1.0 && nCovered < ep.xCond.length) {
+      if(rel != data.relVocab("NA") && ep.rel(rel) == 1.0 && nCovered < ep.features.length) {
 	val scores = postZ(::,rel)
 	scores(covered) := Double.NegativeInfinity
 	val best   = scores.argmax
@@ -239,8 +242,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     val bs = new BeamSearch(new HiddenVariablesHypothesis(covered, postZ, postObs, Nil, rPartial, ep.obs.toArray, sPartial, sPartial), 50);
 
     //println("new beam search--------------------------------------------------------------------------")
-    while(bs.Head.asInstanceOf[HiddenVariablesHypothesis].z.length < ep.xCond.length) {
-      //println("hypothesis size:\t" + bs.Head.asInstanceOf[HiddenVariablesHypothesis].z.length + "/" + ep.xCond.length)
+    while(bs.Head.asInstanceOf[HiddenVariablesHypothesis].z.length < ep.features.length) {
+      //println("hypothesis size:\t" + bs.Head.asInstanceOf[HiddenVariablesHypothesis].z.length + "/" + ep.features.length)
       bs.UpdateQ
     }
 
@@ -260,11 +263,212 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       println("constrained obs=\t" + (0 until rel.length).filter((r) => ep.obs(r) == 1.0).map((r) => data.relVocab(r)))
     }
 
-    val result = new EntityPair(ep.e1id, ep.e2id, ep.xCond, rel, DenseVector(bs.Head.asInstanceOf[HiddenVariablesHypothesis].z.toArray), null, ep.obs)
+    val result = new EntityPair(ep.e1id, ep.e2id, ep.features, rel, DenseVector(bs.Head.asInstanceOf[HiddenVariablesHypothesis].z.toArray), null, ep.obs)
 
     if(Constants.TIMING) {
       Utils.Timer.stop("inferHidden")
     }
+    result
+  }
+
+  def inferHiddenLocalSearch(ep:EntityPair):EntityPair = {
+    if(Constants.TIMING) {
+      Utils.Timer.start("inferHiddenLocalSearch")
+    }
+
+    //println("N:" + ep.features.length)
+
+    val postZ  = DenseMatrix.zeros[Double](ep.features.length, data.nRel)
+    for(i <- 0 until ep.features.length) {
+      postZ(i,::) := (theta * ep.features(i)).toDense
+    }
+
+    //Posterior distribution over observations
+    val postObs     = DenseVector.zeros[Double](data.nRel)
+    for(r <- 0 until data.nRel) {
+      if(r == data.relVocab("NA")) {
+	postObs(r) = -4.0
+	//postObs(r) = -2.0
+	//postObs(r) = 0.0
+      } else if(ep.obs(r) == 0.0) {
+	postObs(r) = -5.0
+	//postObs(r) = -200000.0
+      } else {
+	postObs(r) = 100.0
+	//postObs(r) = 1000000.0
+      }
+    }
+
+    val nRandomRestarts             = 10
+    //val nRandomRestarts             = 1
+    var bestZ:DenseVector[Int]      = null
+    var bestRel:DenseVectorRow[Double] = null
+    var bestScore                   = Double.NegativeInfinity
+
+    for(n <- 0 until nRandomRestarts) {
+      val z       = DenseVector.zeros[Int](postZ.numRows)
+      val rel     = DenseVector.zeros[Double](postZ.numCols).t
+      val rCounts = DenseVector.zeros[Int](postZ.numCols)
+      var score = 0.0
+      
+      //Random initialization
+      for(i <- 0 until z.length) {
+	//z(i) = scala.util.Random.nextInt(postObs.length)
+	z(i) = MathUtils.Sample(scalala.library.Library.exp(postZ(i,::)).toArray)
+	score += postZ(i,z(i))
+	rCounts(z(i)) += 1
+	rel(z(i)) = 1.0
+      }
+      for(r <- 0 until rCounts.length) {
+	if(rCounts(r) > 0) {
+	  score += postObs(r)
+	}
+      }
+
+      var changed = false
+      do {
+	//Recompute Deltas
+	Utils.Timer.start("Allocating deltas matrix")
+	val deltas = DenseMatrix.zeros[Double](postZ.numRows, postZ.numCols)
+	Utils.Timer.stop("Allocating deltas matrix")
+
+	Utils.Timer.start("re-computing deltas")
+	for(i <- (0 until postZ.numRows)) {
+	  for(r <- 0 until postZ.numCols) {
+	    if(r != z(i)) {
+	      deltas(i,r) = postZ(i,r) - postZ(i,z(i))
+	      if(rCounts(r) == 0) {
+		//This will be the first instance of r to be extracted...
+		deltas(i,r) += postObs(r)
+	      }
+	      if(rCounts(z(i)) == 1) {
+		//z(i) is the last instance of r remaining...
+		deltas(i,r) -= postObs(z(i))
+	      }
+	    } else {
+	      deltas(i,r) = 0.0
+	    }
+	  }
+	}
+	Utils.Timer.stop("re-computing deltas")
+
+	changed = false
+
+	val (i, newRel) = deltas.argmax
+	//val (i, newRel) = d
+	val oldRel      = z(i)
+	val delta       = deltas(i,newRel)
+
+	if(oldRel != newRel && delta > 0) {
+	  score += delta
+	  z(i) = newRel
+	  rCounts(newRel) += 1
+	  rel(newRel) = 1.0
+	  rCounts(oldRel) -= 1
+	  if(rCounts(oldRel) == 0.0) {
+	    rel(oldRel) = 0
+	  }
+	  changed = true
+	}
+      } while(changed)
+
+      /*
+      
+      val deltas = DenseMatrix.zeros[Double](postZ.numRows, postZ.numCols)
+      for(i <- 0 until postZ.numRows) {
+	for(r <- 0 until postZ.numCols) {
+	  if(r != z(i)) {
+	    deltas(i,r) = postZ(i,r) - postZ(i,z(i))
+	    if(rCounts(r) == 0) {
+	      //This will be the first instance of r to be extracted...
+	      deltas(i,r) += postObs(r)
+	    }
+	    if(rCounts(z(i)) == 1) {
+	      //z(i) is the last instance of r remaining...
+	      deltas(i,r) -= postObs(z(i))
+	    }
+	  } else {
+	    deltas(i,r) = 0.0
+	  }
+	}
+      }
+ 
+      var changed = false
+      do {
+        val (i, newRel) = deltas.argmax
+	val oldRel      = z(i)
+	val delta       = deltas.max
+
+	if(oldRel != newRel && delta >= 0) {
+	  changed = true
+	  score += delta
+
+	  deltas(i,::) -= postZ(i,newRel) + postZ(i,oldRel)
+
+	  //TODO: think more about these cases....
+	  //TODO: maybe just re-compute deltas from scratch every time?...?
+
+	  if(rCounts(newRel) == 0) {
+	    //deltas(::,newRel) -= postObs(newRel)
+	    deltas(::,newRel) -= postObs(newRel)
+	    deltas(i,::)      -= postObs(newRel)
+	    deltas(i,newRel)  = 0.0
+	    rel(newRel) = 1.0
+	  }
+	  if(rCounts(oldRel) == 1) {
+	    //No longer count 1...
+	    //deltas(z :== oldRel,::) += postObs(oldRel)
+	    for(j <- 0 until z.length) {
+	      if(z(j) == oldRel) {
+		deltas(j,::) += postObs(oldRel)
+	      }
+	    }
+	    deltas(::,oldRel) += postObs(oldRel)
+	    rel(oldRel) = 0.0
+	  }
+	  if(rCounts(oldRel) == 2) {
+	    //About to become count 1...
+	    for(j <- 0 until z.length) {
+	      if(z(j) == oldRel) {
+		deltas(j,::) -= postObs(oldRel)
+	      }
+	    }
+	  }
+
+	  rCounts(newRel) += 1
+	  rCounts(oldRel) -= 1
+
+	  //println(rCounts.toList)
+
+	  z(i) = newRel
+	} else {
+	  changed = false
+	}
+	//println(score)
+      } while(changed)
+      */
+
+      if(score > bestScore) {
+	bestScore = score
+	bestZ     = z
+	bestRel   = rel
+      }
+    }
+
+
+    if(Constants.DEBUG) {
+      println("constrained score=\t"    + bestScore)
+      println("constrained result.z=\t" + bestZ.toList.map((r) => data.relVocab(r)))
+      println("constrained rel=\t"      + (0 until bestRel.length).filter((r) => bestRel(r) == 1.0).map((r) => data.relVocab(r)))
+      println("constrained obs=\t"      + (0 until ep.obs.length).filter((r) => ep.obs(r) == 1.0).map((r) => data.relVocab(r)))
+    }
+
+    val result = new EntityPair(ep.e1id, ep.e2id, ep.features, bestRel, bestZ, null)
+    
+    if(Constants.TIMING) {
+      Utils.Timer.stop("inferHiddenLocalSearch")
+    }
+
     result
   }
 
@@ -273,23 +477,29 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       Utils.Timer.start("inferHiddenTwoSided")
     }
 
-    val postZ  = DenseMatrix.zeros[Double](ep.xCond.length, data.nRel)
+    val postZ  = DenseMatrix.zeros[Double](ep.features.length, data.nRel)
 
-    for(i <- 0 until ep.xCond.length) {
-      postZ(i,::) := (theta * ep.xCond(i)).toDense
+    for(i <- 0 until ep.features.length) {
+      postZ(i,::) := (theta * ep.features(i)).toDense
     }
 
     //Posterior distribution over observations
     val postObs     = DenseVector.zeros[Double](data.nRel)
     for(r <- 0 until data.nRel) {
+      //if(r == data.relVocab("NA") && ep.obs(r) == 0.0) {
       if(r == data.relVocab("NA")) {
-	postObs(r) = 0.0
-      } else if(ep.obs(r) == 0.0) {
-	postObs(r) = Double.NegativeInfinity
+	//postObs(r) = 0.0
 	//postObs(r) = -5.0
+	postObs(r) = -2.0
+	//postObs(r) = -100.0
+      } else if(ep.obs(r) == 0.0) {
+	//postObs(r) = Double.NegativeInfinity
+	postObs(r) = -5.0
       } else {
-	postObs(r) = 1000000000.0
-	//postObs(r) = 100.0
+	//Too big?
+	//postObs(r) = 1000000000.0
+	//postObs(r) = 1000000.0
+	postObs(r) = 100.0
       }
     }
 
@@ -297,11 +507,13 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 
     val rPartial = new Array[Double](data.nRel)
     var sPartial = 0.0
-    val bs = new BeamSearch(new HiddenVariablesHypothesisTwoSided(postZ, postObs, Nil, rPartial, ep.obs.toArray, sPartial, sPartial), 1000);
+    //val bs = new BeamSearch(new HiddenVariablesHypothesisTwoSided(postZ, postObs, Nil, rPartial, ep.obs.toArray, sPartial, sPartial), 1000);
+    val bs = new BeamSearch(new HiddenVariablesHypothesisTwoSided(postZ, postObs, Nil, rPartial, ep.obs.toArray, sPartial, sPartial), 50);
+    //val bs = new BeamSearch(new HiddenVariablesHypothesisTwoSided(postZ, postObs, Nil, rPartial, ep.obs.toArray, sPartial, sPartial), 10000);
 
     //println("new beam search--------------------------------------------------------------------------")
-    while(bs.Head.asInstanceOf[HiddenVariablesHypothesisTwoSided].z.length < ep.xCond.length) {
-      //println("hypothesis size:\t" + bs.Head.asInstanceOf[HiddenVariablesHypothesisTwoSided].z.length + "/" + ep.xCond.length)
+    while(bs.Head.asInstanceOf[HiddenVariablesHypothesisTwoSided].z.length < ep.features.length) {
+      //println("hypothesis size:\t" + bs.Head.asInstanceOf[HiddenVariablesHypothesisTwoSided].z.length + "/" + ep.features.length)
       bs.UpdateQ
     }
 
@@ -321,7 +533,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       println("constrained obs=\t" + (0 until rel.length).filter((r) => ep.obs(r) == 1.0).map((r) => data.relVocab(r)))
     }
 
-    val result = new EntityPair(ep.e1id, ep.e2id, ep.xCond, rel, DenseVector(bs.Head.asInstanceOf[HiddenVariablesHypothesisTwoSided].z.toArray), null, ep.obs)
+    val result = new EntityPair(ep.e1id, ep.e2id, ep.features, rel, DenseVector(bs.Head.asInstanceOf[HiddenVariablesHypothesisTwoSided].z.toArray), null, ep.obs)
 
     if(Constants.TIMING) {
       Utils.Timer.stop("inferHiddenTwoSided")
@@ -334,12 +546,12 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       Utils.Timer.start("inferHidden")
     }
 
-    val z      = DenseVector.zeros[Int](ep.xCond.length)
-    val zScore = DenseVector.zeros[Double](ep.xCond.length)
-    val postZ  = DenseMatrix.zeros[Double](ep.xCond.length, data.nRel)
+    val z      = DenseVector.zeros[Int](ep.features.length)
+    val zScore = DenseVector.zeros[Double](ep.features.length)
+    val postZ  = DenseMatrix.zeros[Double](ep.features.length, data.nRel)
 
-    for(i <- 0 until ep.xCond.length) {
-      postZ(i,::) := (theta * ep.xCond(i)).toDense
+    for(i <- 0 until ep.features.length) {
+      postZ(i,::) := (theta * ep.features(i)).toDense
 
       //TODO: this is kind of a hack... probably need to do what was actually done in the multiR paper...
       for(r <- 0 until ep.rel.length) {
@@ -358,7 +570,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       println("constrained result.z=" + z.toList.map((r) => data.relVocab(r)))
     }
 
-    val result = new EntityPair(ep.e1id, ep.e2id, ep.xCond, ep.rel, z, zScore)
+    val result = new EntityPair(ep.e1id, ep.e2id, ep.features, ep.rel, z, zScore)
 
     if(Constants.TIMING) {
       Utils.Timer.stop("inferHidden")
@@ -380,17 +592,17 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     if(Constants.TIMING) {
       Utils.Timer.start("inferAll")
     }
-    val z      = DenseVector.zeros[Int](ep.xCond.length)
-    //val postZ  = new Array[SparseVector[Double]](ep.xCond.length)
-    val postZ  = DenseMatrix.zeros[Double](ep.xCond.length, data.nRel)
-    val zScore = DenseVector.zeros[Double](ep.xCond.length)
+    val z      = DenseVector.zeros[Int](ep.features.length)
+    //val postZ  = new Array[SparseVector[Double]](ep.features.length)
+    val postZ  = DenseMatrix.zeros[Double](ep.features.length, data.nRel)
+    val zScore = DenseVector.zeros[Double](ep.features.length)
     val rel    = DenseVector.zeros[Double](data.nRel).t
 
-    for(i <- 0 until ep.xCond.length) {
+    for(i <- 0 until ep.features.length) {
       if(useAverage) {
-	postZ(i,::) := (theta_average * ep.xCond(i)).toDense
+	postZ(i,::) := (theta_average * ep.features(i)).toDense
       } else {
-	postZ(i,::) := (theta * ep.xCond(i)).toDense
+	postZ(i,::) := (theta * ep.features(i)).toDense
       }
 
       z(i) = postZ(i,::).argmax
@@ -425,7 +637,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     //println("unconstrained postObs=" + postObs.toList)
 
     //TODO: get rid of zScore, replace with postZ...
-    val result = new EntityPair(ep.e1id, ep.e2id, ep.xCond, rel, z, zScore, newObs)
+    val result = new EntityPair(ep.e1id, ep.e2id, ep.features, rel, z, zScore, newObs)
     result.postObs = postObs
 
     if(Constants.TIMING) {

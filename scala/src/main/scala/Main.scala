@@ -49,11 +49,13 @@ object Main {
     val multir = new MultiR(train.value.getOrElse(null))
     val dnmar  = new DNMAR(train.value.getOrElse(null))
 
-    println("evaluating MultiR")
-    EvalIterations(multir)
-
-    //println("evaluating DNMAR")
-    //EvalIterations(dnmar)
+    if(false) {
+      println("evaluating MultiR")
+      EvalIterations(multir)
+    } else {
+      println("evaluating DNMAR")
+      EvalIterations(dnmar)
+    }
   }
 
   def EvalIterations(dnmar:Parameters) {
@@ -70,7 +72,7 @@ object Main {
       println("rel predictions:")
       Eval.useObsPredictions = false
       Eval.AggregateEval(dnmar, test.value.getOrElse(null))
-      if(i % 10 && i >= 10) {
+      if(i % 10 == 0 && i >= 10) {
 	for(r <- 0 until nrel) {
 	  println(relVocab(r))
 	  Eval.AggregateEval(dnmar, test.value.getOrElse(null), r)
@@ -87,7 +89,7 @@ object Main {
       println("* Human annotated evaluation")
       println("*********************************************")
       Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt")
-      if(i % 10 && i >= 10) {
+      if(i % 10 == 0 && i >= 10) {
 	for(r <- 0 until nrel) {
 	  println(relVocab(r))
 	  Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt", r)

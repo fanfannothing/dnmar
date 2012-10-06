@@ -25,11 +25,11 @@ import cc.factorie.protobuf.DocumentProtos.Relation.RelationMentionRef
  * of entities (e1id,e2id)
  **************************************************************************
  */
-class EntityPair(val e1id:Int, val e2id:Int, val xCond:Array[SparseVectorCol[Double]], val rel:DenseVectorRow[Double], val z:DenseVector[Int], val zScore:DenseVector[Double], val obs:DenseVector[Double], val sentences:Array[String]) {
-  def this(e1id:Int, e2id:Int, xCond:Array[SparseVectorCol[Double]], rel:DenseVectorRow[Double], z:DenseVector[Int], zScore:DenseVector[Double], obs:DenseVector[Double]) = this(e1id, e2id, xCond, rel, z, zScore, obs, null)
-  def this(e1id:Int, e2id:Int, xCond:Array[SparseVectorCol[Double]], rel:DenseVectorRow[Double]) = this(e1id, e2id, xCond, rel, null, null, rel.toDense, null)
-  def this(e1id:Int, e2id:Int, xCond:Array[SparseVectorCol[Double]], rel:DenseVectorRow[Double], sentences:Array[String]) = this(e1id, e2id, xCond, rel, null, null, rel.toDense, sentences)
-  def this(e1id:Int, e2id:Int, xCond:Array[SparseVectorCol[Double]], rel:DenseVectorRow[Double], z:DenseVector[Int], zScore:DenseVector[Double]) = this(e1id, e2id, xCond, rel, z, zScore, rel.toDense, null)
+class EntityPair(val e1id:Int, val e2id:Int, val features:Array[SparseVectorCol[Double]], val rel:DenseVectorRow[Double], val z:DenseVector[Int], val zScore:DenseVector[Double], val obs:DenseVector[Double], val sentences:Array[String]) {
+  def this(e1id:Int, e2id:Int, features:Array[SparseVectorCol[Double]], rel:DenseVectorRow[Double], z:DenseVector[Int], zScore:DenseVector[Double], obs:DenseVector[Double]) = this(e1id, e2id, features, rel, z, zScore, obs, null)
+  def this(e1id:Int, e2id:Int, features:Array[SparseVectorCol[Double]], rel:DenseVectorRow[Double]) = this(e1id, e2id, features, rel, null, null, rel.toDense, null)
+  def this(e1id:Int, e2id:Int, features:Array[SparseVectorCol[Double]], rel:DenseVectorRow[Double], sentences:Array[String]) = this(e1id, e2id, features, rel, null, null, rel.toDense, sentences)
+  def this(e1id:Int, e2id:Int, features:Array[SparseVectorCol[Double]], rel:DenseVectorRow[Double], z:DenseVector[Int], zScore:DenseVector[Double]) = this(e1id, e2id, features, rel, z, zScore, rel.toDense, null)
   //val obs = rel.toDense							
   var postObs:DenseVector[Double] = null
 }

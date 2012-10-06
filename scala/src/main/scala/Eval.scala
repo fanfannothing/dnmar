@@ -34,8 +34,9 @@ object Eval {
     /*
      * Read in the features and labels
      */
-    val features = new ListBuffer[SparseVectorCol[Double]]
-    val labels   = new ListBuffer[Int]
+    val features  = new ListBuffer[SparseVectorCol[Double]]
+    val labels    = new ListBuffer[Int]
+    val sentences = new ListBuffer[String]
     for(line <- scala.io.Source.fromFile(annotatedFile).getLines()) {
       //var Array(e1id_str, e2id_str, i_dont_know_what_this_is, relation_str, is_mention_str, sentence) = line.trim.split("\t")
       var Array(e1id_str, e2id_str, i_dont_know_what_this_is, relation_str, is_mention_str, sentence_annotated, e1str, e2str, sentence) = line.trim.split("\t")
@@ -43,17 +44,24 @@ object Eval {
 	sentence = sentence.substring(1,sentence.length-1)	//strip quotes
       }
 
-      if(is_mention_str != "n" && (rel == -1 || test.relVocab(relation_str) == rel)) {
+      //if(is_mention_str != "n" && (rel == -1 || test.relVocab(relation_str) == rel)) {
+      if(rel == -1 || test.relVocab(relation_str) == rel) {
 	test.entityVocab.lock      
 	val e1id = test.entityVocab(e1id_str)
 	val e2id = test.entityVocab(e2id_str)
+
+	//Treat errors as "NA"? (doesn't penalize recall for missing them, but any predictions will hurt precision...)
+	if(is_mention_str == "n") {
+	  relation_str = "NA"
+	}
 
 	//OK, now let's find the sentence in the test data, so we can get it's features
 	val ep    = test.data.filter((ep) => ep.e1id == e1id && ep.e2id == e2id)(0)
 	val index = ep.sentences.indexOf(sentence)
 	if(index >= 0) {
-	  features += ep.xCond(index)
-	  labels   += test.relVocab(relation_str)
+	  features  += ep.features(index)
+	  labels    += test.relVocab(relation_str)
+	  sentences += sentence
 	} else {
 	  if(Constants.DEBUG) {
 	    println("Threw out an annotated example...")
@@ -69,6 +77,7 @@ object Eval {
 
     var sortedPredictions = List[Prediction]()
 
+    var maxRecall = 0.0
     for(i <- 0 until features.length) {
       var postZ:DenseVector[Double] = null
       if(useAveragedParameters) {
@@ -78,16 +87,22 @@ object Eval {
       }
       val predicted = postZ.argmax
 
-      //println(param.data.relVocab(predicted))
+      //println(param.data.relVocab(predicted) + "\t" + sentences(i))
 
-      if(predicted == labels(i)) {
-	sortedPredictions ::= Prediction(postZ(predicted), true)
-      } else {
-	sortedPredictions ::= Prediction(postZ(predicted), false)
+      if(labels(i) != test.relVocab("NA")) {
+	maxRecall += 1.0
+      }
+      
+      if(predicted != test.relVocab("NA")) {
+	if(predicted == labels(i)) {
+	  sortedPredictions ::= Prediction(postZ(predicted), true)
+	} else {
+	  sortedPredictions ::= Prediction(postZ(predicted), false)
+	}
       }
     }
 
-    PrintPR(sortedPredictions, features.length)
+    PrintPR(sortedPredictions, maxRecall)
 
     if(Constants.TIMING) {
       Utils.Timer.stop("HumanEval")
@@ -170,6 +185,7 @@ object Eval {
 	maxPf = f
       }
     }
+    println("N:" + sortedPredictions.length)
     println("P:" + maxFp + "\tR:" + maxFr + "\tF:" + maxF)
     println("P:" + maxP  + "\tR:" + maxPr + "\tF:" + maxPf)
   }

@@ -54,13 +54,13 @@ abstract class Parameters(val data:EntityPairData) {
     }
 
     //Update le weights
-    for(m <- 0 until iAll.xCond.length) {
+    for(m <- 0 until iAll.features.length) {
       if(iAll.z(m) != iHidden.z(m)) {
-	theta(iHidden.z(m),::)     :+= iHidden.xCond(m)
-	theta(iAll.z(m),   ::)     :-= iAll.xCond(m)
+	theta(iHidden.z(m),::)     :+= iHidden.features(m)
+	theta(iAll.z(m),   ::)     :-= iAll.features(m)
 
-	theta_sum(iHidden.z(m),::) :+= (nUpdates :* iHidden.xCond(m))
-	theta_sum(iAll.z(m),   ::) :-= (nUpdates :* iAll.xCond(m))
+	theta_sum(iHidden.z(m),::) :+= (nUpdates :* iHidden.features(m))
+	theta_sum(iAll.z(m),   ::) :-= (nUpdates :* iAll.features(m))
       }
     }
 
