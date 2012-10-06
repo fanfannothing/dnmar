@@ -355,7 +355,6 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	changed = false
 
 	val (i, newRel) = deltas.argmax
-	//val (i, newRel) = d
 	val oldRel      = z(i)
 	val delta       = deltas(i,newRel)
 
@@ -371,82 +370,6 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	  changed = true
 	}
       } while(changed)
-
-      /*
-      
-      val deltas = DenseMatrix.zeros[Double](postZ.numRows, postZ.numCols)
-      for(i <- 0 until postZ.numRows) {
-	for(r <- 0 until postZ.numCols) {
-	  if(r != z(i)) {
-	    deltas(i,r) = postZ(i,r) - postZ(i,z(i))
-	    if(rCounts(r) == 0) {
-	      //This will be the first instance of r to be extracted...
-	      deltas(i,r) += postObs(r)
-	    }
-	    if(rCounts(z(i)) == 1) {
-	      //z(i) is the last instance of r remaining...
-	      deltas(i,r) -= postObs(z(i))
-	    }
-	  } else {
-	    deltas(i,r) = 0.0
-	  }
-	}
-      }
- 
-      var changed = false
-      do {
-        val (i, newRel) = deltas.argmax
-	val oldRel      = z(i)
-	val delta       = deltas.max
-
-	if(oldRel != newRel && delta >= 0) {
-	  changed = true
-	  score += delta
-
-	  deltas(i,::) -= postZ(i,newRel) + postZ(i,oldRel)
-
-	  //TODO: think more about these cases....
-	  //TODO: maybe just re-compute deltas from scratch every time?...?
-
-	  if(rCounts(newRel) == 0) {
-	    //deltas(::,newRel) -= postObs(newRel)
-	    deltas(::,newRel) -= postObs(newRel)
-	    deltas(i,::)      -= postObs(newRel)
-	    deltas(i,newRel)  = 0.0
-	    rel(newRel) = 1.0
-	  }
-	  if(rCounts(oldRel) == 1) {
-	    //No longer count 1...
-	    //deltas(z :== oldRel,::) += postObs(oldRel)
-	    for(j <- 0 until z.length) {
-	      if(z(j) == oldRel) {
-		deltas(j,::) += postObs(oldRel)
-	      }
-	    }
-	    deltas(::,oldRel) += postObs(oldRel)
-	    rel(oldRel) = 0.0
-	  }
-	  if(rCounts(oldRel) == 2) {
-	    //About to become count 1...
-	    for(j <- 0 until z.length) {
-	      if(z(j) == oldRel) {
-		deltas(j,::) -= postObs(oldRel)
-	      }
-	    }
-	  }
-
-	  rCounts(newRel) += 1
-	  rCounts(oldRel) -= 1
-
-	  //println(rCounts.toList)
-
-	  z(i) = newRel
-	} else {
-	  changed = false
-	}
-	//println(score)
-      } while(changed)
-      */
 
       if(score > bestScore) {
 	bestScore = score
