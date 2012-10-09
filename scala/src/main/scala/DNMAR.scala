@@ -163,14 +163,27 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	//print("entity pair " + j + "/" + training.length + ":" + data.data(e12).features.length)
 	//Run le inference
 	val iAll    = inferAll(data.data(e12))
-	var iHidden = iAll  //Just needed to asign it something temporarily...
+	var iHidden:EntityPair = null  //Just needed to asign it something temporarily...
+	var score = 0.0
 
 	if(trainSimple) {
 	  iHidden = inferHiddenSimple(data.data(e12))
 	} else {
-	  //iHidden = inferHidden(data.data(e12))
-	  //iHidden = inferHiddenTwoSided(data.data(e12))
-	  iHidden = inferHiddenLocalSearch(data.data(e12))
+	  //val (iHidden, score) = inferHiddenLocalSearch(data.data(e12), 10)
+	  val result = inferHiddenLocalSearch(data.data(e12), 1)
+	  iHidden = result._1
+	  score   = result._2
+
+	  //Figure out search error (in cases where we can efficiently do exact inference)
+	  if(Constants.DEBUG) {
+	    if(data.data(e12).features.length < 200) {
+	      val (iHidden1rs,  score1rs) = inferHiddenLocalSearch(data.data(e12), 1)
+	      val (iHidden10rs, score10rs) = inferHiddenLocalSearch(data.data(e12), 1)
+	      val (iHidden20rs, score20rs) = inferHiddenLocalSearch(data.data(e12), 20)
+	      val (iHiddenExact, scoreExact) = inferHiddenTwoSided(data.data(e12))
+	      println("scores:" + "\t" + score1rs + "\t" + score10rs + "\t" + score20rs + "\t" + scoreExact + "\t" + data.data(e12).features.length)
+	    }
+	  }
 	}
 
 	if(updateTheta) {
@@ -222,8 +235,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	var s = 0.0
 	//s += phi(ep.e1id)
 	//s += phi(ep.e2id)
-	s += phi(data.entityVocab.size + r)
-	s += phi(phi.length-1)	//Bias feature
+	s += phiNeg(data.entityVocab.size + r)
+	s += phiNeg(phiNeg.length-1)	//Bias feature
 	if(r != data.relVocab("NA")) {
 	  postObs(r)     = -1000.0
 	  //postObs(r)     = -100
@@ -271,7 +284,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     result
   }
 
-  def inferHiddenLocalSearch(ep:EntityPair):EntityPair = {
+  def inferHiddenLocalSearch(ep:EntityPair, nRandomRestarts:Int):Tuple2[EntityPair,Double] = {
     if(Constants.TIMING) {
       Utils.Timer.start("inferHiddenLocalSearch")
     }
@@ -287,20 +300,24 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     val postObs     = DenseVector.zeros[Double](data.nRel)
     for(r <- 0 until data.nRel) {
       if(r == data.relVocab("NA")) {
-	postObs(r) = -4.0
+	//postObs(r) = -4.0
 	//postObs(r) = -2.0
-	//postObs(r) = 0.0
+	postObs(r) = 0.0
       } else if(ep.obs(r) == 0.0) {
-	postObs(r) = -5.0
-	//postObs(r) = -200000.0
+	var s = 0.0
+	s += phiNeg(data.entityVocab.size + r)
+	s += phiNeg(phiNeg.length-1)
+	postObs(r) = s
+	//postObs(r) = -5.0
       } else {
-	postObs(r) = 100.0
-	//postObs(r) = 1000000.0
+	var s = 0.0
+	s += phiPos(data.entityVocab.size + r)
+	s += phiPos(phiPos.length-1)
+	postObs(r) = s
+	//postObs(r) = 100.0
       }
     }
 
-    val nRandomRestarts             = 10
-    //val nRandomRestarts             = 1
     var bestZ:DenseVector[Int]      = null
     var bestRel:DenseVectorRow[Double] = null
     var bestScore                   = Double.NegativeInfinity
@@ -328,11 +345,12 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       var changed = false
       do {
 	//Recompute Deltas
-	Utils.Timer.start("Allocating deltas matrix")
-	val deltas = DenseMatrix.zeros[Double](postZ.numRows, postZ.numCols)
-	Utils.Timer.stop("Allocating deltas matrix")
+	if(Constants.TIMING) {
+	  Utils.Timer.start("re-computing deltas")
+	}
 
-	Utils.Timer.start("re-computing deltas")
+	//First search operator (change one variable)
+	val deltas = DenseMatrix.zeros[Double](postZ.numRows, postZ.numCols)
 	for(i <- (0 until postZ.numRows)) {
 	  for(r <- 0 until postZ.numCols) {
 	    if(r != z(i)) {
@@ -350,15 +368,54 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	    }
 	  }
 	}
-	Utils.Timer.stop("re-computing deltas")
+
+	//Second search operator (switch all instances of relation r to NA)
+	//val deltasNA = DenseVector.zeros[Double](postZ.numCols)
+	val deltasAggregate = DenseMatrix.zeros[Double](postZ.numCols, postZ.numCols)
+	for(r1 <- 0 until postZ.numCols) {
+	  for(r2 <- 0 until postZ.numCols) {
+	    if(rCounts(r1) > 0 && r1 != r2) {
+	      for(i <- 0 until postZ.numRows) {
+		if(z(i) == r1) {
+		  deltasAggregate(r1,r2) += postZ(i,r2) - postZ(i,r1)
+		}
+	      }
+	      deltasAggregate(r1,r2) -= postObs(r1)
+	      if(rCounts(r2) == 0) {
+		deltasAggregate(r1,r2) += postObs(r2)
+	      }
+	    }
+	  }
+	}
+
+	if(Constants.TIMING) {
+	  Utils.Timer.stop("re-computing deltas")
+	}
 
 	changed = false
 
-	val (i, newRel) = deltas.argmax
-	val oldRel      = z(i)
-	val delta       = deltas(i,newRel)
+	val (i, newRel)    = deltas.argmax
+	val oldRel         = z(i)
+	val delta          = deltas(i,newRel)
+	val deltaAggregate = deltasAggregate.max
 
-	if(oldRel != newRel && delta > 0) {
+	//Check which search operator provides the greatest score delta
+	if(deltaAggregate > delta && deltaAggregate > 0) {
+	  //Change all instances of the max deltaNA relation to NA 
+	  score += deltaAggregate
+
+	  val (r1, r2)  = deltasAggregate.argmax
+	  for(i <- 0 until z.length) {
+	    if(z(i) == r1) {
+	      z(i) = r2
+	      rCounts(r2) += 1
+	    }
+	  }
+	  rCounts(r1) = 0
+	  rel(r1) = 0.0
+	  rel(r2) = 1.0
+	  changed = true
+	} else if(oldRel != newRel && delta > 0) {
 	  score += delta
 	  z(i) = newRel
 	  rCounts(newRel) += 1
@@ -392,10 +449,10 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       Utils.Timer.stop("inferHiddenLocalSearch")
     }
 
-    result
+    (result, bestScore)
   }
 
-  def inferHiddenTwoSided(ep:EntityPair):EntityPair = {
+  def inferHiddenTwoSided(ep:EntityPair):Tuple2[EntityPair,Double] = {
     if(Constants.TIMING) {
       Utils.Timer.start("inferHiddenTwoSided")
     }
@@ -409,34 +466,22 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     //Posterior distribution over observations
     val postObs     = DenseVector.zeros[Double](data.nRel)
     for(r <- 0 until data.nRel) {
-      //if(r == data.relVocab("NA") && ep.obs(r) == 0.0) {
       if(r == data.relVocab("NA")) {
-	//postObs(r) = 0.0
-	//postObs(r) = -5.0
-	postObs(r) = -2.0
-	//postObs(r) = -100.0
+	//postObs(r) = -2.0
+	postObs(r) = -4.0
       } else if(ep.obs(r) == 0.0) {
-	//postObs(r) = Double.NegativeInfinity
 	postObs(r) = -5.0
       } else {
-	//Too big?
-	//postObs(r) = 1000000000.0
-	//postObs(r) = 1000000.0
 	postObs(r) = 100.0
       }
     }
 
-    //println("constrained postObs=" + postObs.toList)
-
     val rPartial = new Array[Double](data.nRel)
     var sPartial = 0.0
     //val bs = new BeamSearch(new HiddenVariablesHypothesisTwoSided(postZ, postObs, Nil, rPartial, ep.obs.toArray, sPartial, sPartial), 1000);
-    val bs = new BeamSearch(new HiddenVariablesHypothesisTwoSided(postZ, postObs, Nil, rPartial, ep.obs.toArray, sPartial, sPartial), 50);
-    //val bs = new BeamSearch(new HiddenVariablesHypothesisTwoSided(postZ, postObs, Nil, rPartial, ep.obs.toArray, sPartial, sPartial), 10000);
+    val bs = new BeamSearch(new HiddenVariablesHypothesisTwoSided(postZ, postObs, Nil, rPartial, ep.obs.toArray, sPartial, sPartial), -1);
 
-    //println("new beam search--------------------------------------------------------------------------")
     while(bs.Head.asInstanceOf[HiddenVariablesHypothesisTwoSided].z.length < ep.features.length) {
-      //println("hypothesis size:\t" + bs.Head.asInstanceOf[HiddenVariablesHypothesisTwoSided].z.length + "/" + ep.features.length)
       bs.UpdateQ
     }
 
@@ -445,10 +490,11 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       rel(r) = 1.0
     }
 
+    val score     = bs.Head.asInstanceOf[HiddenVariablesHypothesisTwoSided].score
+
     if(Constants.DEBUG) {
       val z         = bs.Head.asInstanceOf[HiddenVariablesHypothesisTwoSided].z
       val rPartial  = bs.Head.asInstanceOf[HiddenVariablesHypothesisTwoSided].rPartial
-      val score     = bs.Head.asInstanceOf[HiddenVariablesHypothesisTwoSided].score
       println("constrained score=\t"  + score)
       println("constrained result.z=\t" + z.toList.map((r) => data.relVocab(r)))
       println("constrained rel=\t"      + (0 until rel.length).filter((r) => rel(r) == 1.0).map((r) => data.relVocab(r)))
@@ -461,7 +507,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     if(Constants.TIMING) {
       Utils.Timer.stop("inferHiddenTwoSided")
     }
-    result
+
+    (result, score)
   }
 
   def inferHiddenSimple(ep:EntityPair):EntityPair = {
@@ -543,15 +590,26 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 
     val postObs = DenseVector.zeros[Double](data.nRel)
     val newObs  = DenseVector.zeros[Double](data.nRel)
-    for(r <- 0 until data.nRel) {
-      var s = 0.0
-      //s += phi(ep.e1id)
-      //s += phi(ep.e2id)
-      s += phi(data.entityVocab.size + r)
-      s += phi(phi.length-1)	//Bias feature
-      postObs(r) = s
 
-      if(rel(r) == 1.0 && postObs(r) > 0.0) {
+    //TODO: not quite right here...
+    for(r <- 0 until data.nRel) {
+      if(rel(r) == 1.0) {
+	var s = 0.0
+	//s += phiPos(ep.e1id)
+	//s += phiPos(ep.e2id)
+	s += phiPos(data.entityVocab.size + r)
+	s += phiPos(phiPos.length-1)	//Bias feature
+	postObs(r) = s
+      } else {
+	//s += phiNeg(ep.e1id)
+	//s += phiNeg(ep.e2id)
+	s += phiNeg(data.entityVocab.size + r)
+	s += phiNeg(phiNeg.length-1)	//Bias feature
+	postObs(r) = s        
+      }
+
+      //if(rel(r) == 1.0 && postObs(r) > 0.0) {
+      if(postObs(r) > 0) {
 	newObs(r) = 1.0
       }
     }

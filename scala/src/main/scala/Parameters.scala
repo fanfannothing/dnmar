@@ -30,6 +30,8 @@ abstract class Parameters(val data:EntityPairData) {
    *********************************************************************
    */
   val theta         = DenseMatrix.zeros[Double](nRel,nFeat+1)
+				//Innitialize bias feature for "NA"
+  //theta(data.relVocab("NA"), nFeat) = -10.0
   val theta_sum     = DenseMatrix.zeros[Double](nRel,nFeat+1)
 
   var theta_average = DenseMatrix.zeros[Double](nRel,nFeat+1)
@@ -76,11 +78,13 @@ abstract class Parameters(val data:EntityPairData) {
    * PHI
    *********************************************************************
    */
-  val phi = SparseVector.zeros[Double](data.entityVocab.size + data.relVocab.size + 1)	//Add space for bias feature...
-  //val phi = DenseVector.rand(data.entityVocab.size + data.relVocab.size + 1)	//Observation parameters (just 3 things for now - e1, e2, rel)
+  val phiPos = SparseVector.zeros[Double](data.entityVocab.size + data.relVocab.size + 1)	//Add space for bias feature...
+  val phiNeg = SparseVector.zeros[Double](data.entityVocab.size + data.relVocab.size + 1)	//Add space for bias feature...
+  //val phiPos = DenseVector.rand(data.entityVocab.size + data.relVocab.size + 1)	//Observation parameters (just 3 things for now - e1, e2, rel)
 
-  //Innitialize bias feature
-  phi(phi.length-1) = 100
+  //Innitialize bias features
+  phiPos(phiPos.length-1) =  100.0
+  phiNeg(phiPos.length-1) =   -5.0
 
   def updatePhi(iAll:EntityPair, iHidden:EntityPair) { 
     if(Constants.TIMING) {
@@ -93,21 +97,32 @@ abstract class Parameters(val data:EntityPairData) {
     val e1id = iHidden.e1id
     val e2id = iHidden.e2id
 
+    //TODO: have some doubts here...
     for(r <- 0 until iAll.rel.length) {
-      if(iAll.rel(r) == 1.0) {						//If we think this fact is true, then update parameters...
-	if(iHidden.obs(r) >= 0.5) {
-	  //phi(iHidden.e1id)              += 1.0
-	  //phi(iHidden.e2id)              += 1.0
-	  phi(data.entityVocab.size + r) += 1.0
-	  phi(phi.length-1)              += 1.0
-	}
+      if(iHidden.obs(r) == 1.0 && iHidden.rel(r) == 1.0) {
+	//phiPos(iHidden.e1id)              += 1.0
+	//phiPos(iHidden.e2id)              += 1.0
+	phiPos(data.entityVocab.size + r) += 1.0
+	phiPos(phiPos.length-1)           += 1.0	
+      }
+      if(iAll.obs(r) == 1.0 && iAll.rel(r) == 1.0) {
+	//phiPos(iHidden.e1id)              -= 1.0
+	//phiPos(iHidden.e2id)              -= 1.0
+	phiPos(data.entityVocab.size + r) -= 1.0
+	phiPos(phiPos.length-1)           -= 1.0	
+      }
 
-	if(iAll.obs(r) >= 0.5) {
-	  //phi(iAll.e1id)                 -= 1.0
-	  //phi(iAll.e2id)                 -= 1.0
-	  phi(data.entityVocab.size + r) -= 1.0
-	  phi(phi.length-1)              -= 1.0
-	}
+      if(iHidden.obs(r) == 0.0 && iHidden.rel(r) == 1.0) {
+	//phiNeg(iHidden.e1id)              += 1.0
+	//phiNeg(iHidden.e2id)              += 1.0
+	phiNeg(data.entityVocab.size + r) += 1.0
+	phiNeg(phiNeg.length-1)           += 1.0
+      }
+      if(iAll.obs(r) == 0.0 && iAll.rel(r) == 1.0) {
+	//phiNeg(iHidden.e1id)              -= 1.0
+	//phiNeg(iHidden.e2id)              -= 1.0
+	phiNeg(data.entityVocab.size + r) -= 1.0
+	phiNeg(phiNeg.length-1)           -= 1.0	
       }
     }    
 
@@ -117,12 +132,22 @@ abstract class Parameters(val data:EntityPairData) {
   }
 
   def printPhi {
-    println("bias\t" + phi(phi.length-1))
-    for(i <- (0 until phi.length).toList.sortBy((j) => -phi(j)).slice(0,10)) {
+    println("PhiPos************************")
+    println("bias\t" + phiPos(phiPos.length-1))
+    for(i <- (0 until phiPos.length).toList.sortBy((j) => -phiPos(j)).slice(0,10)) {
       if(i < data.entityVocab.size) {
-	println(data.entityVocab(i) + "\t" + phi(i))
+	println(data.entityVocab(i) + "\t" + phiPos(i))
       } else if(i < data.entityVocab.size + data.relVocab.size) {
-	println(data.relVocab(i - data.entityVocab.size) + "\t" + phi(i))
+	println(data.relVocab(i - data.entityVocab.size) + "\t" + phiPos(i))
+      }
+    }
+    println("PhiNeg************************")
+    println("bias\t" + phiNeg(phiNeg.length-1))
+    for(i <- (0 until phiNeg.length).toList.sortBy((j) => -phiNeg(j)).slice(0,10)) {
+      if(i < data.entityVocab.size) {
+	println(data.entityVocab(i) + "\t" + phiNeg(i))
+      } else if(i < data.entityVocab.size + data.relVocab.size) {
+	println(data.relVocab(i - data.entityVocab.size) + "\t" + phiNeg(i))
       }
     }
   }

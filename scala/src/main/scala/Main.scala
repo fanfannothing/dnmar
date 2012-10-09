@@ -68,6 +68,7 @@ object Main {
       println("*********************************************")
 
       dnmar.train(1)
+      dnmar.printPhi
 
       println("rel predictions:")
       Eval.useObsPredictions = false
