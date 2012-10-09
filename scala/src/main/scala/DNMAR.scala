@@ -449,6 +449,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	s += phiPos(phiPos.length-1)	//Bias feature
 	postObs(r) = s
       } else {
+        var s = 0.0
 	//s += phiNeg(ep.e1id)
 	//s += phiNeg(ep.e2id)
 	s += phiNeg(data.entityVocab.size + r)
