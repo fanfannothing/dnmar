@@ -85,11 +85,11 @@ object Eval {
       } else {
 	postZ = (param.theta * features(i)).toDense
       }
-      val predicted = postZ.argmax
+      var predicted = postZ.argmax
 
       //println(param.data.relVocab(predicted) + "\t" + sentences(i))
 
-      if(labels(i) != test.relVocab("NA")) {
+      if(labels(i) != test.relVocab("NA") && (rel == -1 || labels(i) == rel)) {
 	maxRecall += 1.0
       }
       
@@ -123,13 +123,13 @@ object Eval {
     var sortedPredictions = List[Prediction]()
     for(ep <- Random.shuffle(test.data.toList)) { 
       val predicted = param.inferAll(ep, useAveragedParameters)
-      if(Constants.DEBUG) {
-	println("predicted:\t" + Utils.bin2int(predicted.rel.toArray).map((r) => test.relVocab(r)))
-	println("observed:\t"  + Utils.bin2int(ep.rel.toArray).map((r) => test.relVocab(r)))
-      }
+//      if(Constants.DEBUG) {
+//	println("predicted:\t" + Utils.bin2int(predicted.rel.toArray).map((r) => test.relVocab(r)))
+//	println("observed:\t"  + Utils.bin2int(ep.rel.toArray).map((r) => test.relVocab(r)))
+//      }
       for(r <- 0 until test.nRel) {
 	if(test.relVocab(r) != "NA" && (rel == -1 || r == rel)) {
-	  if(ep.rel(r) == 1.0) {
+	  if(ep.rel(r) == 1.0 && (rel == -1 || rel == r)) {
 	    totalRelations += 1.0
 	  }
 

@@ -67,18 +67,21 @@ object Main {
       println("iteration " + i)
       println("*********************************************")
 
+      //dnmar.trainSimple = i <= 10
+      //dnmar.updatePhi   = i <= 10
+
       dnmar.train(1)
       dnmar.printPhi
 
       println("rel predictions:")
       Eval.useObsPredictions = false
       Eval.AggregateEval(dnmar, test.value.getOrElse(null))
-      if(i % 10 == 0 && i >= 10) {
-	for(r <- 0 until nrel) {
-	  println(relVocab(r))
-	  Eval.AggregateEval(dnmar, test.value.getOrElse(null), r)
-	}
-      }
+//      if(i % 10 == 0 && i >= 10) {
+//	for(r <- 0 until nrel) {
+//	  println(relVocab(r))
+//	  Eval.AggregateEval(dnmar, test.value.getOrElse(null), r)
+//	}
+//      }
 
       println("*********************************************")
       println("* rel predictions (training):")
@@ -90,12 +93,12 @@ object Main {
       println("* Human annotated evaluation")
       println("*********************************************")
       Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt")
-      if(i % 10 == 0 && i >= 10) {
-	for(r <- 0 until nrel) {
-	  println(relVocab(r))
-	  Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt", r)
-	}
-      }
+//      if(i % 10 == 0 && i >= 10) {
+//	for(r <- 0 until nrel) {
+//	  println(relVocab(r))
+//	  Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt", r)
+//	}
+//      }
 
       if(i % 10 == 0 && i >= 10) {
 	println("*********************************************")
@@ -106,17 +109,17 @@ object Main {
 
 	Eval.useObsPredictions = false
 	Eval.AggregateEval(dnmar, test.value.getOrElse(null))
-	for(r <- 0 until nrel) {
-	  println(relVocab(r))
-	  Eval.AggregateEval(dnmar, test.value.getOrElse(null), r)
-	}
+//	for(r <- 0 until nrel) {
+//	  println(relVocab(r))
+//	  Eval.AggregateEval(dnmar, test.value.getOrElse(null), r)
+//	}
 
 	println("Human annotated evaluation (averaged)")
 	Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt")
-	for(r <- 0 until nrel) {
-	  println(relVocab(r))
-	  Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt", r)
-	}
+//	for(r <- 0 until nrel) {
+//	  println(relVocab(r))
+//	  Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt", r)
+//	}
 	Eval.useAveragedParameters = false
       }
 

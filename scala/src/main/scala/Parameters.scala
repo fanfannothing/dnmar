@@ -21,6 +21,8 @@ import cc.factorie.protobuf.DocumentProtos.Relation.RelationMentionRef
 
 import scala.util.Random
 
+import math._
+
 abstract class Parameters(val data:EntityPairData) {
   val nRel  = data.nRel
   val nFeat = data.nFeat
@@ -32,6 +34,7 @@ abstract class Parameters(val data:EntityPairData) {
   val theta         = DenseMatrix.zeros[Double](nRel,nFeat+1)
 				//Innitialize bias feature for "NA"
   //theta(data.relVocab("NA"), nFeat) = -10.0
+  //theta(data.relVocab("NA"), nFeat) = -100.0
   val theta_sum     = DenseMatrix.zeros[Double](nRel,nFeat+1)
 
   var theta_average = DenseMatrix.zeros[Double](nRel,nFeat+1)
@@ -78,20 +81,24 @@ abstract class Parameters(val data:EntityPairData) {
    * PHI
    *********************************************************************
    */
-  val phiPos = SparseVector.zeros[Double](data.entityVocab.size + data.relVocab.size + 1)	//Add space for bias feature...
-  val phiNeg = SparseVector.zeros[Double](data.entityVocab.size + data.relVocab.size + 1)	//Add space for bias feature...
-  //val phiPos = DenseVector.rand(data.entityVocab.size + data.relVocab.size + 1)	//Observation parameters (just 3 things for now - e1, e2, rel)
+  val phiMid = SparseVector.zeros[Double](data.entityVocab.size + data.relVocab.size + 1)	//Add space for bias feature...
+  val phiMit = SparseVector.zeros[Double](data.entityVocab.size + data.relVocab.size + 1)	//Add space for bias feature...
+  //val phiMid = DenseVector.rand(data.entityVocab.size + data.relVocab.size + 1)	//Observation parameters (just 3 things for now - e1, e2, rel)
 
   //Innitialize bias features
-  phiPos(phiPos.length-1) =  100.0
-  phiNeg(phiPos.length-1) =   -5.0
+  //phiMid(phiMid.length-1) =   -5.0
+  //phiMit(phiMid.length-1) = -100.0
+
+  //phiMid(phiMid.length-1) =  -100.0
+  //phiMit(phiMid.length-1) =  -200.0
+
+  //phiMid(phiMid.length-1) =     -50.0
+  //phiMit(phiMid.length-1) =  -1000.0
 
   def updatePhi(iAll:EntityPair, iHidden:EntityPair) { 
     if(Constants.TIMING) {
       Utils.Timer.start("updatePhi")
     }
-
-    assert(iAll.e1id == iHidden.e1id && iAll.e2id == iHidden.e2id, "updatePhi: iAll and iHidden are different...")
 
     //Update le weights
     val e1id = iHidden.e1id
@@ -99,30 +106,34 @@ abstract class Parameters(val data:EntityPairData) {
 
     //TODO: have some doubts here...
     for(r <- 0 until iAll.rel.length) {
-      if(iHidden.obs(r) == 1.0 && iHidden.rel(r) == 1.0) {
-	//phiPos(iHidden.e1id)              += 1.0
-	//phiPos(iHidden.e2id)              += 1.0
-	phiPos(data.entityVocab.size + r) += 1.0
-	phiPos(phiPos.length-1)           += 1.0	
-      }
-      if(iAll.obs(r) == 1.0 && iAll.rel(r) == 1.0) {
-	//phiPos(iHidden.e1id)              -= 1.0
-	//phiPos(iHidden.e2id)              -= 1.0
-	phiPos(data.entityVocab.size + r) -= 1.0
-	phiPos(phiPos.length-1)           -= 1.0	
-      }
+      if(r != data.relVocab("NA")) {
+        if(iHidden.obs(r) == 0.0 && iHidden.rel(r) == 1.0) {
+          //println("MID")
+	  phiMid(iHidden.e1id)              += 1.0
+	  phiMid(iHidden.e2id)              += 1.0
+	  phiMid(data.entityVocab.size + r) += 1.0
+	  phiMid(phiMid.length-1)           += 1.0	
+        }
+        if(iAll.obs(r) == 0.0 && iAll.rel(r) == 1.0) {
+	  phiMid(iHidden.e1id)              -= 1.0
+	  phiMid(iHidden.e2id)              -= 1.0
+	  phiMid(data.entityVocab.size + r) -= 1.0
+	  phiMid(phiMid.length-1)           -= 1.0	
+        }
 
-      if(iHidden.obs(r) == 0.0 && iHidden.rel(r) == 1.0) {
-	//phiNeg(iHidden.e1id)              += 1.0
-	//phiNeg(iHidden.e2id)              += 1.0
-	phiNeg(data.entityVocab.size + r) += 1.0
-	phiNeg(phiNeg.length-1)           += 1.0
-      }
-      if(iAll.obs(r) == 0.0 && iAll.rel(r) == 1.0) {
-	//phiNeg(iHidden.e1id)              -= 1.0
-	//phiNeg(iHidden.e2id)              -= 1.0
-	phiNeg(data.entityVocab.size + r) -= 1.0
-	phiNeg(phiNeg.length-1)           -= 1.0	
+        if(iHidden.obs(r) == 1.0 && iHidden.rel(r) == 0.0) {
+          //println("MIT")
+	  phiMit(iHidden.e1id)              += 1.0
+	  phiMit(iHidden.e2id)              += 1.0
+	  phiMit(data.entityVocab.size + r) += 1.0
+	  phiMit(phiMit.length-1)           += 1.0
+        }
+        if(iAll.obs(r) == 1.0 && iAll.rel(r) == 0.0) {
+	  phiMit(iHidden.e1id)              -= 1.0
+	  phiMit(iHidden.e2id)              -= 1.0
+	  phiMit(data.entityVocab.size + r) -= 1.0
+	  phiMit(phiMit.length-1)           -= 1.0	
+        }
       }
     }    
 
@@ -132,22 +143,24 @@ abstract class Parameters(val data:EntityPairData) {
   }
 
   def printPhi {
-    println("PhiPos************************")
-    println("bias\t" + phiPos(phiPos.length-1))
-    for(i <- (0 until phiPos.length).toList.sortBy((j) => -phiPos(j)).slice(0,10)) {
+    println("phiMid************************")
+    println("bias\t" + phiMid(phiMid.length-1))
+    for(i <- (0 until phiMid.length).toList.sortBy((j) => -phiMid(j)).slice(0,10)) {
+    //for(i <- (0 until phiMid.length).toList.sortBy((j) => math.abs(phiMid(j))).slice(0,10)) {
       if(i < data.entityVocab.size) {
-	println(data.entityVocab(i) + "\t" + phiPos(i))
+	println(data.entityVocab(i) + "\t" + phiMid(i))
       } else if(i < data.entityVocab.size + data.relVocab.size) {
-	println(data.relVocab(i - data.entityVocab.size) + "\t" + phiPos(i))
+	println(data.relVocab(i - data.entityVocab.size) + "\t" + phiMid(i))
       }
     }
-    println("PhiNeg************************")
-    println("bias\t" + phiNeg(phiNeg.length-1))
-    for(i <- (0 until phiNeg.length).toList.sortBy((j) => -phiNeg(j)).slice(0,10)) {
+    println("phiMit************************")
+    println("bias\t" + phiMit(phiMit.length-1))
+    for(i <- (0 until phiMit.length).toList.sortBy((j) => -phiMit(j)).slice(0,10)) {
+    //for(i <- (0 until phiMit.length).toList.sortBy((j) => math.abs(phiMit(j))).slice(0,10)) {
       if(i < data.entityVocab.size) {
-	println(data.entityVocab(i) + "\t" + phiNeg(i))
+	println(data.entityVocab(i) + "\t" + phiMit(i))
       } else if(i < data.entityVocab.size + data.relVocab.size) {
-	println(data.relVocab(i - data.entityVocab.size) + "\t" + phiNeg(i))
+	println(data.relVocab(i - data.entityVocab.size) + "\t" + phiMit(i))
       }
     }
   }
@@ -162,4 +175,9 @@ abstract class Parameters(val data:EntityPairData) {
   def inferAll(ep:EntityPair):EntityPair
   def inferAll(ep:EntityPair, useAverage:Boolean):EntityPair
   def train(iterations:Int)
+
+  var trainSimple = false
+
+  var updatePhi   = true
+  var updateTheta = true
 }
