@@ -1,0 +1,6 @@
+-Error analysis:
+       -Compare soft threshold to MultiR
+       -per-relation analysis (can we get more relations?)
+       -better recall?
+       -human evaluation...
+-Q: what is really needed?

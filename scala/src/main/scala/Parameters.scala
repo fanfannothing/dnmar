@@ -21,7 +21,7 @@ import cc.factorie.protobuf.DocumentProtos.Relation.RelationMentionRef
 
 import scala.util.Random
 
-import math._
+import math.abs
 
 abstract class Parameters(val data:EntityPairData) {
   val nRel  = data.nRel
@@ -33,7 +33,7 @@ abstract class Parameters(val data:EntityPairData) {
    */
   val theta         = DenseMatrix.zeros[Double](nRel,nFeat+1)
 				//Innitialize bias feature for "NA"
-  //theta(data.relVocab("NA"), nFeat) = -10.0
+  theta(data.relVocab("NA"), nFeat) = -10.0
   //theta(data.relVocab("NA"), nFeat) = -100.0
   val theta_sum     = DenseMatrix.zeros[Double](nRel,nFeat+1)
 
@@ -50,6 +50,30 @@ abstract class Parameters(val data:EntityPairData) {
 
     if(Constants.TIMING) {
       Utils.Timer.stop("computeThetaAverage")
+    }
+  }
+
+  def resetTheta {
+    theta         := 0.0
+    theta_sum     := 0.0
+    theta_average := 0.0
+    nUpdates      = 0.0
+  }
+
+  def printTheta {
+    if(Constants.TIMING) {
+      Utils.Timer.start("printTheta")
+    }
+
+    val thetaSorted = theta.argsort.reverse
+    println("**** THETA ******")
+    for(i <- 0 until 10) {
+      val (r,f) = thetaSorted(i)
+      println(data.relVocab(r) + "\t" + data.featureVocab(f) + "\t" + theta(r,f))
+    }
+
+    if(Constants.TIMING) {
+      Utils.Timer.stop("printTheta")
     }
   }
 
@@ -86,14 +110,20 @@ abstract class Parameters(val data:EntityPairData) {
   //val phiMid = DenseVector.rand(data.entityVocab.size + data.relVocab.size + 1)	//Observation parameters (just 3 things for now - e1, e2, rel)
 
   //Innitialize bias features
-  //phiMid(phiMid.length-1) =   -5.0
+  phiMid(phiMid.length-1) =   -5.0
   //phiMit(phiMid.length-1) = -100.0
+  phiMit(phiMid.length-1) = -1000.0
 
   //phiMid(phiMid.length-1) =  -100.0
   //phiMit(phiMid.length-1) =  -200.0
 
   //phiMid(phiMid.length-1) =     -50.0
   //phiMit(phiMid.length-1) =  -1000.0
+
+  def resetPhi {
+    phiMid := 0
+    phiMit := 0
+  }
 
   def updatePhi(iAll:EntityPair, iHidden:EntityPair) { 
     if(Constants.TIMING) {
@@ -106,34 +136,53 @@ abstract class Parameters(val data:EntityPairData) {
 
     //TODO: have some doubts here...
     for(r <- 0 until iAll.rel.length) {
-      if(r != data.relVocab("NA")) {
-        if(iHidden.obs(r) == 0.0 && iHidden.rel(r) == 1.0) {
-          //println("MID")
-	  phiMid(iHidden.e1id)              += 1.0
-	  phiMid(iHidden.e2id)              += 1.0
-	  phiMid(data.entityVocab.size + r) += 1.0
-	  phiMid(phiMid.length-1)           += 1.0	
-        }
-        if(iAll.obs(r) == 0.0 && iAll.rel(r) == 1.0) {
-	  phiMid(iHidden.e1id)              -= 1.0
-	  phiMid(iHidden.e2id)              -= 1.0
-	  phiMid(data.entityVocab.size + r) -= 1.0
-	  phiMid(phiMid.length-1)           -= 1.0	
-        }
+      var maxConfidence = Double.NegativeInfinity
+      val scores = iAll.zScore(iAll.z :== r)
+      if(scores.length > 0) {
+	maxConfidence = scores.max
+	//println("maxConfidence=" + maxConfidence)
+      }
+      var minConfidence = iAll.zScore.min
+//      if(iAll.rel(r) == 0.0) {
+//	println("minConfidence=" + minConfidence)
+//      }
 
-        if(iHidden.obs(r) == 1.0 && iHidden.rel(r) == 0.0) {
-          //println("MIT")
-	  phiMit(iHidden.e1id)              += 1.0
-	  phiMit(iHidden.e2id)              += 1.0
-	  phiMit(data.entityVocab.size + r) += 1.0
-	  phiMit(phiMit.length-1)           += 1.0
-        }
-        if(iAll.obs(r) == 1.0 && iAll.rel(r) == 0.0) {
-	  phiMit(iHidden.e1id)              -= 1.0
-	  phiMit(iHidden.e2id)              -= 1.0
-	  phiMit(data.entityVocab.size + r) -= 1.0
-	  phiMit(phiMit.length-1)           -= 1.0	
-        }
+      if(r != data.relVocab("NA")) {
+	if(maxConfidence > 10.0) {
+          //if(iHidden.obs(r) == 0.0 && iHidden.rel(r) == 1.0) {
+	  if(iHidden.obs(r) == 0.0 && iAll.rel(r) == 1.0) {
+	    phiMid(iHidden.e1id)              += 1.0
+	    phiMid(iHidden.e2id)              += 1.0
+	    phiMid(data.entityVocab.size + r) += 1.0
+	    phiMid(phiMid.length-1)           += 1.0	
+          }
+          if(iAll.obs(r) == 0.0 && iAll.rel(r) == 1.0) {
+	    phiMid(iHidden.e1id)              -= 1.0
+	    phiMid(iHidden.e2id)              -= 1.0
+	    phiMid(data.entityVocab.size + r) -= 1.0
+	    phiMid(phiMid.length-1)           -= 1.0	
+          }
+	}
+
+	//TODO: minConfidence (aka confidence this relation wasn't extracted?)
+	//Needs some more thought on how to do this...
+	//Confidence that all scores are N/A...?
+
+        //if(iHidden.obs(r) == 1.0 && iHidden.rel(r) == 0.0) {
+	if(minConfidence > 10.0 && iAll.rel(r) == 0.0) {
+	  if(iHidden.obs(r) == 1.0 && iAll.rel(r) == 0.0) {
+	    phiMit(iHidden.e1id)              += 1.0
+	    phiMit(iHidden.e2id)              += 1.0
+	    phiMit(data.entityVocab.size + r) += 1.0
+	    phiMit(phiMit.length-1)           += 1.0
+          }
+          if(iAll.obs(r) == 1.0 && iAll.rel(r) == 0.0) {
+	    phiMit(iHidden.e1id)              -= 1.0
+	    phiMit(iHidden.e2id)              -= 1.0
+	    phiMit(data.entityVocab.size + r) -= 1.0
+	    phiMit(phiMit.length-1)           -= 1.0	
+          }
+	}
       }
     }    
 
@@ -145,8 +194,8 @@ abstract class Parameters(val data:EntityPairData) {
   def printPhi {
     println("phiMid************************")
     println("bias\t" + phiMid(phiMid.length-1))
-    for(i <- (0 until phiMid.length).toList.sortBy((j) => -phiMid(j)).slice(0,10)) {
-    //for(i <- (0 until phiMid.length).toList.sortBy((j) => math.abs(phiMid(j))).slice(0,10)) {
+    //for(i <- (0 until phiMid.length).toList.sortBy((j) => -phiMid(j)).slice(0,10)) {
+    for(i <- (0 until phiMid.length).toList.sortBy((j) => -math.abs(phiMid(j))).slice(0,10)) {
       if(i < data.entityVocab.size) {
 	println(data.entityVocab(i) + "\t" + phiMid(i))
       } else if(i < data.entityVocab.size + data.relVocab.size) {
@@ -155,8 +204,8 @@ abstract class Parameters(val data:EntityPairData) {
     }
     println("phiMit************************")
     println("bias\t" + phiMit(phiMit.length-1))
-    for(i <- (0 until phiMit.length).toList.sortBy((j) => -phiMit(j)).slice(0,10)) {
-    //for(i <- (0 until phiMit.length).toList.sortBy((j) => math.abs(phiMit(j))).slice(0,10)) {
+    //for(i <- (0 until phiMit.length).toList.sortBy((j) => -phiMit(j)).slice(0,10)) {
+    for(i <- (0 until phiMit.length).toList.sortBy((j) => -math.abs(phiMit(j))).slice(0,10)) {
       if(i < data.entityVocab.size) {
 	println(data.entityVocab(i) + "\t" + phiMit(i))
       } else if(i < data.entityVocab.size + data.relVocab.size) {

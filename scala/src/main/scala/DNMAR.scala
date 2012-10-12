@@ -100,8 +100,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	  iHidden = inferHiddenMULTIR(data.data(e12))
 	} else {
 	  //val (iHidden, score) = inferHiddenLocalSearch(data.data(e12), 10)
-	  //val result = inferHiddenLocalSearch(data.data(e12), 1)
-          val result = inferHiddenLocalSearch(data.data(e12), 20)
+	  val result = inferHiddenLocalSearch(data.data(e12), 1)
+          //val result = inferHiddenLocalSearch(data.data(e12), 20)
 	  iHidden = result._1
 	  score   = result._2
 
@@ -117,12 +117,12 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 //	  }
 	}
 
-	//if(updateTheta && j % 10 != 0) {
-        if(updateTheta) {
+	if(updateTheta && j % 10 != 0) {
+        //if(updateTheta) {
 	  updateTheta(iAll, iHidden)
 	}
-	//if(updatePhi && j % 10 == 0) {
-        if(updatePhi) {
+	if(updatePhi && j % 10 == 0) {
+        //if(updatePhi) {
 	  updatePhi(iAll, iHidden)
 	}
 	j += 1
