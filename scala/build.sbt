@@ -18,6 +18,3 @@ resolvers ++= Seq(
 
 scalaVersion := "2.9.2"
 
-javaOptions ++= Seq(
-	    "-Xmx12G"
-)

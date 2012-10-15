@@ -14,14 +14,17 @@ import scalala.operators.Implicits._;
 
 import scala.util.Random
 
+import java.io._
+
 class MultiR(data:EntityPairData) extends Parameters(data) {
   //Randomly permute the training data
-  //Throw out X% of negative data...?
-  //val training = Random.shuffle((0 until data.data.length).toList).filter((e12) => data.data(e12).rel(data.relVocab("NA")) == 0.0 || scala.util.Random.nextDouble < 0.2)
-  //val training = Random.shuffle((0 until data.data.length).toList).filter((e12) => data.data(e12).rel(data.relVocab("NA")) == 0.0 || scala.util.Random.nextDouble < 0.1)
   val training = Random.shuffle((0 until data.data.length).toList).filter((e12) => true)
 
-  def train(nIter:Int) = { 
+  def train(nIter:Int) = {
+    train(nIter, null)
+  }
+
+  def train(nIter:Int, outFile:FileWriter) = { 
     for(i <- 0 until nIter) {
       //println("iteration " + i)
       for(e12 <- training) {

@@ -37,15 +37,21 @@ object Utils {
       sum   = new HashMap[String,Long]
     }
 
+    def reset(s:String):Double = {
+      val time = stop(s)
+      begin.remove(s)
+      sum.remove(s)
+      time
+    }
+
     def start(s:String) = {
       begin(s) = System.currentTimeMillis
     }
 
-    def stop(s:String) = {
+    def stop(s:String):Double = {
       val end = System.currentTimeMillis
       sum(s) = sum.getOrElse(s, 0L) + (end - begin(s))
-      sum(s)
-      //println(s + ">   " + (end - begin(s))/ 1000.0 + " s")
+      sum(s) / 1000.0
     }
 
     def print {

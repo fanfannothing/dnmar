@@ -16,17 +16,27 @@ import scalala.operators.Implicits._;
 
 import scala.collection.mutable.ListBuffer
 
+import java.io._
+
 object Eval {
   case class Prediction(val score:Double, val correct:Boolean) 
 
   var useObsPredictions = false
   var useAveragedParameters = false
 
-  def HumanEval(param:Parameters, test:EntityPairData, annotatedFile:String) {
-    HumanEval(param, test, annotatedFile, -1)
+  def HumanEval(param:Parameters, test:EntityPairData, annotatedFile:String, rel:Int) {
+    HumanEval(param, test, annotatedFile, rel, null)
   }
 
-  def HumanEval(param:Parameters, test:EntityPairData, annotatedFile:String, rel:Int) {
+  def HumanEval(param:Parameters, test:EntityPairData, annotatedFile:String) {
+    HumanEval(param, test, annotatedFile, -1, null)
+  }
+
+  def HumanEval(param:Parameters, test:EntityPairData, annotatedFile:String, outFile:String) {
+    HumanEval(param, test, annotatedFile, -1, outFile)
+  }
+
+  def HumanEval(param:Parameters, test:EntityPairData, annotatedFile:String, rel:Int, outFile:String) {
     if(Constants.TIMING) {
       Utils.Timer.start("HumanEval")
     }
@@ -102,7 +112,13 @@ object Eval {
       }
     }
 
-    PrintPR(sortedPredictions, maxRecall)
+    if(maxRecall > 0) {
+      if(outFile != null) {
+	println("dumping to " + outFile)
+	DumpPR(sortedPredictions, maxRecall, outFile)
+      }
+      PrintPR(sortedPredictions, maxRecall)
+    }
 
     if(Constants.TIMING) {
       Utils.Timer.stop("HumanEval")
@@ -110,10 +126,18 @@ object Eval {
   }
 
   def AggregateEval(param:Parameters, test:EntityPairData) {
-    AggregateEval(param, test, -1)
+    AggregateEval(param, test, -1, null)
   }
 
   def AggregateEval(param:Parameters, test:EntityPairData, rel:Int) {
+    AggregateEval(param, test, rel, null)
+  }
+
+  def AggregateEval(param:Parameters, test:EntityPairData, outFile:String) {
+    AggregateEval(param, test, -1, outFile)
+  }
+
+  def AggregateEval(param:Parameters, test:EntityPairData, rel:Int, outFile:String) {
     if(Constants.TIMING) {
       Utils.Timer.start("AggregateEval")
     }
@@ -148,13 +172,40 @@ object Eval {
 	}
       }
     }
-
+    
+    if(outFile != null) {
+      DumpPR(sortedPredictions, totalRelations, outFile)
+    }
+    
     PrintPR(sortedPredictions, totalRelations)
 
     if(Constants.TIMING) {
       Utils.Timer.stop("AggregateEval")
     }
   }
+
+  def DumpPR(sortedPredictions:List[Prediction], maxResults:Double, outFile:String) {
+    var tp, fp, fn = 0.0
+
+    val fw = new FileWriter(outFile)
+
+    for(prediction <- sortedPredictions.sortBy(-_.score)) {
+      if(prediction.correct) {
+	tp += 1.0
+      } else {
+	fp += 1.0
+      }
+
+      fn = maxResults - tp
+      val p = tp / (tp + fp)
+      val r = tp / (tp + fn)
+      //val f = 2 * p * r / (p + r)
+
+      fw.write(p + "\t" + r + "\n")
+    }
+
+    fw.close()
+  }    
 
   def PrintPR(sortedPredictions:List[Prediction], maxResults:Double) {
     var tp, fp, fn = 0.0

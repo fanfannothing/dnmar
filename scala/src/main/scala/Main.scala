@@ -8,7 +8,11 @@ import java.io.InputStream
 import cc.factorie.protobuf.DocumentProtos.Relation
 import cc.factorie.protobuf.DocumentProtos.Relation.RelationMentionRef
 
+import sys.process._
+
 import org.clapper.argot._
+
+import java.io._
 
 object Constants {
   var DEBUG = false
@@ -38,6 +42,14 @@ object Main {
 				      true)
   }
 
+  val outDir = parser.option[String](List("outDir"), "n", "output directory") {
+    (sValue, opt) => sValue
+  }
+
+  val outCompareInfer = parser.option[String](List("outCompareInfer"), "n", "output file for comparing inference methods") {
+    (sValue, opt) => sValue
+  }
+
   def main(args: Array[String]) {
     try { 
       parser.parse(args)
@@ -48,6 +60,11 @@ object Main {
 
     val multir = new MultiR(train.value.getOrElse(null))
     val dnmar  = new DNMAR(train.value.getOrElse(null))
+
+    if(outDir.value.getOrElse(null) != null) {
+      println(outDir.value.getOrElse(null))
+      ("mkdir -p " + outDir.value.getOrElse(null)).!
+    }
 
     if(false) {
     //if(true) {
@@ -63,35 +80,25 @@ object Main {
     val nrel     = train.value.getOrElse(null).relVocab.size
     val relVocab = train.value.getOrElse(null).relVocab
 
-    for(i <- 0 to 150) {
+    var fw:FileWriter = null
+    if(outCompareInfer.value.getOrElse(null) != null) {
+      println(outCompareInfer.value.getOrElse(null))
+      fw = new FileWriter(outCompareInfer.value.getOrElse(null))
+      fw.write(List("score1rs", "time1rs", "score10rs", "time10rs", "score20rs", "time20rs", "score1kBeam", "time1kBeam", "scoreExact", "timeExact", "nVars").reduceLeft(_ + "\t" + _) + "\n")
+    }
+
+    for(i <- 0 to 60) {
+      var outFile:String = null
+
       println("*********************************************")
       println("iteration " + i)
       println("*********************************************")
 
-      dnmar.updatePhi   = i > 10 && i <= 20
-      dnmar.trainSimple = i <= 20
-      dnmar.updateTheta = i < 10 || i > 20
-//      dnmar.updatePhi   = (i % 2) == 1
-      //if(i % 10 == 2 && i > 10) {
-      if(i == 21) {
-	dnmar.resetTheta
-      }
-
-      dnmar.train(1)
-      dnmar.printPhi
-      if(i % 10 == 0) {
-	dnmar.printTheta
-      }
+      dnmar.train(1, fw)
 
       println("rel predictions:")
       Eval.useObsPredictions = false
       Eval.AggregateEval(dnmar, test.value.getOrElse(null))
-      //      if(i % 10 == 0 && i >= 10) {
-      //	for(r <- 0 until nrel) {
-      //	  println(relVocab(r))
-      //	  Eval.AggregateEval(dnmar, test.value.getOrElse(null), r)
-      //	}
-      //      }
 
       println("*********************************************")
       println("* rel predictions (training):")
@@ -103,14 +110,7 @@ object Main {
       println("* Human annotated evaluation")
       println("*********************************************")
       Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt")
-      //      if(i % 10 == 0 && i >= 10) {
-      //	for(r <- 0 until nrel) {
-      //	  println(relVocab(r))
-      //	  Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt", r)
-      //	}
-      //      }
 
-      /*
       if(i % 10 == 0 && i >= 10) {
 	println("*********************************************")
 	println("* averaged parameters")
@@ -119,21 +119,35 @@ object Main {
 	Eval.useAveragedParameters = true
 
 	Eval.useObsPredictions = false
-	Eval.AggregateEval(dnmar, test.value.getOrElse(null))
-	//	for(r <- 0 until nrel) {
-	//	  println(relVocab(r))
-	//	  Eval.AggregateEval(dnmar, test.value.getOrElse(null), r)
-	//	}
+
+	if(i == 50) {
+	  outFile = outDir.value.getOrElse(null)
+	  if(outFile != null) {
+	    outFile += "/aggregate"
+	  }
+	}
+	Eval.AggregateEval(dnmar, test.value.getOrElse(null), outFile)
 
 	println("Human annotated evaluation (averaged)")
-	Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt")
-	//	for(r <- 0 until nrel) {
-	//	  println(relVocab(r))
-	//	  Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt", r)
-	//	}
+	if(i == 50) {
+	  outFile = outDir.value.getOrElse(null)
+	  if(outFile != null) {
+	    outFile += "/sentential"
+	  }
+	}
+	Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt", outFile)
+	for(r <- 0 until nrel) {
+	  if(i == 50) {
+	    outFile = outDir.value.getOrElse(null)
+	    if(outFile != null) {
+	      outFile += ("/sentential_" + relVocab(r).replace("/", "_"))
+	    }
+	  }
+	  println(relVocab(r))
+	  Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential-byrelation.txt", r, outFile)
+	}
 	Eval.useAveragedParameters = false
       }
-      */
 
       if(Constants.TIMING) {
 	Utils.Timer.print

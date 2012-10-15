@@ -16,6 +16,7 @@ import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
 import math._
+import java.io._
 
 class HiddenVariablesHypothesisTwoSided(postZ:DenseMatrix[Double], postObs:DenseVector[Double], zPart:List[Int], rPart:Array[Double], obs:Array[Double], sPartial:Double, val score:Double) extends Hypothesis {
   def z:Array[Int] = {
@@ -74,18 +75,16 @@ class HiddenVariablesHypothesisTwoSided(postZ:DenseMatrix[Double], postObs:Dense
 }
 
 class DNMAR(data:EntityPairData) extends Parameters(data) {
-  //TODO: without the assumption that unobserved data are negatives, shouldn't need to throw out 80% of negative data...
-
   //Randomly permute the training data
-  //Throw out X% of negative data...
-  //val training = Random.shuffle((0 until data.data.length).toList).filter((e12) => data.data(e12).rel(data.relVocab("NA")) == 0.0 || scala.util.Random.nextDouble < 0.1)
-  //val training = Random.shuffle((0 until data.data.length).toList).filter((e12) => data.data(e12).rel(data.relVocab("NA")) == 0.0 || scala.util.Random.nextDouble < 0.2)
-  //val training = Random.shuffle((0 until data.data.length).toList).filter((e12) => data.data(e12).rel(data.relVocab("NA")) == 0.0 || scala.util.Random.nextDouble < 0.5)
   val training = Random.shuffle((0 until data.data.length).toList).filter((e12) => true)
 
   //TODO: seperate training for theta & phi?
 
-  def train(nIter:Int) = { 
+  def train(nIter:Int) = {
+    train(nIter, null)
+  }
+
+  def train(nIter:Int, fw:FileWriter) = {
     for(i <- 0 until nIter) {
       //println("iteration " + i)
       var j = 0
@@ -99,22 +98,35 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	if(trainSimple) {
 	  iHidden = inferHiddenMULTIR(data.data(e12))
 	} else {
-	  //val (iHidden, score) = inferHiddenLocalSearch(data.data(e12), 10)
-	  val result = inferHiddenLocalSearch(data.data(e12), 1)
+	  val result = inferHiddenLocalSearch(data.data(e12), 10)
           //val result = inferHiddenLocalSearch(data.data(e12), 20)
 	  iHidden = result._1
 	  score   = result._2
 
 	  //Figure out search error (in cases where we can efficiently do exact inference)
-//	  if(Constants.DEBUG) {
-//	    if(data.data(e12).features.length < 200) {
-//	      val (iHidden1rs,  score1rs) = inferHiddenLocalSearch(data.data(e12), 1)
-//	      val (iHidden10rs, score10rs) = inferHiddenLocalSearch(data.data(e12), 1)
-//	      val (iHidden20rs, score20rs) = inferHiddenLocalSearch(data.data(e12), 20)
-//	      val (iHiddenExact, scoreExact) = inferHiddenTwoSided(data.data(e12))
-//	      println("scores:" + "\t" + score1rs + "\t" + score10rs + "\t" + score20rs + "\t" + scoreExact + "\t" + data.data(e12).features.length)
-//	    }
-//	  }
+	  if(fw != null && data.data(e12).features.length > 1 && data.data(e12).features.length < 100) {
+	    Utils.Timer.start("inferenceTime")
+	    val (iHidden1rs,  score1rs) = inferHiddenLocalSearch(data.data(e12), 1)
+	    val time1rs = Utils.Timer.reset("inferenceTime")
+
+	    Utils.Timer.start("inferenceTime")
+	    val (iHidden10rs, score10rs) = inferHiddenLocalSearch(data.data(e12), 10)
+	    val time10rs = Utils.Timer.reset("inferenceTime")
+
+	    Utils.Timer.start("inferenceTime")
+	    val (iHidden20rs, score20rs) = inferHiddenLocalSearch(data.data(e12), 20)
+	    val time20rs = Utils.Timer.reset("inferenceTime")
+
+	    Utils.Timer.start("inferenceTime")
+	    val (iHidden1kBeam, score1kBeam) = inferHiddenTwoSided(data.data(e12), 1000)
+	    val time1kBeam = Utils.Timer.reset("inferenceTime")
+
+	    Utils.Timer.start("inferenceTime")
+	    val (iHiddenExact, scoreExact) = inferHiddenTwoSided(data.data(e12), -1)
+	    val timeExact = Utils.Timer.reset("inferenceTime")
+	    fw.write(List(score1rs, time1rs, score10rs, time10rs, score20rs, time20rs, score1kBeam, time1kBeam, scoreExact, timeExact, data.data(e12).features.length).map(_.toString).reduceLeft(_ + "\t" + _) + "\n")
+	    fw.flush
+	  }
 	}
 
 	if(updateTheta && j % 10 != 0) {
@@ -130,22 +142,25 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     }
   }
 
-  def inferHiddenLocalSearch(ep:EntityPair, nRandomRestarts:Int):Tuple2[EntityPair,Double] = {
-    if(Constants.TIMING) {
-      Utils.Timer.start("inferHiddenLocalSearch")
+  def simpleObsScore(ep:EntityPair):DenseVector[Double] = {
+    val postObs     = DenseVector.zeros[Double](data.nRel)
+    for(r <- 0 until data.nRel) {
+      if(r == data.relVocab("NA")) {
+	//postObs(r) = -4.0
+	postObs(r) = -2.0
+	//postObs(r) = 0.0
+      } else if(ep.obs(r) == 0.0) {
+	postObs(r) = -5.0
+      } else {
+	//postObs(r) = 100.0
+	postObs(r) = 10000.0
+      }
     }
+    postObs
+  }
 
-    //println("N:" + ep.features.length)
-
-    val postZ  = DenseMatrix.zeros[Double](ep.features.length, data.nRel)
-    for(i <- 0 until ep.features.length) {
-      postZ(i,::) := (theta * ep.features(i)).toDense
-      /*
-       * NOTE: don't use "NA" parameters....?
-       */
-      //postZ(i,data.relVocab("NA")) = 0.0
-    }
-
+  //Computes the score for each of the observation factors based on observed data in Freebase
+  def computeObsScore(ep:EntityPair):DenseVector[Double] = {
     //Posterior distribution over observations
     val postObs     = DenseVector.zeros[Double](data.nRel)
     for(r <- 0 until data.nRel) {
@@ -180,6 +195,24 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	//postObs(r) = 100.0
       }
     }
+    postObs
+  }
+
+  def inferHiddenLocalSearch(ep:EntityPair, nRandomRestarts:Int):Tuple2[EntityPair,Double] = {
+    if(Constants.TIMING) {
+      Utils.Timer.start("inferHiddenLocalSearch")
+    }
+
+    //println("N:" + ep.features.length)
+
+    val postZ  = DenseMatrix.zeros[Double](ep.features.length, data.nRel)
+    for(i <- 0 until ep.features.length) {
+      postZ(i,::) := (theta * ep.features(i)).toDense
+      /*
+       * NOTE: don't use "NA" parameters....?
+       */
+      //postZ(i,data.relVocab("NA")) = 0.0
+    }
 
     var bestZ:DenseVector[Int]      = null
     var bestRel:DenseVectorRow[Double] = null
@@ -190,6 +223,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       val rel     = DenseVector.zeros[Double](postZ.numCols).t
       val rCounts = DenseVector.zeros[Int](postZ.numCols)
       var score = 0.0
+
+      val postObs = simpleObsScore(ep)
       
       //Random initialization
       for(i <- 0 until z.length) {
@@ -316,6 +351,10 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
   }
 
   def inferHiddenTwoSided(ep:EntityPair):Tuple2[EntityPair,Double] = {
+    inferHiddenTwoSided(ep, -1)
+  }
+
+  def inferHiddenTwoSided(ep:EntityPair, beamSize:Int):Tuple2[EntityPair,Double] = {
     if(Constants.TIMING) {
       Utils.Timer.start("inferHiddenTwoSided")
     }
@@ -327,22 +366,11 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     }
 
     //Posterior distribution over observations
-    val postObs     = DenseVector.zeros[Double](data.nRel)
-    for(r <- 0 until data.nRel) {
-      if(r == data.relVocab("NA")) {
-	//postObs(r) = -2.0
-	postObs(r) = -4.0
-      } else if(ep.obs(r) == 0.0) {
-	postObs(r) = -5.0
-      } else {
-	postObs(r) = 100.0
-      }
-    }
+    val postObs = simpleObsScore(ep)
 
     val rPartial = new Array[Double](data.nRel)
     var sPartial = 0.0
-    //val bs = new BeamSearch(new HiddenVariablesHypothesisTwoSided(postZ, postObs, Nil, rPartial, ep.obs.toArray, sPartial, sPartial), 1000);
-    val bs = new BeamSearch(new HiddenVariablesHypothesisTwoSided(postZ, postObs, Nil, rPartial, ep.obs.toArray, sPartial, sPartial), -1);
+    val bs = new BeamSearch(new HiddenVariablesHypothesisTwoSided(postZ, postObs, Nil, rPartial, ep.obs.toArray, sPartial, sPartial), beamSize);
 
     while(bs.Head.asInstanceOf[HiddenVariablesHypothesisTwoSided].z.length < ep.features.length) {
       bs.UpdateQ

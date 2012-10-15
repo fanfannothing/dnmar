@@ -79,10 +79,6 @@ class ProtobufData(inFile:String, evoc:Vocab, rvoc:Vocab, fvoc:Vocab, readSenten
     r = Relation.parseDelimitedFrom(is)
   }
 
-  println("f: " + featureVocab.size)
-  println("e: " + entityVocab.size)
-  println("r: " + relVocab.size)
-
   val nRel  = relVocab.size
   val nFeat = featureVocab.size
 
@@ -131,7 +127,15 @@ class ProtobufData(inFile:String, evoc:Vocab, rvoc:Vocab, fvoc:Vocab, readSenten
       data(nEntityPairs) = new EntityPair(e1, e2, mentions, relations.t)
     }
 
+//    if(nEntityPairs % 1000 == 0) {
+//      println(nEntityPairs)
+//    }
+
     nEntityPairs += 1
     r = Relation.parseDelimitedFrom(is)
   }
+
+  println("feature vocab size: " + featureVocab.size)
+  println("# entity pairs:     " + nEntityPairs)
+  println("# relations:        " + relVocab.size)
 }

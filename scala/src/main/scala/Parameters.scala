@@ -23,6 +23,8 @@ import scala.util.Random
 
 import math.abs
 
+import java.io._
+
 abstract class Parameters(val data:EntityPairData) {
   val nRel  = data.nRel
   val nFeat = data.nFeat
@@ -33,7 +35,7 @@ abstract class Parameters(val data:EntityPairData) {
    */
   val theta         = DenseMatrix.zeros[Double](nRel,nFeat+1)
 				//Innitialize bias feature for "NA"
-  theta(data.relVocab("NA"), nFeat) = -10.0
+  //theta(data.relVocab("NA"), nFeat) = -10.0
   //theta(data.relVocab("NA"), nFeat) = -100.0
   val theta_sum     = DenseMatrix.zeros[Double](nRel,nFeat+1)
 
@@ -224,6 +226,7 @@ abstract class Parameters(val data:EntityPairData) {
   def inferAll(ep:EntityPair):EntityPair
   def inferAll(ep:EntityPair, useAverage:Boolean):EntityPair
   def train(iterations:Int)
+  def train(iterations:Int, fw:FileWriter)
 
   var trainSimple = false
 

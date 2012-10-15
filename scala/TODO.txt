@@ -3,4 +3,18 @@
        -per-relation analysis (can we get more relations?)
        -better recall?
        -human evaluation...
--Q: what is really needed?
+       -TODO: need to compare training on exactly the same data (e.g. throw out 80% negative matches?)
+
+-Compare inference methods:
+	 -Random restarts (0, 10, 20)
+	 -Beam search with fixed width...
+	 -Measure time and % exact solutions
+
+TODO: need some data dumping and analysis infrastructure...
+-Dump out P/R points to a variety of files
+-One directory per experiment
+-Also list relations
+Write scripts to read in dumped output and plot graphs, etc...
+
+TODO: Evaluate MultiR and DLVM exact same dataset (e.g. don't randomly sample "NA" seperately)
+
