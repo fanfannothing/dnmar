@@ -18,13 +18,15 @@ import java.io._
 
 class MultiR(data:EntityPairData) extends Parameters(data) {
   //Randomly permute the training data
-  val training = Random.shuffle((0 until data.data.length).toList).filter((e12) => true)
+  //val training = Random.shuffle((0 until data.data.length).toList).filter((e12) => true)
 
   def train(nIter:Int) = {
     train(nIter, null)
   }
 
   def train(nIter:Int, outFile:FileWriter) = { 
+    //Randomly permute the training data
+    val training = Random.shuffle((0 until data.data.length).toList).filter((e12) => true)
     for(i <- 0 until nIter) {
       //println("iteration " + i)
       for(e12 <- training) {

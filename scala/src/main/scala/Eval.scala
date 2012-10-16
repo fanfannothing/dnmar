@@ -55,13 +55,13 @@ object Eval {
       }
 
       //if(is_mention_str != "n" && (rel == -1 || test.relVocab(relation_str) == rel)) {
-      if(rel == -1 || test.relVocab(relation_str) == rel) {
+      if(rel == -1 || test.relVocab(relation_str) == rel && (relation_str != "/location/administrative_division/country") && (is_mention_str != "")) {
 	test.entityVocab.lock      
 	val e1id = test.entityVocab(e1id_str)
 	val e2id = test.entityVocab(e2id_str)
 
 	//Treat errors as "NA"? (doesn't penalize recall for missing them, but any predictions will hurt precision...)
-	if(is_mention_str == "n") {
+	if(is_mention_str != "y" && is_mention_str != "indirect") {
 	  relation_str = "NA"
 	}
 
@@ -210,8 +210,9 @@ object Eval {
   def PrintPR(sortedPredictions:List[Prediction], maxResults:Double) {
     var tp, fp, fn = 0.0
 
-    var maxF, maxFp, maxFr = 0.0
-    var maxP, maxPr, maxPf = 0.0
+    var maxF,  maxFp, maxFr = 0.0
+    var maxP,  maxPr, maxPf = 0.0
+    var maxRp, maxR,  maxRf = 0.0
     for(prediction <- sortedPredictions.sortBy(-_.score)) {
       if(prediction.correct) {
 	tp += 1.0
@@ -235,9 +236,16 @@ object Eval {
 	maxPr = r
 	maxPf = f
       }
+
+      if(r > maxR && p > 0.5) {
+	maxR  = r
+	maxRp = p
+	maxRf = f
+      }
     }
     println("N:" + sortedPredictions.length)
     println("P:" + maxFp + "\tR:" + maxFr + "\tF:" + maxF)
     println("P:" + maxP  + "\tR:" + maxPr + "\tF:" + maxPf)
+    println("P:" + maxRp + "\tR:" + maxR  + "\tF:" + maxRf)
   }
 }
