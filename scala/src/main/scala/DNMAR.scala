@@ -101,8 +101,11 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	if(trainSimple) {
 	  iHidden = inferHiddenMULTIR(data.data(e12))
 	} else {
-	  val result = inferHiddenLocalSearch(data.data(e12), 10)
+	  //val result = inferHiddenLocalSearch(data.data(e12), 10)
           //val result = inferHiddenLocalSearch(data.data(e12), 20)
+
+	  val result = inferHiddenBranchAndBound(data.data(e12))
+
 	  iHidden = result._1
 	  score   = result._2
 
@@ -216,11 +219,13 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     }
     val postObs = simpleObsScore(ep)
     val (iHidden1rs, score1rs) = inferHiddenLocalSearch(ep, 1)
-    inferHiddenBranchAndBound(ep, postZ, postObs, iHidden1rs, score1rs, new Array[Double](postZ.numCols), List(), 0.0)
+    val result = inferHiddenBranchAndBound(ep, postZ, postObs, iHidden1rs, score1rs, new Array[Double](postZ.numCols), List(), 0.0)
 
     if(Constants.TIMING) {
       Utils.Timer.stop("inferHiddenBranchAndBound")
     }
+
+    result
   }
 
   def inferHiddenBranchAndBound(ep:EntityPair, postZ:DenseMatrix[Double], postObs:DenseVector[Double], epbest:EntityPair, scorebest:Double, rPartial:Array[Double], zPartial:List[Int], sPartial:Double):Tuple2[EntityPair,Double] = {
