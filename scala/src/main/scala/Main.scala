@@ -84,7 +84,7 @@ object Main {
     if(outCompareInfer.value.getOrElse(null) != null) {
       println(outCompareInfer.value.getOrElse(null))
       fw = new FileWriter(outCompareInfer.value.getOrElse(null))
-      fw.write(List("score1rs", "time1rs", "score10rs", "time10rs", "score20rs", "time20rs", "score1kBeam", "time1kBeam", "scoreExact", "timeExact", "nVars").reduceLeft(_ + "\t" + _) + "\n")
+      fw.write(List("score1rs", "time1rs", "score10rs", "time10rs", "score20rs", "time20rs", "score1kBeam", "time1kBeam", "scoreBNB", "timeBNB", "scoreExact", "timeExact", "nVars").reduceLeft(_ + "\t" + _) + "\n")
     }
 
     for(i <- 0 to 60) {

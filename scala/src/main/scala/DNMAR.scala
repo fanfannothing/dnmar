@@ -36,7 +36,7 @@ class HiddenVariablesHypothesisTwoSided(postZ:DenseMatrix[Double], postObs:Dense
 
     for(rel <- 0 until postZ.numCols) {
       val newZ = rel :: zPartial
-      var newSpartial = sPartial + postZ(z.length, rel)
+      var newSpartial = sPartial + postZ(newZ.length-1, rel)
       var newScore = newSpartial
 
       //Update rPartial
@@ -76,7 +76,7 @@ class HiddenVariablesHypothesisTwoSided(postZ:DenseMatrix[Double], postObs:Dense
 
 class DNMAR(data:EntityPairData) extends Parameters(data) {
   //Randomly permute the training data
-  val training = Random.shuffle((0 until data.data.length).toList).filter((e12) => true)
+  //var training = Random.shuffle((0 until data.data.length).toList).filter((e12) => true)
 
   //TODO: seperate training for theta & phi?
 
@@ -86,6 +86,9 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 
   def train(nIter:Int, fw:FileWriter) = {
     for(i <- 0 until nIter) {
+      //Randomly permute the training data
+      var training = Random.shuffle((0 until data.data.length).toList).filter((e12) => true)
+
       //println("iteration " + i)
       var j = 0
       for(e12 <- training) {
@@ -118,13 +121,17 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	    val time20rs = Utils.Timer.reset("inferenceTime")
 
 	    Utils.Timer.start("inferenceTime")
-	    val (iHidden1kBeam, score1kBeam) = inferHiddenTwoSided(data.data(e12), 1000)
+	    val (iHidden1kBeam, score1kBeam) = inferHiddenAstar(data.data(e12), 1000)
 	    val time1kBeam = Utils.Timer.reset("inferenceTime")
 
 	    Utils.Timer.start("inferenceTime")
-	    val (iHiddenExact, scoreExact) = inferHiddenTwoSided(data.data(e12), -1)
+	    val (iHiddenBNB, scoreBNB) = inferHiddenBranchAndBound(data.data(e12))
+	    val timeBNB = Utils.Timer.reset("inferenceTime")
+
+	    Utils.Timer.start("inferenceTime")
+	    val (iHiddenExact, scoreExact) = inferHiddenAstar(data.data(e12), -1)
 	    val timeExact = Utils.Timer.reset("inferenceTime")
-	    fw.write(List(score1rs, time1rs, score10rs, time10rs, score20rs, time20rs, score1kBeam, time1kBeam, scoreExact, timeExact, data.data(e12).features.length).map(_.toString).reduceLeft(_ + "\t" + _) + "\n")
+	    fw.write(List(score1rs, time1rs, score10rs, time10rs, score20rs, time20rs, score1kBeam, time1kBeam, scoreBNB, timeBNB, scoreExact, timeExact, data.data(e12).features.length).map(_.toString).reduceLeft(_ + "\t" + _) + "\n")
 	    fw.flush
 	  }
 	}
@@ -196,6 +203,73 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       }
     }
     postObs
+  }
+
+  def inferHiddenBranchAndBound(ep:EntityPair):Tuple2[EntityPair,Double] = {
+    if(Constants.TIMING) {
+      Utils.Timer.start("inferHiddenBranchAndBound")
+    }
+
+    val postZ = DenseMatrix.zeros[Double](ep.features.length, data.nRel)
+    for(i <- 0 until ep.features.length) {
+      postZ(i,::) := (theta * ep.features(i)).toDense
+    }
+    val postObs = simpleObsScore(ep)
+    val (iHidden1rs, score1rs) = inferHiddenLocalSearch(ep, 1)
+    inferHiddenBranchAndBound(ep, postZ, postObs, iHidden1rs, score1rs, new Array[Double](postZ.numCols), List(), 0.0)
+
+    if(Constants.TIMING) {
+      Utils.Timer.stop("inferHiddenBranchAndBound")
+    }
+  }
+
+  def inferHiddenBranchAndBound(ep:EntityPair, postZ:DenseMatrix[Double], postObs:DenseVector[Double], epbest:EntityPair, scorebest:Double, rPartial:Array[Double], zPartial:List[Int], sPartial:Double):Tuple2[EntityPair,Double] = {
+    var epBest    = epbest
+    var scoreBest = scorebest
+    for(rel <- 0 until postZ.numCols) {
+      val newZ = rel :: zPartial
+      val newSpartial = sPartial + postZ(newZ.length-1, rel)
+      var newScore    = newSpartial
+      
+      //Update rPartial
+      val newRpartial = rPartial.clone
+      newRpartial(rel) = 1.0
+
+      //Add max scores for rest of z's (note: this is an upper bound / admissible heuristic)
+      for(i <- newZ.length until postZ.numRows) {
+	newScore += postZ(i,::).max
+      }
+
+      //Observation factors
+      for(rel <- 0 until postZ.numCols) {
+	if(newRpartial(rel) == 1.0) {
+	  newScore += postObs(rel)
+	} else if(postObs(rel) > 0.0) {
+	  //Find the bess possible way of changing one of the remaining z's (note: it is possible we could use the same z to satisfy 2 different relations, but hey this is an upper bound!)
+	  var maxValue = Double.NegativeInfinity
+	  for(i <- newZ.length until postZ.numRows) {
+	    val possibleValue = postObs(rel) + postZ(i,rel) - postZ(i,::).max
+	    if(possibleValue > maxValue) {
+	      maxValue = possibleValue
+	    }
+	  }
+	  if(maxValue > 0.0) {
+	    newScore += maxValue
+	  }
+	}
+      }
+
+      if(newZ.length == postZ.numRows && newScore > scoreBest) {
+	//Found a better full assignment
+	epBest    = new EntityPair(ep.e1id, ep.e2id, ep.features, DenseVector(newRpartial).t, DenseVector(newZ.toArray), null, ep.obs)
+	scoreBest = newScore
+      } else if(newScore > scoreBest) {
+	val results = inferHiddenBranchAndBound(ep, postZ, postObs, epBest, scoreBest, newRpartial, newZ, newSpartial)
+	epBest    = results._1
+	scoreBest = results._2
+      }
+    }
+    return (epBest, scoreBest)
   }
 
   def inferHiddenLocalSearch(ep:EntityPair, nRandomRestarts:Int):Tuple2[EntityPair,Double] = {
@@ -350,13 +424,13 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     (result, bestScore)
   }
 
-  def inferHiddenTwoSided(ep:EntityPair):Tuple2[EntityPair,Double] = {
-    inferHiddenTwoSided(ep, -1)
+  def inferHiddenAstar(ep:EntityPair):Tuple2[EntityPair,Double] = {
+    inferHiddenAstar(ep, -1)
   }
 
-  def inferHiddenTwoSided(ep:EntityPair, beamSize:Int):Tuple2[EntityPair,Double] = {
+  def inferHiddenAstar(ep:EntityPair, beamSize:Int):Tuple2[EntityPair,Double] = {
     if(Constants.TIMING) {
-      Utils.Timer.start("inferHiddenTwoSided")
+      Utils.Timer.start("inferHiddenAstar")
     }
 
     val postZ  = DenseMatrix.zeros[Double](ep.features.length, data.nRel)
@@ -396,7 +470,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     val result = new EntityPair(ep.e1id, ep.e2id, ep.features, rel, DenseVector(bs.Head.asInstanceOf[HiddenVariablesHypothesisTwoSided].z.toArray), null, ep.obs)
 
     if(Constants.TIMING) {
-      Utils.Timer.stop("inferHiddenTwoSided")
+      Utils.Timer.stop("inferHiddenAstar")
     }
 
     (result, score)
