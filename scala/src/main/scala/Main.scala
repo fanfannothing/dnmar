@@ -111,7 +111,7 @@ object Main {
       println("*********************************************")
       Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt")
 
-      if(i % 10 == 0 && i >= 10) {
+      if(i % 10 == 0 && i >= 10 || i == 1) {
 	println("*********************************************")
 	println("* averaged parameters")
 	println("*********************************************")
@@ -120,7 +120,8 @@ object Main {
 
 	Eval.useObsPredictions = false
 
-	if(i == 50) {
+	//if(i == 50) {
+	if(i == 1) {
 	  outFile = outDir.value.getOrElse(null)
 	  if(outFile != null) {
 	    outFile += "/aggregate"
@@ -129,7 +130,8 @@ object Main {
 	Eval.AggregateEval(dnmar, test.value.getOrElse(null), outFile)
 
 	println("Human annotated evaluation (averaged)")
-	if(i == 50) {
+	//if(i == 50) {
+	if(i == 1) {
 	  outFile = outDir.value.getOrElse(null)
 	  if(outFile != null) {
 	    outFile += "/sentential"
@@ -137,7 +139,8 @@ object Main {
 	}
 	Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt", outFile)
 	for(r <- 0 until nrel) {
-	  if(i == 50) {
+	  //if(i == 50) {
+	  if(i == 1) {
 	    outFile = outDir.value.getOrElse(null)
 	    if(outFile != null) {
 	      outFile += ("/sentential_" + relVocab(r).replace("/", "_"))
