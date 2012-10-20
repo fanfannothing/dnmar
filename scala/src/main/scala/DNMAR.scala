@@ -92,7 +92,9 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       //println("iteration " + i)
       var j = 0
       for(e12 <- training) {
-	//print("entity pair " + j + "/" + training.length + ":" + data.data(e12).features.length)
+	if(Constants.DEBUG && data.data(e12).features.length > 10) {
+	  print("entity pair " + j + "/" + training.length + ":" + data.data(e12).features.length + "\n")
+	}
 	//Run le inference
 	val iAll    = inferAll(data.data(e12))
 	var iHidden:EntityPair = null  //Just needed to asign it something temporarily...
@@ -102,9 +104,9 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	  iHidden = inferHiddenMULTIR(data.data(e12))
 	} else {
 	  //val result = inferHiddenLocalSearch(data.data(e12), 10)
-          //val result = inferHiddenLocalSearch(data.data(e12), 20)
 
-	  val result = inferHiddenBranchAndBound(data.data(e12))
+	  //val result = inferHiddenBranchAndBound(data.data(e12))
+          val result = inferHiddenLocalSearch(data.data(e12), 20)
 
 	  iHidden = result._1
 	  score   = result._2

@@ -42,11 +42,23 @@ object Eval {
     }
 
     /*
+     ************************************************************************************************************************
+     * NOTE: it appears MultiR uses the aggregate-level scores to generate P/R curves rather than the per-sentence scores
+     * Hypothesis: this could lead to higher recal....
+     *
+     * Comment From MultiR (FullInference.java):
+       It's important to ignore the _NO_RELATION_ type here, soneed to start at 1!
+       final value is avg of maxes
+     ************************************************************************************************************************
+     */
+
+    /*
      * Read in the features and labels
      */
-    val features  = new ListBuffer[SparseVectorCol[Double]]
-    val labels    = new ListBuffer[Int]
-    val sentences = new ListBuffer[String]
+    val features        = new ListBuffer[SparseVectorCol[Double]]
+    val aggregateScores = new ListBuffer[Double]
+    val labels          = new ListBuffer[Int]
+    val sentences       = new ListBuffer[String]
     for(line <- scala.io.Source.fromFile(annotatedFile).getLines()) {
       //var Array(e1id_str, e2id_str, i_dont_know_what_this_is, relation_str, is_mention_str, sentence) = line.trim.split("\t")
       var Array(e1id_str, e2id_str, i_dont_know_what_this_is, relation_str, is_mention_str, sentence_annotated, e1str, e2str, sentence) = line.trim.split("\t")
@@ -55,7 +67,8 @@ object Eval {
       }
 
       //if(is_mention_str != "n" && (rel == -1 || test.relVocab(relation_str) == rel)) {
-      if(rel == -1 || test.relVocab(relation_str) == rel && (relation_str != "/location/administrative_division/country") && (is_mention_str != "")) {
+      //if(rel == -1 || test.relVocab(relation_str) == rel && (relation_str != "/location/administrative_division/country") && (is_mention_str != "")) {
+      if(rel == -1 || test.relVocab(relation_str) == rel && (relation_str != "/location/administrative_division/country")) {
 	test.entityVocab.lock      
 	val e1id = test.entityVocab(e1id_str)
 	val e2id = test.entityVocab(e2id_str)
@@ -65,13 +78,31 @@ object Eval {
 	  relation_str = "NA"
 	}
 
-	//OK, now let's find the sentence in the test data, so we can get it's features
 	val ep    = test.data.filter((ep) => ep.e1id == e1id && ep.e2id == e2id)(0)
+	//TODO: no need to find the actual test sentence if we'er using the aggregate scores?
+	//OK, now let's find the sentence in the test data, so we can get it's features
 	val index = ep.sentences.indexOf(sentence)
 	if(index >= 0) {
-	  features  += ep.features(index)
-	  labels    += test.relVocab(relation_str)
-	  sentences += sentence
+	  features        += ep.features(index)
+	  labels          += test.relVocab(relation_str)
+	  sentences       += sentence
+	  aggregateScores += 0.0
+
+	  //Just doing what MultiR code does...  Not sure I totally understand why...
+	  val epPred       = param.inferAll(ep)
+	  val maxRelScores = Array.fill(test.nRel){ Double.NegativeInfinity }
+	  for(i <- 0 until epPred.features.length) {
+	    if(epPred.zScore(i) > maxRelScores(epPred.z(i))) {
+	      maxRelScores(epPred.z(i)) = epPred.zScore(i)
+	    }
+	    var sumNum, sumSum = 0.0
+	    for(r <- 0 until test.nRel) {
+	      if(r != test.relVocab("NA") && maxRelScores(r) > Double.NegativeInfinity) {
+		sumNum += 1.0; sumSum += maxRelScores(epPred.z(i))
+	      }
+	    }
+	    aggregateScores(aggregateScores.length-1) += sumSum / sumNum
+	  }
 	} else {
 	  if(Constants.DEBUG) {
 	    println("Threw out an annotated example...")
@@ -95,6 +126,8 @@ object Eval {
       } else {
 	postZ = (param.theta * features(i)).toDense
       }
+      val pNA = postZ(test.relVocab("NA"))
+      postZ(test.relVocab("NA")) = Double.NegativeInfinity
       var predicted = postZ.argmax
 
       //println(param.data.relVocab(predicted) + "\t" + sentences(i))
@@ -106,8 +139,10 @@ object Eval {
       if(predicted != test.relVocab("NA")) {
 	if(predicted == labels(i)) {
 	  sortedPredictions ::= Prediction(postZ(predicted), true)
+	  //sortedPredictions ::= Prediction(aggregateScores(i), true)
 	} else {
 	  sortedPredictions ::= Prediction(postZ(predicted), false)
+	  //sortedPredictions ::= Prediction(aggregateScores(i), false)
 	}
       }
     }

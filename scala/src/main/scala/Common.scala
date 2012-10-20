@@ -45,10 +45,16 @@ object Utils {
     }
 
     def start(s:String) = {
+      if(Constants.DEBUG) {
+	println("start " + s)
+      }
       begin(s) = System.currentTimeMillis
     }
 
     def stop(s:String):Double = {
+      if(Constants.DEBUG) {
+	println("stop " + s)
+      }
       val end = System.currentTimeMillis
       sum(s) = sum.getOrElse(s, 0L) + (end - begin(s))
       sum(s) / 1000.0
