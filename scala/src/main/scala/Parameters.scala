@@ -221,7 +221,8 @@ abstract class Parameters(val data:EntityPairData) {
    * Inference (Must be in implementation class)
    *********************************************************************
    */
-  //def inferHidden(ep:EntityPair):EntityPair
+  
+  // def inferHidden(ep:EntityPair):EntityPair
 
   def inferAll(ep:EntityPair):EntityPair
   def inferAll(ep:EntityPair, useAverage:Boolean):EntityPair
