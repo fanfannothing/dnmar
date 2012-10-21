@@ -159,8 +159,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     for(r <- 0 until data.nRel) {
       if(r == data.relVocab("NA")) {
 	//postObs(r) = -4.0
-	postObs(r) = -2.0
-	//postObs(r) = 0.0
+	//postObs(r) = -2.0
+	postObs(r) = 0.0
       } else if(ep.obs(r) == 0.0) {
 	postObs(r) = -5.0
       } else {
