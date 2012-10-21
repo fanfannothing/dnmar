@@ -138,11 +138,11 @@ object Eval {
       
       if(predicted != test.relVocab("NA")) {
 	if(predicted == labels(i)) {
-	  sortedPredictions ::= Prediction(postZ(predicted), true)
-	  //sortedPredictions ::= Prediction(aggregateScores(i), true)
+	  //sortedPredictions ::= Prediction(postZ(predicted), true)
+	  sortedPredictions ::= Prediction(aggregateScores(i), true)
 	} else {
-	  sortedPredictions ::= Prediction(postZ(predicted), false)
-	  //sortedPredictions ::= Prediction(aggregateScores(i), false)
+	  //sortedPredictions ::= Prediction(postZ(predicted), false)
+	  sortedPredictions ::= Prediction(aggregateScores(i), false)
 	}
       }
     }
