@@ -66,8 +66,8 @@ object Main {
       ("mkdir -p " + outDir.value.getOrElse(null)).!
     }
 
-    //if(false) {
-    if(true) {
+    if(false) {
+    //if(true) {
       println("evaluating MultiR")
       EvalIterations(multir, 50)
     } else {
