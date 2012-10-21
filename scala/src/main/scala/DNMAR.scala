@@ -112,7 +112,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	  score   = result._2
 
 	  //Figure out search error (in cases where we can efficiently do exact inference)
-	  if(fw != null && data.data(e12).features.length > 1 && data.data(e12).features.length < 100) {
+	  //if(fw != null && data.data(e12).features.length > 1 && data.data(e12).features.length < 100) {
+	  if(fw != null && data.data(e12).features.length > 1 && data.data(e12).features.length < 500) {
 	    Utils.Timer.start("inferenceTime")
 	    val (iHidden1rs,  score1rs) = inferHiddenLocalSearch(data.data(e12), 1)
 	    val time1rs = Utils.Timer.reset("inferenceTime")
