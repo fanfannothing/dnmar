@@ -19,7 +19,10 @@ import scala.collection.mutable.ListBuffer
 import java.io._
 
 object Eval {
-  case class Prediction(val score:Double, val correct:Boolean) 
+  //case class Prediction(val score:Double, val correct:Boolean) 
+  class Prediction(val score:Double, val correct:Boolean, val rel:String, val annotated_sentence:String) {
+    def this(score:Double, correct:Boolean) = this(score, correct, null, null)
+  }
 
   var useObsPredictions = false
   var useAveragedParameters = false
@@ -55,10 +58,11 @@ object Eval {
     /*
      * Read in the features and labels
      */
-    val features        = new ListBuffer[SparseVectorCol[Double]]
-    val aggregateScores = new ListBuffer[Double]
-    val labels          = new ListBuffer[Int]
-    val sentences       = new ListBuffer[String]
+    val features            = new ListBuffer[SparseVectorCol[Double]]
+    val aggregateScores     = new ListBuffer[Double]
+    val labels              = new ListBuffer[Int]
+    val sentences           = new ListBuffer[String]
+    val sentences_annotated = new ListBuffer[String]
     for(line <- scala.io.Source.fromFile(annotatedFile).getLines()) {
       //var Array(e1id_str, e2id_str, i_dont_know_what_this_is, relation_str, is_mention_str, sentence) = line.trim.split("\t")
       var Array(e1id_str, e2id_str, i_dont_know_what_this_is, relation_str, is_mention_str, sentence_annotated, e1str, e2str, sentence) = line.trim.split("\t")
@@ -83,12 +87,14 @@ object Eval {
 	//OK, now let's find the sentence in the test data, so we can get it's features
 	val index = ep.sentences.indexOf(sentence)
 	if(index >= 0) {
-	  features        += ep.features(index)
-	  labels          += test.relVocab(relation_str)
-	  sentences       += sentence
-	  aggregateScores += 0.0
+	  features            += ep.features(index)
+	  labels              += test.relVocab(relation_str)
+	  sentences           += sentence
+	  sentences_annotated += sentence_annotated
+	  //aggregateScores += 0.0
 
 	  //Just doing what MultiR code does...  Not sure I totally understand why...
+	  /*
 	  val epPred       = param.inferAll(ep)
 	  val maxRelScores = Array.fill(test.nRel){ Double.NegativeInfinity }
 	  for(i <- 0 until epPred.features.length) {
@@ -103,6 +109,7 @@ object Eval {
 	    }
 	    aggregateScores(aggregateScores.length-1) += sumSum / sumNum
 	  }
+	  */
 	} else {
 	  if(Constants.DEBUG) {
 	    println("Threw out an annotated example...")
@@ -140,10 +147,12 @@ object Eval {
       
       if(predicted != test.relVocab("NA")) {
 	if(predicted == labels(i)) {
-	  sortedPredictions ::= Prediction(postZ(predicted), true)
+	  sortedPredictions ::= new Prediction(postZ(predicted), true, test.relVocab(predicted), sentences_annotated(i))
+	  //sortedPredictions ::= Prediction(postZ(predicted), true)
 	  //sortedPredictions ::= Prediction(aggregateScores(i), true)
 	} else {
-	  sortedPredictions ::= Prediction(postZ(predicted), false)
+	  sortedPredictions ::= new Prediction(postZ(predicted), false, test.relVocab(predicted), sentences_annotated(i))
+	  //sortedPredictions ::= Prediction(postZ(predicted), false)
 	  //sortedPredictions ::= Prediction(aggregateScores(i), false)
 	}
       }
@@ -201,10 +210,12 @@ object Eval {
 	  }
 
 	  if(ep.rel(r) == 1.0 && prediction == 1.0) { 
-	    sortedPredictions ::= Prediction(predicted.zScore(predicted.z :== r).max, true)
+	    sortedPredictions ::= new Prediction(predicted.zScore(predicted.z :== r).max, true)
+	    //sortedPredictions ::= Prediction(predicted.zScore(predicted.z :== r).max, true)
 	  }
 	  else if(ep.rel(r) == 0.0 && prediction == 1.0) {
-	    sortedPredictions ::= Prediction(predicted.zScore(predicted.z :== r).max, false)
+	    sortedPredictions ::= new Prediction(predicted.zScore(predicted.z :== r).max, false)
+	    //sortedPredictions ::= Prediction(predicted.zScore(predicted.z :== r).max, false)
 	  }
 	}
       }
@@ -238,7 +249,7 @@ object Eval {
       val r = tp / (tp + fn)
       //val f = 2 * p * r / (p + r)
 
-      fw.write(p + "\t" + r + "\n")
+      fw.write(p + "\t" + r + "\t" + prediction.rel + "\t" + prediction.correct + "\t" + prediction.annotated_sentence + "\n")
     }
 
     fw.close()
