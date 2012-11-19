@@ -145,12 +145,13 @@ object Eval {
 	maxRecall += 1.0
       }
       
+      //if(predicted != test.relVocab("NA")) {
       if(predicted != test.relVocab("NA")) {
 	if(predicted == labels(i)) {
 	  sortedPredictions ::= new Prediction(postZ(predicted), true, test.relVocab(predicted), sentences_annotated(i))
 	  //sortedPredictions ::= Prediction(postZ(predicted), true)
 	  //sortedPredictions ::= Prediction(aggregateScores(i), true)
-	} else {
+	} else if(labels(i) != test.relVocab("NA")) {
 	  sortedPredictions ::= new Prediction(postZ(predicted), false, test.relVocab(predicted), sentences_annotated(i))
 	  //sortedPredictions ::= Prediction(postZ(predicted), false)
 	  //sortedPredictions ::= Prediction(aggregateScores(i), false)
