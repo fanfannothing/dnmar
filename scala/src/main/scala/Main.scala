@@ -87,7 +87,8 @@ object Main {
       fw.write(List("score1rs", "time1rs", "score10rs", "time10rs", "score20rs", "time20rs", "score1kBeam", "time1kBeam", "scoreBNB", "timeBNB", "scoreExact", "timeExact", "nVars").reduceLeft(_ + "\t" + _) + "\n")
     }
 
-    for(i <- 0 to nIter+1) {
+    //for(i <- 0 to nIter+1) {
+    for(i <- 0 to nIter) {
       var outFile:String = null
 
       println("*********************************************")
