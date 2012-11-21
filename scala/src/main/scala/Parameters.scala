@@ -79,6 +79,28 @@ abstract class Parameters(val data:EntityPairData) {
     }
   }
 
+  def dumpTheta(outFile:String) {
+    if(Constants.TIMING) {
+      Utils.Timer.start("dumpTheta")
+    }
+    
+    val fw = new FileWriter(outFile)
+
+    var thetaSorted = theta.argsort.reverse.filter((rf) => rf._1 != data.relVocab("NA"))
+    thetaSorted = thetaSorted.sortBy((rf) => -math.abs(theta(rf._1,rf._2)))
+    //for(i <- 0 until thetaSorted.length) {
+    for(i <- 0 until 10000) {
+      val (r,f) = thetaSorted(i)
+      fw.write(data.relVocab(r) + "\t" + data.featureVocab(f) + "\t" + theta(r,f) + "\n")
+    }
+
+    fw.close()
+
+    if(Constants.TIMING) {
+      Utils.Timer.stop("dumpTheta")
+    }
+  }
+
   def updateTheta(iAll:EntityPair, iHidden:EntityPair) {
     if(Constants.TIMING) {
       Utils.Timer.start("updateTheta")

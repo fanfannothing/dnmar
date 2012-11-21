@@ -72,7 +72,8 @@ object Eval {
 
       //if(is_mention_str != "n" && (rel == -1 || test.relVocab(relation_str) == rel)) {
       //if(rel == -1 || test.relVocab(relation_str) == rel && (relation_str != "/location/administrative_division/country") && (is_mention_str != "")) {
-      if(rel == -1 || test.relVocab(relation_str) == rel && (relation_str != "/location/administrative_division/country")) {
+      //if(rel == -1 || test.relVocab(relation_str) == rel && (relation_str != "/location/administrative_division/country")) {
+      if(relation_str != "/location/administrative_division/country") {
 	test.entityVocab.lock      
 	val e1id = test.entityVocab(e1id_str)
 	val e2id = test.entityVocab(e2id_str)
@@ -91,25 +92,6 @@ object Eval {
 	  labels              += test.relVocab(relation_str)
 	  sentences           += sentence
 	  sentences_annotated += sentence_annotated
-	  //aggregateScores += 0.0
-
-	  //Just doing what MultiR code does...  Not sure I totally understand why...
-	  /*
-	  val epPred       = param.inferAll(ep)
-	  val maxRelScores = Array.fill(test.nRel){ Double.NegativeInfinity }
-	  for(i <- 0 until epPred.features.length) {
-	    if(epPred.zScore(i) > maxRelScores(epPred.z(i))) {
-	      maxRelScores(epPred.z(i)) = epPred.zScore(i)
-	    }
-	    var sumNum, sumSum = 0.0
-	    for(r <- 0 until test.nRel) {
-	      if(r != test.relVocab("NA") && maxRelScores(r) > Double.NegativeInfinity) {
-		sumNum += 1.0; sumSum += maxRelScores(epPred.z(i))
-	      }
-	    }
-	    aggregateScores(aggregateScores.length-1) += sumSum / sumNum
-	  }
-	  */
 	} else {
 	  if(Constants.DEBUG) {
 	    println("Threw out an annotated example...")
@@ -146,15 +128,14 @@ object Eval {
       }
       
       //if(predicted != test.relVocab("NA")) {
-      if(predicted != test.relVocab("NA")) {
+      if((rel == -1 || predicted == rel) && predicted != test.relVocab("NA")) {
 	if(predicted == labels(i)) {
+	  //True Positive
 	  sortedPredictions ::= new Prediction(postZ(predicted), true, test.relVocab(predicted), sentences_annotated(i))
-	  //sortedPredictions ::= Prediction(postZ(predicted), true)
-	  //sortedPredictions ::= Prediction(aggregateScores(i), true)
-	} else if(labels(i) != test.relVocab("NA")) {
+	//} else if(labels(i) != test.relVocab("NA")) {
+	} else {
+	  //False Positive
 	  sortedPredictions ::= new Prediction(postZ(predicted), false, test.relVocab(predicted), sentences_annotated(i))
-	  //sortedPredictions ::= Prediction(postZ(predicted), false)
-	  //sortedPredictions ::= Prediction(aggregateScores(i), false)
 	}
       }
     }

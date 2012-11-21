@@ -46,6 +46,10 @@ object Main {
     (sValue, opt) => sValue
   }
 
+  val algorithm = parser.option[String](List("algorithm"), "n", "algorithm") {
+    (sValue, opt) => sValue
+  }
+
   val outCompareInfer = parser.option[String](List("outCompareInfer"), "n", "output file for comparing inference methods") {
     (sValue, opt) => sValue
   }
@@ -64,15 +68,21 @@ object Main {
     if(outDir.value.getOrElse(null) != null) {
       println(outDir.value.getOrElse(null))
       ("mkdir -p " + outDir.value.getOrElse(null)).!
+      //("mkdir -p " + outDir.value.getOrElse(null) + "/parameters").!
     }
 
-    if(false) {
+    //if(false) {
     //if(true) {
+    if(algorithm.value.getOrElse(null) == "MultiR") {
       println("evaluating MultiR")
       EvalIterations(multir, 50)
-    } else {
+      //println("DUMPING THETA")
+      //multir.dumpTheta(outDir.value.getOrElse(null) + "/parameters/theta")
+    } else if(algorithm.value.getOrElse(null) == "DNMAR") {
       println("evaluating DNMAR")
       EvalIterations(dnmar, 1)
+      //println("DUMPING THETA")
+      //dnmar.dumpTheta(outDir.value.getOrElse(null) + "/parameters/theta")
     }
   }
 
