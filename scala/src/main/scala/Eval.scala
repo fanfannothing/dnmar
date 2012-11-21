@@ -61,6 +61,7 @@ object Eval {
     val features            = new ListBuffer[SparseVectorCol[Double]]
     val aggregateScores     = new ListBuffer[Double]
     val labels              = new ListBuffer[Int]
+    val tf                  = new ListBuffer[Boolean]
     val sentences           = new ListBuffer[String]
     val sentences_annotated = new ListBuffer[String]
     for(line <- scala.io.Source.fromFile(annotatedFile).getLines()) {
@@ -78,10 +79,15 @@ object Eval {
 	val e1id = test.entityVocab(e1id_str)
 	val e2id = test.entityVocab(e2id_str)
 
+	/*****************************************************************************************************************
+	 * OK, we can't assume a relation isn't true if just because the sentence is labeled with a different relation
+	 *****************************************************************************************************************
+	 */
+
 	//Treat errors as "NA"? (doesn't penalize recall for missing them, but any predictions will hurt precision...)
-	if(is_mention_str != "y" && is_mention_str != "indirect") {
-	  relation_str = "NA"
-	}
+//	if(is_mention_str != "y" && is_mention_str != "indirect") {
+//	  relation_str = "NA"
+//	}
 
 	val ep    = test.data.filter((ep) => ep.e1id == e1id && ep.e2id == e2id)(0)
 	//TODO: no need to find the actual test sentence if we'er using the aggregate scores?
@@ -91,6 +97,7 @@ object Eval {
 	  features            += ep.features(index)
 	  labels              += test.relVocab(relation_str)
 	  sentences           += sentence
+	  tf                  += is_mention_str == "y" || is_mention_str == "indirect"
 	  sentences_annotated += sentence_annotated
 	} else {
 	  if(Constants.DEBUG) {
@@ -119,23 +126,27 @@ object Eval {
       postZ -= logExpSum
       val pNA = postZ(test.relVocab("NA"))
       postZ(test.relVocab("NA")) = Double.NegativeInfinity
-      var predicted = postZ.argmax
 
       //println(param.data.relVocab(predicted) + "\t" + sentences(i))
 
-      if(labels(i) != test.relVocab("NA") && (rel == -1 || labels(i) == rel)) {
+      if(tf(i) && labels(i) != test.relVocab("NA") && (rel == -1 || labels(i) == rel)) {
 	maxRecall += 1.0
       }
       
       //if(predicted != test.relVocab("NA")) {
-      if((rel == -1 || predicted == rel) && predicted != test.relVocab("NA")) {
-	if(predicted == labels(i)) {
-	  //True Positive
-	  sortedPredictions ::= new Prediction(postZ(predicted), true, test.relVocab(predicted), sentences_annotated(i))
-	//} else if(labels(i) != test.relVocab("NA")) {
-	} else {
-	  //False Positive
-	  sortedPredictions ::= new Prediction(postZ(predicted), false, test.relVocab(predicted), sentences_annotated(i))
+      //NOTE: not just making max prediction (as done in original MultiR paper...)
+      var predicted = postZ.argmax
+      for(predicted <- 0 until test.nRel) {
+	if((rel == -1 || predicted == rel) && predicted != test.relVocab("NA")) {
+	  if(predicted == labels(i)) {
+	    if(tf(i)) {
+	      //True Positive
+	      sortedPredictions ::= new Prediction(postZ(predicted), true, test.relVocab(predicted), sentences_annotated(i))
+	    } else {
+	      //False Positive
+	      sortedPredictions ::= new Prediction(postZ(predicted), false, test.relVocab(predicted), sentences_annotated(i))
+	    }
+	  }
 	}
       }
     }
