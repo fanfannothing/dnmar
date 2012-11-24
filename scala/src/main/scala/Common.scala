@@ -82,6 +82,40 @@ object StringUtils {
   }
 }
 
+object FreebaseUtils {
+  def guid2mid(GUID:String) : String = {
+    //From Freebase wiki:
+    /*
+     * 1. Take the GUID
+     * 2. Strip off the leading "#9202a8c04000641f8"
+     * 3. Take what's left and interpret it as a hex number
+     * 4. Express that number in base 32 using the character set 0123456789bcdfghjklmnpqrstvwxyz_ (ie the digits, the letters excluding the vowels and underscore)
+     * Prepend /m/0 to what you've got.
+     */
+    val characters =List('0','1','2','3','4','5','6','7','8','9','b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','y','z','_').toArray
+
+    var result = List[Char]()
+    var number = Integer.parseInt(GUID.slice(17,GUID.length), 16)
+    println(GUID)
+    println(GUID.slice(17,GUID.length))
+    while(number > 0) {
+      result ::= characters(number & 31)
+      number >>= 5
+    }
+    
+    return "/m/0" + result.mkString("")
+  }
+
+  /************************************************************************************
+   * Filter freebase quadruple dump to generate a file only containing relevant
+   * entities (acording to the GUID vocab).  This is basically just for efficiency...
+   ************************************************************************************
+   */
+  def filterFreebase(sourceFile:String, targetFile:String, guidVocab:String) {
+    
+  }
+}
+
 object MathUtils {
   val rnd = new Random
 

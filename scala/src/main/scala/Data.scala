@@ -16,6 +16,8 @@ import java.io.FileInputStream
 import java.io.BufferedInputStream
 import java.io.InputStream
 
+import scala.collection.mutable.ListBuffer
+
 import cc.factorie.protobuf.DocumentProtos.Relation
 import cc.factorie.protobuf.DocumentProtos.Relation.RelationMentionRef
 
@@ -25,13 +27,14 @@ import cc.factorie.protobuf.DocumentProtos.Relation.RelationMentionRef
  * of entities (e1id,e2id)
  **************************************************************************
  */
-class EntityPair(val e1id:Int, val e2id:Int, val features:Array[SparseVectorCol[Double]], val rel:DenseVectorRow[Double], val z:DenseVector[Int], val zScore:DenseVector[Double], val obs:DenseVector[Double], val sentences:Array[String]) {
+class EntityPair(val e1id:Int, val e2id:Int, val features:Array[SparseVectorCol[Double]], val rel:DenseVectorRow[Double], var z:DenseVector[Int], val zScore:DenseVector[Double], val obs:DenseVector[Double], val sentences:Array[String]) {
   def this(e1id:Int, e2id:Int, features:Array[SparseVectorCol[Double]], rel:DenseVectorRow[Double], z:DenseVector[Int], zScore:DenseVector[Double], obs:DenseVector[Double]) = this(e1id, e2id, features, rel, z, zScore, obs, null)
   def this(e1id:Int, e2id:Int, features:Array[SparseVectorCol[Double]], rel:DenseVectorRow[Double]) = this(e1id, e2id, features, rel, null, null, rel.toDense, null)
   def this(e1id:Int, e2id:Int, features:Array[SparseVectorCol[Double]], rel:DenseVectorRow[Double], sentences:Array[String]) = this(e1id, e2id, features, rel, null, null, rel.toDense, sentences)
   def this(e1id:Int, e2id:Int, features:Array[SparseVectorCol[Double]], rel:DenseVectorRow[Double], z:DenseVector[Int], zScore:DenseVector[Double]) = this(e1id, e2id, features, rel, z, zScore, rel.toDense, null)
   //val obs = rel.toDense							
   var postObs:DenseVector[Double] = null
+  var annotatedSentences:Array[String] = null
 }
 
 abstract class EntityPairData {
@@ -102,16 +105,17 @@ class ProtobufData(inFile:String, evoc:Vocab, rvoc:Vocab, fvoc:Vocab, readSenten
       }
     }
 
-    val mentions  = new Array[SparseVectorCol[Double]](r.getMentionCount)
-    val sentences = new Array[String](r.getMentionCount)
+    val mentions           = new Array[SparseVectorCol[Double]](r.getMentionCount)
+    val sentences          = new Array[String](r.getMentionCount)
+    val annotatedSentences = new Array[String](r.getMentionCount)
     //val mentions = new Array[DenseVectorCol[Double]](r.getMentionCount)
     for(i <- 0 until r.getMentionCount) {
       var nFeatures = 0.0
       mentions(i) = SparseVector.zeros[Double](featureVocab.size + 1)
       mentions(i)(featureVocab.size) = 1.0	//Bias feature
       val m = r.getMention(i)
-      sentences(i) = m.getSentence
-      //println(m.getSentence)
+      sentences(i)          = m.getSentence
+      println(m.getSentence)
       for(j <- 0 until m.getFeatureCount) {
 	val f = featureVocab(m.getFeature(j))
 	if(f >= 0) {

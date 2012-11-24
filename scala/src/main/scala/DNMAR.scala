@@ -102,6 +102,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 
 	if(trainSimple) {
 	  iHidden = inferHiddenMULTIR(data.data(e12))
+	  data.data(e12).z = iHidden.z
 	} else {
 	  //val result = inferHiddenLocalSearch(data.data(e12), 10)
 
@@ -110,6 +111,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 
 	  iHidden = result._1
 	  score   = result._2
+
+	  data.data(e12).z = iHidden.z
 
 	  //Figure out search error (in cases where we can efficiently do exact inference)
 	  //if(fw != null && data.data(e12).features.length > 1 && data.data(e12).features.length < 100) {
@@ -564,6 +567,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	postZ(i,::) := (theta * ep.features(i)).toDense
       }
 
+      //TODO: normalize?
       z(i) = postZ(i,::).argmax
       zScore(i) = postZ(i,::).max
 

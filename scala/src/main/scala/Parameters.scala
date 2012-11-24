@@ -237,6 +237,19 @@ abstract class Parameters(val data:EntityPairData) {
       }
     }
   }
+
+  def dumpPredictions(outFile:String) {
+    val fw = new FileWriter(outFile)
+
+    for(i <- 0 until data.data.length) {
+      val e12 = data.data(i)
+      for(j <- 0 until e12.z.length) {
+	fw.write(List(data.entityVocab(e12.e1id), data.entityVocab(e12.e2id), data.relVocab(e12.z(j)), data.data(i).sentences(j)).mkString("\t") + "\n")
+      }
+    }
+
+    fw.close()
+  }
   
 
   /*********************************************************************

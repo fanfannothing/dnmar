@@ -33,6 +33,7 @@ class MultiR(data:EntityPairData) extends Parameters(data) {
 	//Run le inference
 	val iAll    = inferAll(data.data(e12))
 	val iHidden = inferHidden(data.data(e12))
+	data.data(e12).z = iHidden.z
 	updateTheta(iAll, iHidden)
       }
     }
