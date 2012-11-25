@@ -12,6 +12,10 @@ class Vocab {
   var locked = false
   
   def apply(str:String):Int = {
+    if(str.slice(0,6) == "/guid/") {
+      str = FreebaseUtils.guid2mid(str)
+    }
+
     if(!string2Int.contains(str) && locked) {
       return -1  //UNK is -1
     }

@@ -3,6 +3,7 @@ package dnmar;
 import scala.collection.mutable.HashMap
 import math._
 import scala.io._
+import java.io._
 import java.io.FileWriter
 import scala.util.Random
 
@@ -112,7 +113,22 @@ object FreebaseUtils {
    ************************************************************************************
    */
   def filterFreebase(sourceFile:String, targetFile:String, guidVocab:String) {
+//InputStream fileStream = new FileInputStream(filename);
+//InputStream gzipStream = new GZIPInputStream(fileStream);
+//Reader decoder = new InputStreamReader(gzipStream, encoding);
+//BufferedReader buffered = new BufferedReader(decoder);
+
+    val buffered = new BufferedInputStream(new InputStreamReader(new org.apache.tools.bzip2.CBZip2InputStream(new FileInputStream(sourceFile))))
     
+    val locked = guidVocab.locked
+    guidVocab.locked = true
+    for(line <- buffered.getlines()) {
+      var Array(a1, a2, a3, a4) = line.strip.split("\t")
+      if(guidVocab(a1) > 0 || guidVocab(a3) || guidVocab(a4) > 0) {
+	println(line)
+      }
+    }
+    guidVocab.locked = locked
   }
 }
 
