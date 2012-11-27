@@ -70,9 +70,9 @@ class ProtobufData(inFile:String, evoc:Vocab, rvoc:Vocab, fvoc:Vocab, readSenten
     val e2 = entityVocab(r.getDestGuid)
 
     if(newVocab) {
-      //for(rel <- r.getRelType.split(",")) {
+      for(rel <- r.getRelType.split(",")) {
       //for(rel <- fbData.getRels(entityVocab(e1), entityVocab(e2))) {
-      for(rel <- fbData.getRels(entityVocab(e1), entityVocab(e2)) ++ r.getRelType.split(",")) {
+      //for(rel <- fbData.getRels(entityVocab(e1), entityVocab(e2)) ++ r.getRelType.split(",")) {
 	relVocab(rel)
       }
       for(i <- 0 until r.getMentionCount) {
@@ -105,9 +105,9 @@ class ProtobufData(inFile:String, evoc:Vocab, rvoc:Vocab, fvoc:Vocab, readSenten
     val e2 = entityVocab(r.getDestGuid)
 
     val relations = DenseVector.zeros[Double](relVocab.size)
-    //for(rel <- r.getRelType.split(",")) {
+    for(rel <- r.getRelType.split(",")) {
     //for(rel <- fbData.getRels(entityVocab(e1), entityVocab(e2))) {
-    for(rel <- fbData.getRels(entityVocab(e1), entityVocab(e2)) ++ r.getRelType.split(",")) {
+    //for(rel <- fbData.getRels(entityVocab(e1), entityVocab(e2)) ++ r.getRelType.split(",")) {
       val r = relVocab(rel)
       if(r >= 0) {
 	relations(r) = 1.0
