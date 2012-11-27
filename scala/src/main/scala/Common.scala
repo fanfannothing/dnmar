@@ -84,7 +84,62 @@ object StringUtils {
 }
 
 object FreebaseUtils {
-  def guid2mid(GUID:String) : String = {
+  class Mid2Name(mapFile:String) {
+    val m2n = new HashMap[String,String]
+
+    for(line <- scala.io.Source.fromFile(mapFile).getLines()) {
+      var Array(mid, rel, lang, name) = line.trim.split("\t")
+      m2n += mid -> name
+    }
+
+    def apply(s:String):String = {
+      if(!m2n.contains(s)) {
+	return null
+      } else {
+	return m2n(s)
+      }
+    }
+  }
+
+  class FreebaseData(quadruplesFile:String) {
+    val a1Rel = new HashMap[String,List[String]]
+    val a1a2  = new HashMap[String,List[String]]
+    
+    for(line <- scala.io.Source.fromFile(quadruplesFile).getLines()) {
+      var fields = line.trim.split("\t")
+      if(fields.length == 3) {
+	val a1r = fields(0) + "\t" + fields(1)
+	if(!a1Rel.contains(a1r)) {
+	  a1Rel += a1r -> List[String]()
+	}
+	a1Rel(a1r) ::= fields(2)
+	val a12 = fields(0) + "\t" + fields(2)
+	if(!a1a2.contains(a12)) {
+	  a1a2 += a12 -> List[String]()
+	}
+	a1a2(a12) ::= fields(1)
+      }
+    }
+
+    def getRels(a1:String, a2:String):List[String] = {
+      val key = a1 + "\t" + a2
+      if(!a1a2.contains(key)) {
+	return List("NA")
+      }
+      return a1a2(key)
+    }
+    
+    def getA2s(a1:String, rel:String):List[String] = {
+      val key = a1 + "\t" + rel
+      if(!a1Rel.contains(key)) {
+	return List[String]()
+      }
+      return a1Rel(key)
+    }
+  }
+  
+  def guid2mid(guid:String) : String = {
+    var GUID = guid
     //From Freebase wiki:
     /*
      * 1. Take the GUID
@@ -95,10 +150,12 @@ object FreebaseUtils {
      */
     val characters =List('0','1','2','3','4','5','6','7','8','9','b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','y','z','_').toArray
 
+    GUID = GUID.replace("/guid/", "")
+
     var result = List[Char]()
     var number = Integer.parseInt(GUID.slice(17,GUID.length), 16)
-    println(GUID)
-    println(GUID.slice(17,GUID.length))
+    //println(GUID)
+    //println(GUID.slice(17,GUID.length))
     while(number > 0) {
       result ::= characters(number & 31)
       number >>= 5
@@ -112,23 +169,60 @@ object FreebaseUtils {
    * entities (acording to the GUID vocab).  This is basically just for efficiency...
    ************************************************************************************
    */
-  def filterFreebase(sourceFile:String, targetFile:String, guidVocab:String) {
-//InputStream fileStream = new FileInputStream(filename);
-//InputStream gzipStream = new GZIPInputStream(fileStream);
-//Reader decoder = new InputStreamReader(gzipStream, encoding);
-//BufferedReader buffered = new BufferedReader(decoder);
+  def filterFreebase(sourceFile:String, targetFile:String, guidVocab:Vocab, relVocab:Vocab) {
+    //val buffered = new BufferedReader(new InputStreamReader(new org.apache.tools.bzip2.CBZip2InputStream(new BufferedInputStream(new FileInputStream(sourceFile)))))
+    //Need to do this hack for some wierd reasons (googled...)
 
-    val buffered = new BufferedInputStream(new InputStreamReader(new org.apache.tools.bzip2.CBZip2InputStream(new FileInputStream(sourceFile))))
+    /*
+    val old2new = HashMap[String,String](
+      "/business/person/company"->"/business/employment_tenure/company",
+      "/people/person/place_lived"->"/people/person/places_lived",
+      "/business/company/founders"->"/organization/organization/founders",
+      "/business/company/locations"->"/organization/organization/locations",
+      "/business/company/place_founded"->"/organization/organization/place_founded",
+      "/business/company/advisors"->"/organization/organization/advisors"
+    )
+    */
+
+    val new2old = HashMap[String,String](
+      "/business/employment_tenure/company"->"/business/person/company",
+      "/people/person/places_lived"->"/people/person/place_lived",
+      "/organization/organization/founders"->"/business/company/founders",
+      "/organization/organization/locations"->"/business/company/locations",
+      "/organization/organization/place_founded"->"/business/company/place_founded",
+      "/organization/organization/advisors"->"/business/company/advisors"
+    )
+    
+    val readTwoBytes = new FileInputStream(sourceFile)
+    readTwoBytes.read()
+    readTwoBytes.read()
+    val buffered = new BufferedReader(new InputStreamReader(new org.apache.tools.bzip2.CBZip2InputStream(readTwoBytes)))
+    val fw = new FileWriter(targetFile)
     
     val locked = guidVocab.locked
     guidVocab.locked = true
-    for(line <- buffered.getlines()) {
-      var Array(a1, a2, a3, a4) = line.strip.split("\t")
-      if(guidVocab(a1) > 0 || guidVocab(a3) || guidVocab(a4) > 0) {
-	println(line)
+    var line = buffered.readLine()
+    while(line != null) {
+      //println(line)
+      var fields = line.trim.split("\t")
+      if(fields.length >= 3) {
+	//if(old2new.contains(fields(1))) {
+	if(new2old.contains(fields(1))) {
+	  //fields(1) = old2new(fields(1))
+	  fields(1) = new2old(fields(1))
+	}
+	try {
+	  if(relVocab(fields(1)) > 0 && (guidVocab(fields(0)) > 0 || guidVocab(fields(2)) > 0 || fields.length > 3 && guidVocab(fields(3)) > 0)) {
+	    fw.write(fields.mkString("\t") + "\n")
+	  }
+	} catch {
+	  case e:Exception => println("skipping:" + line + "\n")
+	}
       }
+      line = buffered.readLine()
     }
     guidVocab.locked = locked
+    fw.close()
   }
 }
 

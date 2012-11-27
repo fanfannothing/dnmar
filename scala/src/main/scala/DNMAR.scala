@@ -293,11 +293,11 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     val postZ  = DenseMatrix.zeros[Double](ep.features.length, data.nRel)
     for(i <- 0 until ep.features.length) {
       postZ(i,::) := (theta * ep.features(i)).toDense
-      /*
-       * NOTE: don't use "NA" parameters....?
-       */
-      //postZ(i,data.relVocab("NA")) = 0.0
+      //Normalize (note: this isn't necessary, except for analasys purposes and generating P/R on training data...)
+      val logExpSum = MathUtils.LogExpSum(postZ(i,::).toArray)
+      postZ(i,::) -= logExpSum
     }
+    ep.postZ = postZ
 
     var bestZ:DenseVector[Int]      = null
     var bestRel:DenseVectorRow[Double] = null

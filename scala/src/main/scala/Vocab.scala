@@ -11,7 +11,8 @@ class Vocab {
   var nextInt = 0
   var locked = false
   
-  def apply(str:String):Int = {
+  def apply(s:String):Int = {
+    var str = s
     if(str.slice(0,6) == "/guid/") {
       str = FreebaseUtils.guid2mid(str)
     }

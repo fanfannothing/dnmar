@@ -17,6 +17,7 @@ import java.io.BufferedInputStream
 import java.io.InputStream
 
 import scala.collection.mutable.ListBuffer
+import scala.collection.mutable.HashMap
 
 import cc.factorie.protobuf.DocumentProtos.Relation
 import cc.factorie.protobuf.DocumentProtos.Relation.RelationMentionRef
@@ -34,7 +35,7 @@ class EntityPair(val e1id:Int, val e2id:Int, val features:Array[SparseVectorCol[
   def this(e1id:Int, e2id:Int, features:Array[SparseVectorCol[Double]], rel:DenseVectorRow[Double], z:DenseVector[Int], zScore:DenseVector[Double]) = this(e1id, e2id, features, rel, z, zScore, rel.toDense, null)
   //val obs = rel.toDense							
   var postObs:DenseVector[Double] = null
-  var annotatedSentences:Array[String] = null
+  var postZ:DenseMatrix[Double] = null
 }
 
 abstract class EntityPairData {
@@ -61,13 +62,17 @@ class ProtobufData(inFile:String, evoc:Vocab, rvoc:Vocab, fvoc:Vocab, readSenten
   var r = Relation.parseDelimitedFrom(is);
   var nEntityPairs = 0
 
+  val fbData = new FreebaseUtils.FreebaseData("../data/freebase-datadump-quadruples.tsv.bz2.filtered")
+
   //First pass: figure out vocabulary sizes
   while(r != null) {
-    entityVocab(r.getSourceGuid)
-    entityVocab(r.getDestGuid)
+    val e1 = entityVocab(r.getSourceGuid)
+    val e2 = entityVocab(r.getDestGuid)
 
     if(newVocab) {
-      for(rel <- r.getRelType.split(",")) {
+      //for(rel <- r.getRelType.split(",")) {
+      //for(rel <- fbData.getRels(entityVocab(e1), entityVocab(e2))) {
+      for(rel <- fbData.getRels(entityVocab(e1), entityVocab(e2)) ++ r.getRelType.split(",")) {
 	relVocab(rel)
       }
       for(i <- 0 until r.getMentionCount) {
@@ -85,6 +90,8 @@ class ProtobufData(inFile:String, evoc:Vocab, rvoc:Vocab, fvoc:Vocab, readSenten
   val nRel  = relVocab.size
   val nFeat = featureVocab.size
 
+  println("nRel:" + nRel)
+
   val data = new Array[EntityPair](nEntityPairs)
 
   //Second pass: Populate the data structures
@@ -98,7 +105,9 @@ class ProtobufData(inFile:String, evoc:Vocab, rvoc:Vocab, fvoc:Vocab, readSenten
     val e2 = entityVocab(r.getDestGuid)
 
     val relations = DenseVector.zeros[Double](relVocab.size)
-    for(rel <- r.getRelType.split(",")) {
+    //for(rel <- r.getRelType.split(",")) {
+    //for(rel <- fbData.getRels(entityVocab(e1), entityVocab(e2))) {
+    for(rel <- fbData.getRels(entityVocab(e1), entityVocab(e2)) ++ r.getRelType.split(",")) {
       val r = relVocab(rel)
       if(r >= 0) {
 	relations(r) = 1.0
@@ -115,7 +124,7 @@ class ProtobufData(inFile:String, evoc:Vocab, rvoc:Vocab, fvoc:Vocab, readSenten
       mentions(i)(featureVocab.size) = 1.0	//Bias feature
       val m = r.getMention(i)
       sentences(i)          = m.getSentence
-      println(m.getSentence)
+      //println(m.getSentence)
       for(j <- 0 until m.getFeatureCount) {
 	val f = featureVocab(m.getFeature(j))
 	if(f >= 0) {

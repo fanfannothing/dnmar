@@ -30,7 +30,7 @@ object Main {
 
   val train = parser.option[ProtobufData](List("trainProto"), "n", "Training data (in google protobuf format).") { 
     println("Loading train")
-    (sValue, opt) => new ProtobufData(sValue)
+    (sValue, opt) => new ProtobufData(sValue,null,null,null,true)
   }
 
   val test  = parser.option[ProtobufData](List("testProto"), "n", "Test data (in google protobuf format).") {
@@ -43,6 +43,10 @@ object Main {
   }
 
   val outDir = parser.option[String](List("outDir"), "n", "output directory") {
+    (sValue, opt) => sValue
+  }
+
+  val filterFB = parser.option[String](List("filterFB"), "n", "Filter Freebase") {
     (sValue, opt) => sValue
   }
 
@@ -65,24 +69,29 @@ object Main {
     val multir = new MultiR(train.value.getOrElse(null))
     val dnmar  = new DNMAR(train.value.getOrElse(null))
 
+    if(filterFB.value.getOrElse(null) != null) {
+      FreebaseUtils.filterFreebase(filterFB.value.getOrElse(null), filterFB.value.getOrElse(null) + ".filtered", train.value.getOrElse(null).entityVocab, train.value.getOrElse(null).relVocab)
+    }
+
     if(outDir.value.getOrElse(null) != null) {
       println(outDir.value.getOrElse(null))
       ("mkdir -p " + outDir.value.getOrElse(null)).!
       //("mkdir -p " + outDir.value.getOrElse(null) + "/parameters").!
+      ("mkdir -p " + outDir.value.getOrElse(null) + "/predictions").!      
     }
 
-    //if(false) {
-    //if(true) {
     if(algorithm.value.getOrElse(null) == "MultiR") {
       println("evaluating MultiR")
       EvalIterations(multir, 50)
       //println("DUMPING THETA")
       //multir.dumpTheta(outDir.value.getOrElse(null) + "/parameters/theta")
+      multir.dumpPredictions(outDir.value.getOrElse(null) + "/predictions/preds")
     } else if(algorithm.value.getOrElse(null) == "DNMAR") {
       println("evaluating DNMAR")
       EvalIterations(dnmar, 1)
       //println("DUMPING THETA")
       //dnmar.dumpTheta(outDir.value.getOrElse(null) + "/parameters/theta")
+      dnmar.dumpPredictions(outDir.value.getOrElse(null) + "/predictions/preds")
     }
   }
 

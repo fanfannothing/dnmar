@@ -50,7 +50,11 @@ class MultiR(data:EntityPairData) extends Parameters(data) {
     //First pre-compute postZ
     for(i <- 0 until ep.features.length) {
       postZ(i,::) := (theta * ep.features(i)).toDense
+      //Normalize (note: this isn't necessary, except for analasys purposes and generating P/R on training data...)
+      val logExpSum = MathUtils.LogExpSum(postZ(i,::).toArray)
+      postZ(i,::) -= logExpSum
     }
+    ep.postZ = postZ
 
     val covered = DenseVector.zeros[Boolean](ep.features.length)     //Indicates whether each mention is already assigned...
     var nCovered = 0

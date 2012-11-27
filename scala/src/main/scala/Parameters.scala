@@ -240,11 +240,21 @@ abstract class Parameters(val data:EntityPairData) {
 
   def dumpPredictions(outFile:String) {
     val fw = new FileWriter(outFile)
+    
+    val mid2name = new FreebaseUtils.Mid2Name("../data/mid2name")
 
     for(i <- 0 until data.data.length) {
       val e12 = data.data(i)
+      val relations = (0 until e12.rel.length).filter((r) => e12.rel(r) == 1.0).map((r) => data.relVocab(r)).mkString(",")
       for(j <- 0 until e12.z.length) {
-	fw.write(List(data.entityVocab(e12.e1id), data.entityVocab(e12.e2id), data.relVocab(e12.z(j)), data.data(i).sentences(j)).mkString("\t") + "\n")
+	val postZ = e12.postZ(j,::)
+	postZ(data.relVocab("NA")) = Double.NegativeInfinity
+	val mapZnonNA = postZ.argmax
+	fw.write(Array(mid2name(data.entityVocab(e12.e1id)), mid2name(data.entityVocab(e12.e2id)),
+		       data.entityVocab(e12.e1id), data.entityVocab(e12.e2id), relations,
+		       data.relVocab(e12.z(j)),
+		       data.relVocab(mapZnonNA), postZ(mapZnonNA),
+		       e12.sentences(j)).mkString("\t") + "\n")
       }
     }
 
