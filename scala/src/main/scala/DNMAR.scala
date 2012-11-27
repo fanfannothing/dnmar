@@ -175,6 +175,32 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     postObs
   }
 
+  def fbObsScore(ep:EntityPair):DenseVector[Double] = {
+    val postObs = DenseVector.zeros[Double](data.nRel)
+    
+    for(r <- 0 until data.nRel) {
+      if(r == data.relVocab("NA")) {
+	postObs(r) = 0.0
+      } else if(ep.obs(r) == 0.0) {
+	//Simple missing data model
+	val e1  = data.entityVocab(ep.e1id)
+	val e2  = data.entityVocab(ep.e2id)
+	val rel = data.relVocab(r)
+	val a2s = data.fbData.getA2s(e1,rel)
+
+	if(a2s.length > 0) {
+	  postObs(r) = -100.0
+	} else {
+	  postObs(r) = -5.0
+	}
+      } else {
+	postObs(r) = 10000.0
+      }
+    }
+
+    postObs
+  }
+
   //Computes the score for each of the observation factors based on observed data in Freebase
   def computeObsScore(ep:EntityPair):DenseVector[Double] = {
     //Posterior distribution over observations
@@ -309,7 +335,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       val rCounts = DenseVector.zeros[Int](postZ.numCols)
       var score = 0.0
 
-      val postObs = simpleObsScore(ep)
+      //val postObs = simpleObsScore(ep)
+      val postObs = fbObsScore(ep)
       
       //Random initialization
       for(i <- 0 until z.length) {

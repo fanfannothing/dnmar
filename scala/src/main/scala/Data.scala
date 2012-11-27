@@ -46,6 +46,8 @@ abstract class EntityPairData {
   val entityVocab:Vocab
   val relVocab:Vocab
   val featureVocab:Vocab
+
+  val fbData:FreebaseUtils.FreebaseData
 }
 
 //Class to read and manage data from google protobuf file format
