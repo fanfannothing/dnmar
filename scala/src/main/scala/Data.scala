@@ -70,7 +70,12 @@ class ProtobufData(inFile:String, evoc:Vocab, rvoc:Vocab, fvoc:Vocab, readSenten
     val e2 = entityVocab(r.getDestGuid)
 
     if(newVocab) {
-      for(rel <- r.getRelType.split(",")) {
+      var relStrings:List[String] = (fbData.getRels(entityVocab(e1), entityVocab(e2)) ++ r.getRelType.split(",")).filter(x => x != "NA").toSet.toList
+      if(relStrings.length == 0) {
+	relStrings = List("NA")
+      }
+      for(rel <- relStrings) {
+      //for(rel <- r.getRelType.split(",")) {
       //for(rel <- fbData.getRels(entityVocab(e1), entityVocab(e2))) {
       //for(rel <- fbData.getRels(entityVocab(e1), entityVocab(e2)) ++ r.getRelType.split(",")) {
 	relVocab(rel)
@@ -105,8 +110,13 @@ class ProtobufData(inFile:String, evoc:Vocab, rvoc:Vocab, fvoc:Vocab, readSenten
     val e2 = entityVocab(r.getDestGuid)
 
     val relations = DenseVector.zeros[Double](relVocab.size)
-    
-    for(rel <- r.getRelType.split(",")) {
+
+    var relStrings = (fbData.getRels(entityVocab(e1), entityVocab(e2)) ++ r.getRelType.split(",")).filter(x => x != "NA").toSet.toList
+    if(relStrings.length == 0) {
+      relStrings = List("NA")
+    }
+    for(rel <- relStrings) {    
+    //for(rel <- r.getRelType.split(",")) {
     //for(rel <- fbData.getRels(entityVocab(e1), entityVocab(e2))) {
     //for(rel <- fbData.getRels(entityVocab(e1), entityVocab(e2)) ++ r.getRelType.split(",")) {
       val r = relVocab(rel)
