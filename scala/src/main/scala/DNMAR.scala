@@ -189,7 +189,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	val a2s = data.fbData.getA2s(e1,rel)
 
 	if(a2s.length > 0) {
-	  postObs(r) = -100.0
+	  postObs(r) = -10.0
 	} else {
 	  postObs(r) = -5.0
 	}
