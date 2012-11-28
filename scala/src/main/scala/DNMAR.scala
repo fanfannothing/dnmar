@@ -195,7 +195,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	}
       } else {
 	//postObs(r) = 10000.0
-	postObs(r) = 100.0 * ep.features.length
+	postObs(r) = -math.log(math.pow(0.02,ep.features.length))
+	//postObs(r) = 100.0 * ep.features.length
       }
     }
 
