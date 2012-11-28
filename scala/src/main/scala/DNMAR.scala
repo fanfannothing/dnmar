@@ -343,8 +343,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       val rCounts = DenseVector.zeros[Int](postZ.numCols)
       var score = 0.0
 
-      //val postObs = simpleObsScore(ep)
-      val postObs = fbObsScore(ep)
+      val postObs = simpleObsScore(ep)
+      //val postObs = fbObsScore(ep)
       
       //Random initialization
       for(i <- 0 until z.length) {
