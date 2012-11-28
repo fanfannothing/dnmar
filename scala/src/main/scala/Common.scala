@@ -103,6 +103,7 @@ object FreebaseUtils {
 
   class FreebaseData(quadruplesFile:String) {
     val a1Rel = new HashMap[String,List[String]]
+    val a2Rel = new HashMap[String,List[String]]
     val a1a2  = new HashMap[String,List[String]]
     
     for(line <- scala.io.Source.fromFile(quadruplesFile).getLines()) {
@@ -112,7 +113,11 @@ object FreebaseUtils {
 	if(!a1Rel.contains(a1r)) {
 	  a1Rel += a1r -> List[String]()
 	}
-	a1Rel(a1r) ::= fields(2)
+	val a2r = fields(2) + "\t" + fields(1)
+	if(!a2Rel.contains(a2r)) {
+	  a2Rel += a2r -> List[String]()
+	}
+	a2Rel(a2r) ::= fields(2)
 	val a12 = fields(0) + "\t" + fields(2)
 	if(!a1a2.contains(a12)) {
 	  a1a2 += a12 -> List[String]()
@@ -135,6 +140,14 @@ object FreebaseUtils {
 	return List[String]()
       }
       return a1Rel(key)
+    }
+
+    def getA1s(a2:String, rel:String):List[String] = {
+      val key = a2 + "\t" + rel
+      if(!a2Rel.contains(key)) {
+	return List[String]()
+      }
+      return a2Rel(key)
     }
   }
   
@@ -201,6 +214,7 @@ object FreebaseUtils {
     
     val locked = guidVocab.locked
     guidVocab.locked = true
+    relVocab.locked = true
     var line = buffered.readLine()
     while(line != null) {
       //println(line)
@@ -212,7 +226,7 @@ object FreebaseUtils {
 	  fields(1) = new2old(fields(1))
 	}
 	try {
-	  if(relVocab(fields(1)) > 0 && (guidVocab(fields(0)) > 0 || guidVocab(fields(2)) > 0 || fields.length > 3 && guidVocab(fields(3)) > 0)) {
+	  if(relVocab(fields(1)) >= 0 && (guidVocab(fields(0)) >= 0 || guidVocab(fields(2)) >= 0 || fields.length > 3 && guidVocab(fields(3)) >= 0)) {
 	    fw.write(fields.mkString("\t") + "\n")
 	  }
 	} catch {
@@ -222,6 +236,7 @@ object FreebaseUtils {
       line = buffered.readLine()
     }
     guidVocab.locked = locked
+    relVocab.locked = locked
     fw.close()
   }
 }
