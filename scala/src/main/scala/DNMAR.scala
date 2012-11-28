@@ -195,6 +195,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 
 	//println(values)
 	if(values.length > 0) {
+	  /*
 	  var containedOrContainedBy = false
 	  for(v <- values) {
 	    if(data.fbData.aContainsB(e1,v) || data.fbData.aContainedByB(e1,v)) {
@@ -209,6 +210,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	    //postObs(r) = -5.0
 	    postObs(r) = -10.0
 	  }
+	  */
+	  postObs(r) = -10.0
 	} else {
 	  postObs(r) = -5.0
 	}
