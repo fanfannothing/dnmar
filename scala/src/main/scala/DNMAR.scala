@@ -196,7 +196,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	//println(values)
 
 	if(values.length > 0) {
-	  postObs(r) = -10.0
+	  //postObs(r) = -10.0
+	  postObs(r) = -100.0
 	} else {
 	  postObs(r) = -5.0
 	}
@@ -343,8 +344,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       val rCounts = DenseVector.zeros[Int](postZ.numCols)
       var score = 0.0
 
-      val postObs = simpleObsScore(ep)
-      //val postObs = fbObsScore(ep)
+      //val postObs = simpleObsScore(ep)
+      val postObs = fbObsScore(ep)
       
       //Random initialization
       for(i <- 0 until z.length) {
