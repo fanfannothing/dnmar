@@ -205,7 +205,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	  if(containedOrContainedBy) {
 	    postObs(r) = -5.0
 	  } else {
-	    postObs(r) = -10.0	    
+	    //postObs(r) = -10.0
+	    postObs(r) = -1000.0
 	  }
 	} else {
 	  postObs(r) = -5.0
