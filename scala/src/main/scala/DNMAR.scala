@@ -194,10 +194,19 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	}
 
 	//println(values)
-
 	if(values.length > 0) {
-	  //postObs(r) = -10.0
-	  postObs(r) = -15.0
+	  var containedOrContainedBy = false
+	  for(v <- values) {
+	    if(data.fbData.aContainsB(e1,v) || data.fbData.aContainedByB(e1,v)) {
+	      containedOrContainedBy = true
+	    }
+	  }
+	  //println(e1 + "\t" + e2 + "\t" + containedOrContainedBy)
+	  if(containedOrContainedBy) {
+	    postObs(r) = -5.0
+	  } else {
+	    postObs(r) = -10.0	    
+	  }
 	} else {
 	  postObs(r) = -5.0
 	}
@@ -338,15 +347,15 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     var bestRel:DenseVectorRow[Double] = null
     var bestScore                   = Double.NegativeInfinity
 
+    //val postObs = simpleObsScore(ep)
+    val postObs = fbObsScore(ep)
+
     for(n <- 0 until nRandomRestarts) {
       val z       = DenseVector.zeros[Int](postZ.numRows)
       val rel     = DenseVector.zeros[Double](postZ.numCols).t
       val rCounts = DenseVector.zeros[Int](postZ.numCols)
       var score = 0.0
 
-      //val postObs = simpleObsScore(ep)
-      val postObs = fbObsScore(ep)
-      
       //Random initialization
       for(i <- 0 until z.length) {
 	//z(i) = scala.util.Random.nextInt(postObs.length)

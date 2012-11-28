@@ -102,13 +102,26 @@ object FreebaseUtils {
   }
 
   class FreebaseData(quadruplesFile:String) {
-    val a1Rel = new HashMap[String,List[String]]
-    val a2Rel = new HashMap[String,List[String]]
-    val a1a2  = new HashMap[String,List[String]]
+    val a1Rel       = new HashMap[String,List[String]]
+    val a2Rel       = new HashMap[String,List[String]]
+    val a1a2        = new HashMap[String,List[String]]
+    val contains    = new HashMap[String,List[String]]
+    val containedBy = new HashMap[String,List[String]]
     
     for(line <- scala.io.Source.fromFile(quadruplesFile).getLines()) {
       var fields = line.trim.split("\t")
       if(fields.length == 3) {
+	if(fields(1) == "/location/location/contains") {
+	  if(!contains.contains(fields(0))) {
+	    contains += fields(0) -> List[String]()
+	  }
+	  if(!containedBy.contains(fields(2))) {
+	    containedBy += fields(2) -> List[String]()
+	  }
+	  contains(fields(0))    ::= fields(2)
+	  containedBy(fields(2)) ::= fields(0)
+	}
+
 	val a1r = fields(0) + "\t" + fields(1)
 	if(!a1Rel.contains(a1r)) {
 	  a1Rel += a1r -> List[String]()
@@ -123,6 +136,40 @@ object FreebaseUtils {
 	  a1a2 += a12 -> List[String]()
 	}
 	a1a2(a12) ::= fields(1)
+      }
+    }
+
+    def aContainsB(a:String, b:String):Boolean = {
+      if(!contains.contains(a)) {
+	return false
+      }
+      val aContains = contains(a)
+      if(aContains.contains(b)) {
+	return true
+      } else {
+	for(c <- aContains) {
+	  if(aContainsB(c,b)) {
+	    return true
+	  }
+	}
+	return false
+      }
+    }
+
+    def aContainedByB(a:String, b:String):Boolean = {
+      if(!containedBy.contains(a)) {
+	return false
+      }
+      val aContainedBy = containedBy(a)
+      if(aContainedBy.contains(b)) {
+	return true
+      } else {
+	for(c <- aContainedBy) {
+	  if(aContainedByB(c,b)) {
+	    return true
+	  }
+	}
+	return false
       }
     }
 
