@@ -177,14 +177,16 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 
   def fbObsScore(ep:EntityPair):DenseVector[Double] = {
     val postObs = DenseVector.zeros[Double](data.nRel)
+    val e1  = data.entityVocab(ep.e1id)
+    val e2  = data.entityVocab(ep.e2id)
+
+    val allSenseRels = data.fbData.getRels(e1, e2).toSet
     
     for(r <- 0 until data.nRel) {
       if(r == data.relVocab("NA")) {
 	postObs(r) = 0.0
       } else if(ep.obs(r) == 0.0) {
 	//Simple missing data model
-	val e1  = data.entityVocab(ep.e1id)
-	val e2  = data.entityVocab(ep.e2id)
 	val rel = data.relVocab(r)
 	val values = if(rel == "/location/location/contains") {
 	  data.fbData.getA1s(e2,rel)
@@ -192,7 +194,12 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	  data.fbData.getA2s(e1,rel)
 	}
 
-	if(values.length > 0) {
+	if(allSenseRels.contains(rel)) {
+	  //TODO: this may need some debugging...
+	  //Q: Is there another sense in which this is true?
+	  postObs(r) = 10.0
+	} else if(values.length > 0) {
+	  //Q: Is there another value for this rel?
 	  postObs(r) = -10.0
 	} else {
 	  postObs(r) = -5.0
