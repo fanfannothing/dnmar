@@ -80,6 +80,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 
   //TODO: seperate training for theta & phi?
 
+  val mid2name = new FreebaseUtils.Mid2Name("../data/mid2name")
+
   def train(nIter:Int) = {
     train(nIter, null)
   }
@@ -180,7 +182,26 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     val e1  = data.entityVocab(ep.e1id)
     val e2  = data.entityVocab(ep.e2id)
 
-    val allSenseRels = data.fbData.getRels(e1, e2).toSet
+    
+    var allSenseRels = Set[String]()
+
+    for(sense1 <- mid2name(e1).flatMap(x => mid2name(x))) {
+      for(sense2 <- mid2name(e2).flatMap(x => mid2name(x))) {
+	for(rel <- data.fbData.getRels(sense1, sense2)) {
+	  allSenseRels += rel
+	}
+      }
+    }
+
+    /*
+    val dataRels = (0 until ep.obs.length).filter(i => ep.obs(i) != 0).map(i => data.relVocab(i))
+    if(dataRels.length != allSenseRels.toList.length) {
+      println(mid2name(e1).mkString + "\t" + mid2name(e1).flatMap(x => mid2name(x)))
+      println(mid2name(e2).mkString + "\t" + mid2name(e2).flatMap(x => mid2name(x)))
+      println("allSenseRels=\t" + allSenseRels)
+      println("dataRels=\t" + (0 until ep.obs.length).filter(i => ep.obs(i) != 0).map(i => data.relVocab(i)).mkString("\t"))
+    }
+    */
     
     for(r <- 0 until data.nRel) {
       if(r == data.relVocab("NA")) {
@@ -209,7 +230,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	postObs(r) = 10000.0
       }
     }
-    println((0 to postObs.length).map(i => i + ":" + data.relVocab(i)).mkString("\t"))
+    //println(e1 + "\t" + e2 + "\t" + (0 until postObs.length).map(i => i + ":" + data.relVocab(i) + postObs(i)).mkString("\t").filter(x => x != -5))
     postObs
   }
 

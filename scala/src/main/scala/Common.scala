@@ -85,25 +85,33 @@ object StringUtils {
 
 object FreebaseUtils {
   class Mid2Name(mapFile:String) {
-    val m2n = new HashMap[String,String]
-    val n2m = new HashMap[String,String]
+    val m2n = new HashMap[String,List[String]]
+    val n2m = new HashMap[String,List[String]]
 
     for(line <- scala.io.Source.fromFile(mapFile).getLines()) {
       var Array(mid, rel, lang, name) = line.trim.split("\t")
-      m2n += mid -> name
-      n2m += name -> mid
+
+      if(!m2n.contains(mid)) {
+	m2n += mid -> List()
+      }
+      m2n(mid) ::= name
+
+      if(!n2m.contains(name)) {
+	n2m += name -> List()
+      }
+      n2m(name) ::= mid
     }
 
-    def apply(s:String):String = {
+    def apply(s:String):List[String] = {
       if(s(0) == '/') {
 	if(!m2n.contains(s)) {
-	  return null
+	  return List[String]()
 	} else {
 	  return m2n(s)
 	}
       } else {
 	if(!n2m.contains(s)) {
-	  return null
+	  return List[String]()
 	} else {
 	  return n2m(s)
 	}
