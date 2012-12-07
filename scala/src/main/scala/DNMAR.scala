@@ -187,38 +187,18 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	val e2  = data.entityVocab(ep.e2id)
 	val rel = data.relVocab(r)
 	val values = if(rel == "/location/location/contains") {
-	  //println("contains")
 	  data.fbData.getA1s(e2,rel)
 	} else {
 	  data.fbData.getA2s(e1,rel)
 	}
 
-	//println(values)
 	if(values.length > 0) {
-	  /*
-	  var containedOrContainedBy = false
-	  for(v <- values) {
-	    if(data.fbData.aContainsB(e1,v) || data.fbData.aContainedByB(e1,v)) {
-	      containedOrContainedBy = true
-	    }
-	  }
-	  //println(e1 + "\t" + e2 + "\t" + containedOrContainedBy)
-	  if(containedOrContainedBy) {
-	    //postObs(r) = -5.0
-	    postObs(r) = 0.0
-	  } else {
-	    //postObs(r) = -5.0
-	    postObs(r) = -10.0
-	  }
-	  */
 	  postObs(r) = -10.0
 	} else {
 	  postObs(r) = -5.0
 	}
       } else {
 	postObs(r) = 10000.0
-	//postObs(r) = -math.log(math.pow(0.02,ep.features.length))
-	//postObs(r) = 100.0 * ep.features.length
       }
     }
     postObs
