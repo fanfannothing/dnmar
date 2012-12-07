@@ -197,7 +197,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	if(allSenseRels.contains(rel)) {
 	  //TODO: this may need some debugging...
 	  //Q: Is there another sense in which this is true?
-	  postObs(r) = 10.0
+	  //postObs(r) = 10.0
+	  postObs(r) = 10000.0
 	} else if(values.length > 0) {
 	  //Q: Is there another value for this rel?
 	  postObs(r) = -10.0
