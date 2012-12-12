@@ -125,6 +125,7 @@ object FreebaseUtils {
     val a1a2        = new HashMap[String,List[String]]
     val contains    = new HashMap[String,List[String]]
     val containedBy = new HashMap[String,List[String]]
+    val entityCount = new HashMap[String,Double]
     
     for(line <- scala.io.Source.fromFile(quadruplesFile).getLines()) {
       var fields = line.trim.split("\t")
@@ -154,6 +155,15 @@ object FreebaseUtils {
 	  a1a2 += a12 -> List[String]()
 	}
 	a1a2(a12) ::= fields(1)
+
+	if(!entityCount.contains(fields(0))) {
+	  entityCount += fields(0) -> 0.0
+	}
+	entityCount(fields(0)) += 1.0
+	if(!entityCount.contains(fields(2))) {
+	  entityCount += fields(2) -> 0.0
+	}
+	entityCount(fields(2)) += 1.0
       }
     }
 
@@ -171,6 +181,14 @@ object FreebaseUtils {
 	  }
 	}
 	return false
+      }
+    }
+
+    def entityFreq(e:String):Double = {
+      if(!entityCount.contains(e)) {
+	return 0.0
+      } else {
+	return entityCount(e)
       }
     }
 

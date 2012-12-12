@@ -5,7 +5,8 @@ files = list.files('../scala/experiments/DNMAR')
 par(mfcol=c(3,4))
 #par(mfcol=c(6,4))
 for(f in files) {
-  if(f != 'log' && f != 'sentential' && f != 'aggregate') {
+  #if(f != 'log' && f != 'sentential' && f != 'aggregate') {
+  if(f != 'log') {
     print(f)
     #p1 = read.csv(paste('../scala/experiments/dnmar_sent/',f,sep=""), sep="\t", header=FALSE)
     file = paste('../scala/experiments/DNMAR/',f,sep="")
