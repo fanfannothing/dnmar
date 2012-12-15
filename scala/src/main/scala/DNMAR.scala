@@ -177,6 +177,32 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     postObs
   }
 
+  //This version doesn't take other values into account or anything.   Just scales by the entity frequency as a model of missing text / DB probability
+  def fbObsScore2(ep:EntityPair):DenseVector[Double] = {
+    val postObs = DenseVector.zeros[Double](data.nRel)
+    val e1  = data.entityVocab(ep.e1id)
+    val e2  = data.entityVocab(ep.e2id)
+
+    var allSenseRels = Set[String]()
+
+    for(r <- 0 until data.nRel) {
+      if(r == data.relVocab("NA")) {
+	postObs(r) = 0.0
+      } else if(ep.obs(r) == 0.0) {
+          postObs(r) = -5.0
+      } else {
+	postObs(r) = 1000.0
+      }
+
+      //Scale based on the entity frequency...
+      postObs(r) *= 0.01 * (1.0 + math.min(data.fbData.entityFreq(e1), data.fbData.entityFreq(e2)))
+    }
+
+    //println(e1 + "\t" + e2 + "\t" + (0 until postObs.length).map(i => i + ":" + data.relVocab(i) + postObs(i)).mkString("\t").filter(x => x != -5))
+    postObs
+  }
+
+
   def fbObsScore(ep:EntityPair):DenseVector[Double] = {
     val postObs = DenseVector.zeros[Double](data.nRel)
     val e1  = data.entityVocab(ep.e1id)
@@ -246,6 +272,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       //Scale based on the entity frequency...
       if(postObs(r) < 100) {
 	postObs(r) *= 0.01 * (1.0 + math.min(data.fbData.entityFreq(e1), data.fbData.entityFreq(e2)))
+	//println(postObs(r))
       }
     }
 
@@ -383,6 +410,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 
     //val postObs = simpleObsScore(ep)
     val postObs = fbObsScore(ep)
+    //val postObs = fbObsScore2(ep)
 
     for(n <- 0 until nRandomRestarts) {
       val z       = DenseVector.zeros[Int](postZ.numRows)
