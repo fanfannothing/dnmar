@@ -202,6 +202,50 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     postObs
   }
 
+  def fbObsScore3(ep:EntityPair):DenseVector[Double] = {
+    val postObs = DenseVector.zeros[Double](data.nRel)
+    val e1  = data.entityVocab(ep.e1id)
+    val e2  = data.entityVocab(ep.e2id)
+
+    var allSenseRels = Set[String]()
+
+    for(sense1 <- mid2name(e1).flatMap(x => mid2name(x))) {
+      for(sense2 <- mid2name(e2).flatMap(x => mid2name(x))) {
+	for(rel <- data.fbData.getRels(sense1, sense2)) {
+	  allSenseRels += rel
+	}
+      }
+    }
+
+    for(r <- 0 until data.nRel) {
+      if(r == data.relVocab("NA")) {
+	postObs(r) = 0.0
+      } else if(ep.obs(r) == 0.0) {
+	//Simple missing data model
+	val rel = data.relVocab(r)
+	val values = data.fbData.getA2s(e1,rel);
+
+	//TODO: this whole thing may need some debugging...
+	if(data.relVocab(r) != "/people/person/nationality" && 
+	   (values.filter(x => data.fbData.aContainsB(e2,x)).length > 0 || values.filter(x => data.fbData.aContainsB(x,e2)).length > 0)) {
+	  postObs(r) = 10000.0
+	} else {
+	  postObs(r) = -5.0
+	}
+      } else {
+	postObs(r) = 10000.0
+      }
+
+      //Scale based on the entity frequency...
+//      if(postObs(r) < 100) {
+//	postObs(r) *= 0.01 * (1.0 + math.min(data.fbData.entityFreq(e1), data.fbData.entityFreq(e2)))
+	//println(postObs(r))
+//      }
+    }
+
+    //println(e1 + "\t" + e2 + "\t" + (0 until postObs.length).map(i => i + ":" + data.relVocab(i) + postObs(i)).mkString("\t").filter(x => x != -5))
+    postObs
+  }
 
   def fbObsScore(ep:EntityPair):DenseVector[Double] = {
     val postObs = DenseVector.zeros[Double](data.nRel)
@@ -409,8 +453,9 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     var bestScore                   = Double.NegativeInfinity
 
     //val postObs = simpleObsScore(ep)
-    val postObs = fbObsScore(ep)
+    //val postObs = fbObsScore(ep)
     //val postObs = fbObsScore2(ep)
+    val postObs = fbObsScore3(ep)
 
     for(n <- 0 until nRandomRestarts) {
       val z       = DenseVector.zeros[Int](postZ.numRows)
