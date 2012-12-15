@@ -89,7 +89,8 @@ object Main {
     } else if(algorithm.value.getOrElse(null) == "DNMAR") {
       println("evaluating DNMAR")
       //EvalIterations(dnmar, 1)
-      EvalIterations(dnmar, 5)
+      //EvalIterations(dnmar, 5)
+      EvalIterations(dnmar, 20)
       //println("DUMPING THETA")
       //dnmar.dumpTheta(outDir.value.getOrElse(null) + "/parameters/theta")
       dnmar.dumpPredictions(outDir.value.getOrElse(null) + "/predictions/preds")
