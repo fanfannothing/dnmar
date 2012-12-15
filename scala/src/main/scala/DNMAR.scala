@@ -237,10 +237,10 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       }
 
       //Scale based on the entity frequency...
-//      if(postObs(r) < 100) {
-//	postObs(r) *= 0.01 * (1.0 + math.min(data.fbData.entityFreq(e1), data.fbData.entityFreq(e2)))
+      if(postObs(r) < 100) {
+	postObs(r) *= 0.01 * (1.0 + math.min(data.fbData.entityFreq(e1), data.fbData.entityFreq(e2)))
 	//println(postObs(r))
-//      }
+      }
     }
 
     //println(e1 + "\t" + e2 + "\t" + (0 until postObs.length).map(i => i + ":" + data.relVocab(i) + postObs(i)).mkString("\t").filter(x => x != -5))
