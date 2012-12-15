@@ -228,7 +228,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	//TODO: this whole thing may need some debugging...
 	if(data.relVocab(r) != "/people/person/nationality" && 
 	   (values.filter(x => data.fbData.aContainsB(e2,x)).length > 0 || values.filter(x => data.fbData.aContainsB(x,e2)).length > 0)) {
-	  postObs(r) = 10.0
+	     //postObs(r) = 10.0
+	  postObs(r) = 10000.0
 	} else {
 	  postObs(r) = -5.0
 	}
