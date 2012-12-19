@@ -225,23 +225,35 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	val rel = data.relVocab(r)
 	val values = data.fbData.getA2s(e1,rel);
 
-	//TODO: this whole thing may need some debugging...
 	if(data.relVocab(r) != "/people/person/nationality" && 
 	   (values.filter(x => data.fbData.aContainsB(e2,x)).length > 0 || values.filter(x => data.fbData.aContainsB(x,e2)).length > 0)) {
-	     //postObs(r) = 10.0
-	  postObs(r) = 10000.0
+	  //postObs(r) = 10.0
+	  //postObs(r) = 10000.0
+	  postObs(r) = -5.0
 	} else {
 	  postObs(r) = -5.0
 	}
       } else {
-	postObs(r) = 10000.0
+	val rel = data.relVocab(r)
+	if(rel == "/location/location/contains" || 
+	   rel == "/people/person/place_lived" ||
+	   //rel == "/people/person/children" ||
+	   //rel == "/location/neighborhood/neighborhood_of" ||
+	   rel == "/business/person/company") {
+	  //postObs(r) = 200.0
+	  postObs(r) =  400.0
+	} else {
+	  //postObs(r) = 100.0
+	  postObs(r) = 200.0
+	}
+	//postObs(r) = 10000.0
       }
 
       //Scale based on the entity frequency...
       //if(postObs(r) < 100) {
       if(postObs(r) < 0) {
 	//postObs(r) *= 0.01 * (1.0 + math.min(data.fbData.entityFreq(e1), data.fbData.entityFreq(e2)))
-	postObs(r) *= 0.015 * (1.0 + math.min(data.fbData.entityFreq(e1), data.fbData.entityFreq(e2)))
+	postObs(r) *= 0.01 * (1.0 + math.min(data.fbData.entityFreq(e1), data.fbData.entityFreq(e2)))
 	//println(postObs(r))
       }
     }

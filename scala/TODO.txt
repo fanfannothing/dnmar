@@ -18,3 +18,10 @@ Write scripts to read in dumped output and plot graphs, etc...
 
 TODO: Evaluate MultiR and DLVM exact same dataset (e.g. don't randomly sample "NA" seperately)
 
+--------------------------------------------------------------------------------------------
+- TODO: 12/15/2012
+--------------------------------------------------------------------------------------------
+-Double check everyting (e.g. evaluation methodology)
+-Put together brief writeup, with clear explanation, error analysis, and current results
+-Try to setup mtg. w/ Luke
+-Figure out next steps (e.g. TACL vs. ACL)

@@ -30,9 +30,13 @@ for(f in files) {
       p3 = data.frame(p=numeric(0), r=numeric(0))
     }    
 
-    if(sum(p1[,1] > 0) || sum(p2[,1] > 0)) {
+    if(dim(p1)[1] > 10 && (sum(p1[,1] > 0) || sum(p2[,1] > 0))) {
       #plot(p1[,2], p1[,1], xlim=c(0,0.9), ylim=c(0,1), main=f, xlab='recall', ylab='precision')
-      plot(p1[,2], p1[,1], xlim=c(0,1), ylim=c(0,1), main=f, xlab='recall', ylab='precision')
+      if(f == 'aggregate') {
+        plot(p1[,2], p1[,1], xlim=c(0,0.3), ylim=c(0.15,1), main=f, xlab='recall', ylab='precision')
+      } else {
+        plot(p1[,2], p1[,1], xlim=c(0,1), ylim=c(0,1), main=f, xlab='recall', ylab='precision')
+      }
       points(p2[,2], p2[,1], col='red', pch=2)
       points(p3[,2], p3[,1], col='green', pch=3)
     }
