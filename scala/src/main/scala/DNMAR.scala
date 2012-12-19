@@ -235,7 +235,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	}
       } else {
 	val rel = data.relVocab(r)
-	if(rel == "/location/location/contains" || 
+	if(//rel == "/loction/location/contains" ||
 	   rel == "/people/person/place_lived" ||
 	   rel == "/people/person/children" ||
 	   rel == "/location/neighborhood/neighborhood_of" ||
