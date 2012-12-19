@@ -244,6 +244,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	} else if(rel == "/location/country/capitol" ||
 		  rel == "/location/country/administrative_divisions" ||
 		  rel == "/people/person/place_of_birth" ||
+		  rel == "/people/person/place_of_death" ||
 		  rel == "/location/us_state/capitol") {
 	  postObs(r) =  50.0
 	} else {
