@@ -239,6 +239,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	   rel == "/people/person/place_lived" ||
 	   rel == "/people/person/children" ||
 	   rel == "/location/neighborhood/neighborhood_of" ||
+	   rel == "/location/country/capitol" ||
+	   rel == "/location/us_state/capitol" ||
 	   rel == "/business/person/company") {
 	  //postObs(r) = 200.0
 	  postObs(r) =  400.0
