@@ -239,13 +239,14 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	   rel == "/people/person/place_lived" ||
 	   rel == "/people/person/children" ||
 	   rel == "/location/neighborhood/neighborhood_of" ||
-	   rel == "/location/country/capitol" ||
-	   rel == "/location/us_state/capitol" ||
 	   rel == "/business/person/company") {
-	  //postObs(r) = 200.0
 	  postObs(r) =  400.0
+	} else if(rel == "/location/country/capitol" ||
+		  rel == "/location/country/administrative_divisions" ||
+		  rel == "/people/person/place_of_birth" ||
+		  rel == "/location/us_state/capitol") {
+	  postObs(r) =  50.0
 	} else {
-	  //postObs(r) = 100.0
 	  postObs(r) = 200.0
 	}
 	//postObs(r) = 10000.0
