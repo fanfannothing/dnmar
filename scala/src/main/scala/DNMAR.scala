@@ -237,6 +237,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	val rel = data.relVocab(r)
 	if(rel == "/loction/location/contains" ||
 	   rel == "/people/person/place_lived" ||
+	   rel == "/people/person/nationality" ||
 	   rel == "/people/person/children" ||
 	   rel == "/location/neighborhood/neighborhood_of" ||
 	   rel == "/business/person/company") {
@@ -244,7 +245,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	} else if(rel == "/location/country/capitol" ||
 		  rel == "/location/country/administrative_divisions" ||
 		  rel == "/people/person/place_of_birth" ||
-		  rel == "/people/person/place_of_death" ||
+		  //rel == "/people/person/place_of_death" ||
 		  rel == "/location/us_state/capitol") {
 	  postObs(r) =  50.0
 	} else {
