@@ -225,31 +225,27 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	val rel = data.relVocab(r)
 	val values = data.fbData.getA2s(e1,rel);
 
-	if(data.relVocab(r) != "/people/person/nationality" && 
-	   (values.filter(x => data.fbData.aContainsB(e2,x)).length > 0 || values.filter(x => data.fbData.aContainsB(x,e2)).length > 0)) {
-	  //postObs(r) = 10.0
-	  //postObs(r) = 10000.0
-	  postObs(r) = -5.0
-	} else {
-	  postObs(r) = -5.0
-	}
+	postObs(r) = -5.0
       } else {
 	val rel = data.relVocab(r)
 	if(rel == "/loction/location/contains" ||
 	   rel == "/people/person/place_lived" ||
-	   rel == "/people/person/nationality" ||
+	   //rel == "/people/person/nationality" ||
 	   rel == "/people/person/children" ||
 	   rel == "/location/neighborhood/neighborhood_of" ||
 	   rel == "/business/person/company") {
-	  postObs(r) =  400.0
+	  //postObs(r) =  400.0
+	  postObs(r) =  1000.0
 	} else if(rel == "/location/country/capitol" ||
 		  rel == "/location/country/administrative_divisions" ||
-		  rel == "/people/person/place_of_birth" ||
-		  //rel == "/people/person/place_of_death" ||
+		  //rel == "/people/person/place_of_birth" ||
+		  rel == "/people/person/place_of_death" ||
 		  rel == "/location/us_state/capitol") {
-	  postObs(r) =  50.0
+	  //postObs(r) =  50.0
+	  postObs(r) =  200.0
 	} else {
-	  postObs(r) = 200.0
+	  //postObs(r) = 200.0
+	  postObs(r) = 500.0
 	}
 	//postObs(r) = 10000.0
       }
