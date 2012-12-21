@@ -166,7 +166,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       if(r == data.relVocab("NA")) {
 	//postObs(r) = -4.0
 	//postObs(r) = -2.0
-	postObs(r) = 0.0
+	//postObs(r) = 0.0
+	postObs(r) = -0.0
       } else if(ep.obs(r) == 0.0) {
 	postObs(r) = -5.0
       } else {
@@ -469,10 +470,10 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     var bestRel:DenseVectorRow[Double] = null
     var bestScore                   = Double.NegativeInfinity
 
-    //val postObs = simpleObsScore(ep)
+    val postObs = simpleObsScore(ep)
     //val postObs = fbObsScore(ep)
     //val postObs = fbObsScore2(ep)
-    val postObs = fbObsScore3(ep)
+    //val postObs = fbObsScore3(ep)
 
     for(n <- 0 until nRandomRestarts) {
       val z       = DenseVector.zeros[Int](postZ.numRows)
