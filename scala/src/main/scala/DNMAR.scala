@@ -219,7 +219,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 
     for(r <- 0 until data.nRel) {
       if(r == data.relVocab("NA")) {
-	postObs(r) = 0.0
+	//postObs(r) = 0.0
+	postObs(r) = -1.0
       } else if(ep.obs(r) == 0.0) {
 	//Simple missing data model
 	val rel = data.relVocab(r)
@@ -230,7 +231,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	val rel = data.relVocab(r)
 	if(rel == "/loction/location/contains" ||
 	   rel == "/people/person/place_lived" ||
-	   //rel == "/people/person/nationality" ||
+	   rel == "/people/person/nationality" ||
 	   rel == "/people/person/children" ||
 	   rel == "/location/neighborhood/neighborhood_of" ||
 	   rel == "/business/person/company") {
