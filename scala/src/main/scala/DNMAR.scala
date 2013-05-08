@@ -109,7 +109,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	  //val result = inferHiddenLocalSearch(data.data(e12), 10)
 
 	  //val result = inferHiddenBranchAndBound(data.data(e12))
-          val result = inferHiddenLocalSearch(data.data(e12), 20)
+          //val result = inferHiddenLocalSearch(data.data(e12), 20)
+	  val result = inferHiddenLocalSearch(data.data(e12), 1)
 
 	  iHidden = result._1
 	  score   = result._2
@@ -170,6 +171,23 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	postObs(r) = -0.0
       } else if(ep.obs(r) == 0.0) {
 	postObs(r) = -5.0
+      } else {
+	//postObs(r) = 100.0
+	postObs(r) = 10000.0
+      }
+    }
+    postObs
+  }
+
+  def simpleObsScoreNER(ep:EntityPair):DenseVector[Double] = {
+    val postObs     = DenseVector.zeros[Double](data.nRel)
+    for(r <- 0 until data.nRel) {
+      if(r == data.relVocab("NA")) {
+	postObs(r) = -0.0
+      } else if(ep.obs(r) == 0.0) {
+	//postObs(r) = -10.0
+	postObs(r) = -100.0
+	//postObs(r) = -5.0
       } else {
 	//postObs(r) = 100.0
 	postObs(r) = 10000.0
@@ -470,7 +488,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     var bestRel:DenseVectorRow[Double] = null
     var bestScore                   = Double.NegativeInfinity
 
-    val postObs = simpleObsScore(ep)
+    //val postObs = simpleObsScore(ep)
+    val postObs = simpleObsScoreNER(ep)
     //val postObs = fbObsScore(ep)
     //val postObs = fbObsScore2(ep)
     //val postObs = fbObsScore3(ep)
@@ -504,8 +523,11 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 
 	//First search operator (change one variable)
 	val deltas = DenseMatrix.zeros[Double](postZ.numRows, postZ.numCols)
-	for(i <- (0 until postZ.numRows)) {
-	  for(r <- 0 until postZ.numCols) {
+//Compute this in parallel over rows?
+//	for(i <- (0 until postZ.numRows)) {
+//	  for(r <- 0 until postZ.numCols) {		
+	for(r <- (0 until postZ.numCols).par) {		//Compute this in parallel over columns?
+	  for(i <- (0 until postZ.numRows)) {
 	    if(r != z(i)) {
 	      deltas(i,r) = postZ(i,r) - postZ(i,z(i))
 	      if(rCounts(r) == 0) {
@@ -525,7 +547,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	//Second search operator (switch all instances of relation r to NA)
 	//val deltasNA = DenseVector.zeros[Double](postZ.numCols)
 	val deltasAggregate = DenseMatrix.zeros[Double](postZ.numCols, postZ.numCols)
-	for(r1 <- 0 until postZ.numCols) {
+	for(r1 <- (0 until postZ.numCols).par) {
+//	for(r1 <- (0 until postZ.numCols)) {
 	  for(r2 <- 0 until postZ.numCols) {
 	    if(rCounts(r1) > 0 && r1 != r2) {
 	      for(i <- 0 until postZ.numRows) {

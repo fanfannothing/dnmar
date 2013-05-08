@@ -164,6 +164,77 @@ object Eval {
     }
   }
 
+  def HumanEvalNer(param:Parameters, inDir:String, outFile:String) {
+    HumanEvalNer(param, inDir, -1, outFile)
+  }
+
+  def HumanEvalNer(param:Parameters, inDir:String, rel:Int, outFile:String) {
+    val fGold     = new BufferedReader(new InputStreamReader(new FileInputStream(inDir + "/gold")))
+    val fFeatures = new BufferedReader(new InputStreamReader(new FileInputStream(inDir + "/test.features")))
+    var lineNum = 0
+
+    var sortedPredictions = List[Prediction]()
+    var maxRecall = 0.0
+
+    for(line <- scala.io.Source.fromFile(inDir + "/entities").getLines()) {
+      val entity      = param.data.entityVocab(line.trim)
+      val gold        = param.data.relVocab(fGold.readLine.trim)
+      val featuresStr = fFeatures.readLine.trim
+
+      /*
+      val relations = DenseVector.zeros[Double](param.data.relVocab.size)
+      rels.foreach( 
+	{r => 
+	  relations(r) = 1.0
+       })
+       */
+
+      val features = SparseVector.zeros[Double](param.data.featureVocab.size + 1)
+      features(param.data.featureVocab.size) = 1.0		//Bias feature
+      featuresStr.split(" ").map(x => param.data.featureVocab(x)).filter(x => x >= 0).foreach(
+	{x =>
+	  features(x) = 1.0
+       })
+
+      var postZ:DenseVector[Double] = null
+      if(useAveragedParameters) {
+	postZ = (param.theta_average * features).toDense
+      } else {
+	postZ = (param.theta * features).toDense
+      }
+      val logExpSum = MathUtils.LogExpSum(postZ.toArray)
+      postZ -= logExpSum
+      val pNA = postZ(param.data.relVocab("NA"))
+      postZ(param.data.relVocab("NA")) = Double.NegativeInfinity
+
+      if(gold != param.data.relVocab("NA") && (rel == -1 || gold == rel)) {
+	maxRecall += 1.0
+      }
+
+      var predicted = postZ.argmax
+      for(predicted <- 0 until param.data.nRel) {
+	if((rel == -1 || predicted == rel) && predicted != param.data.relVocab("NA")) {
+	  if(predicted == gold) {
+	      //True Positive
+	      sortedPredictions ::= new Prediction(postZ(predicted), true, param.data.relVocab(predicted), featuresStr)
+	  } else {
+	      //False Positive
+	    sortedPredictions ::= new Prediction(postZ(predicted), false, param.data.relVocab(predicted), featuresStr)
+	  }
+	}
+      }
+      lineNum += 1
+    }
+    
+    if(maxRecall > 0) {
+      if(outFile != null) {
+	println("dumping to " + outFile)
+	DumpPR(sortedPredictions, maxRecall, outFile)
+      }
+      PrintPR(sortedPredictions, maxRecall)
+    }
+  }
+
   def AggregateEval(param:Parameters, test:EntityPairData) {
     AggregateEval(param, test, -1, null)
   }

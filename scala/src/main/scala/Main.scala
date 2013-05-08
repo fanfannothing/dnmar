@@ -33,6 +33,11 @@ object Main {
     (sValue, opt) => new ProtobufData(sValue,null,null,null,true)
   }
 
+  val nerTrain = parser.option[NerData](List("trainNER"), "n", "Training data (in NER file format).") { 
+    println("Loading train")
+    (sValue, opt) => new NerData(sValue,null,null,null)
+  }
+
   val test  = parser.option[ProtobufData](List("testProto"), "n", "Test data (in google protobuf format).") {
     println("Loading test")
     (sValue, opt) => new ProtobufData(sValue, 
@@ -40,6 +45,14 @@ object Main {
 				      train.value.getOrElse(null).relVocab.lock, 
 				      train.value.getOrElse(null).featureVocab.lock,
 				      true)
+  }
+
+  val nerTest  = parser.option[NerData](List("testNER"), "n", "Test data (in NER format).") {
+    println("Loading test")
+    (sValue, opt) => new NerData(sValue, 
+				 nerTrain.value.getOrElse(null).entityVocab, 
+				 nerTrain.value.getOrElse(null).relVocab.lock, 
+				 nerTrain.value.getOrElse(null).featureVocab.lock)
   }
 
   val outDir = parser.option[String](List("outDir"), "n", "output directory") {
@@ -51,6 +64,10 @@ object Main {
   }
 
   val algorithm = parser.option[String](List("algorithm"), "n", "algorithm") {
+    (sValue, opt) => sValue
+  }
+
+  val nIter = parser.option[String](List("nIter"), "n", "iterations") {
     (sValue, opt) => sValue
   }
 
@@ -66,8 +83,15 @@ object Main {
       case e: ArgotUsageException => println(e.message)
     }
 
-    val multir = new MultiR(train.value.getOrElse(null))
-    val dnmar  = new DNMAR(train.value.getOrElse(null))
+    var multir:MultiR = null
+    var dnmar:DNMAR   = null
+    if(train.value.getOrElse(null) != null) {
+      multir = new MultiR(train.value.getOrElse(null))
+      dnmar  = new DNMAR(train.value.getOrElse(null))
+    } else {
+      multir = new MultiR(nerTrain.value.getOrElse(null))
+      dnmar  = new DNMAR(nerTrain.value.getOrElse(null))
+    }
 
     if(filterFB.value.getOrElse(null) != null) {
       FreebaseUtils.filterFreebase(filterFB.value.getOrElse(null), filterFB.value.getOrElse(null) + ".filtered", train.value.getOrElse(null).entityVocab, train.value.getOrElse(null).relVocab)
@@ -82,24 +106,43 @@ object Main {
 
     if(algorithm.value.getOrElse(null) == "MultiR") {
       println("evaluating MultiR")
-      EvalIterations(multir, 50)
+      if(nIter.value.getOrElse(null) != null) {
+	EvalIterations(multir, nIter.value.getOrElse(null).toInt)
+      } else {
+	EvalIterations(multir, 50)
+      }
       //println("DUMPING THETA")
       //multir.dumpTheta(outDir.value.getOrElse(null) + "/parameters/theta")
-      multir.dumpPredictions(outDir.value.getOrElse(null) + "/predictions/preds")
+      if(train.value.getOrElse(null) != null) {
+	//Only for binary relation data (for now)
+	multir.dumpPredictions(outDir.value.getOrElse(null) + "/predictions/preds")
+      }
     } else if(algorithm.value.getOrElse(null) == "DNMAR") {
       println("evaluating DNMAR")
-      EvalIterations(dnmar, 1)
-      //EvalIterations(dnmar, 5)
-      //EvalIterations(dnmar, 20)
+      if(nIter.value.getOrElse(null) != null) {
+	EvalIterations(dnmar, nIter.value.getOrElse(null).toInt)
+      } else {
+	EvalIterations(dnmar, 1)
+      }
       //println("DUMPING THETA")
       //dnmar.dumpTheta(outDir.value.getOrElse(null) + "/parameters/theta")
-      dnmar.dumpPredictions(outDir.value.getOrElse(null) + "/predictions/preds")
+      if(train.value.getOrElse(null) != null) {
+	//Only for binary relation data (for now)
+	dnmar.dumpPredictions(outDir.value.getOrElse(null) + "/predictions/preds")
+      }
     }
   }
 
   def EvalIterations(dnmar:Parameters, nIter:Int) {
-    val nrel     = train.value.getOrElse(null).relVocab.size
-    val relVocab = train.value.getOrElse(null).relVocab
+    var nrel:Int       = -1
+    var relVocab:Vocab = null
+    if(train.value.getOrElse(null) != null) {
+      nrel     = train.value.getOrElse(null).relVocab.size
+      relVocab = train.value.getOrElse(null).relVocab
+    } else {
+      nrel     = nerTrain.value.getOrElse(null).relVocab.size
+      relVocab = nerTrain.value.getOrElse(null).relVocab
+    }
 
     var fw:FileWriter = null
     if(outCompareInfer.value.getOrElse(null) != null) {
@@ -151,7 +194,11 @@ object Main {
 	    outFile += "/aggregate"
 	  }
 	}
-	Eval.AggregateEval(dnmar, test.value.getOrElse(null), outFile)
+	if(test.value.getOrElse(null) != null) {
+	  Eval.AggregateEval(dnmar, test.value.getOrElse(null), outFile)
+	} else {
+	  Eval.AggregateEval(dnmar, nerTest.value.getOrElse(null), outFile)
+	}
 
 	println("Human annotated evaluation (averaged)")
 	if(i == nIter) {
@@ -160,7 +207,11 @@ object Main {
 	    outFile += "/sentential"
 	  }
 	}
-	Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt", outFile)
+	if(nerTrain.value.getOrElse(null) != null) {
+	  Eval.HumanEvalNer(dnmar, "/home/aritter/dlvm/data/ner/annotated", outFile)
+	} else {
+	  Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt", outFile)
+	}
 	for(r <- 0 until nrel) {
 	  if(i == nIter) {
 	    outFile = outDir.value.getOrElse(null)
@@ -169,7 +220,11 @@ object Main {
 	    }
 	  }
 	  println(relVocab(r))
-	  Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential-byrelation.txt", r, outFile)
+	  if(nerTrain.value.getOrElse(null) != null) {
+	    Eval.HumanEvalNer(dnmar, "/home/aritter/dlvm/data/ner/annotated", r, outFile)
+	  } else {
+	    Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential-byrelation.txt", r, outFile)
+	  }
 	}
 	Eval.useAveragedParameters = false
       }
