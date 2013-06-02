@@ -12,9 +12,9 @@ import scalala.library.Plotting._;
 import scalala.operators.Implicits._;
 
 import java.util.zip.GZIPInputStream
-import java.io.FileInputStream
-import java.io.BufferedInputStream
-import java.io.InputStream
+import scala.io._
+import java.io._
+
 
 import scala.collection.mutable.ListBuffer
 import scala.collection.mutable.HashMap
@@ -48,6 +48,74 @@ abstract class EntityPairData {
   val featureVocab:Vocab
 
   val fbData:FreebaseUtils.FreebaseData
+}
+
+class NerData(inDir:String, evoc:Vocab, rvoc:Vocab, fvoc:Vocab) extends EntityPairData {
+  def this(inDir:String) = this(inDir, null, null, null)
+
+  var newVocab = true
+  val entityVocab  = if(evoc != null) { evoc } else { new Vocab }
+  val relVocab     = if(rvoc != null) { rvoc } else { new Vocab }
+  val featureVocab = if(fvoc != null) { newVocab=false; fvoc } else { new Vocab }
+
+  val fbData = new FreebaseUtils.FreebaseData("../data/freebase-datadump-quadruples.tsv.bz2.filtered")
+
+  //First pass: figure out vocabuarly sizes
+  var nEntities = 0
+  for(line <- scala.io.Source.fromFile(inDir + "/labels2").getLines()) {
+    val rels = line.trim.split(",").filter(_ != "NONE").map(x => relVocab(x)) ++ Array(relVocab("NA"))
+  }
+  for(line <- scala.io.Source.fromFile(inDir + "/features2").getLines()) {
+    val mentions = line.trim.split("\t")
+    for(mention <- mentions) {
+      val features = mention.split(" ").map(x => featureVocab(x))
+    }
+  }
+  for(line <- scala.io.Source.fromFile(inDir + "/entities2").getLines()) {
+    val entity = entityVocab(line.trim)
+    nEntities += 1
+  }
+
+  val nEntityPairs = nEntities
+  val nFeat        = featureVocab.size
+  val nRel         = relVocab.size
+
+  println("nRel:" + nRel)
+  println("feature vocab size: " + featureVocab.size)
+  println("# entity pairs:     " + nEntityPairs)
+  println("# relations:        " + relVocab.size)
+
+  //Second pass: read in the data
+  val data = new Array[EntityPair](nEntities)
+  
+  val fLabels   = new BufferedReader(new InputStreamReader(new FileInputStream(inDir + "/labels2")))
+  val fFeatures = new BufferedReader(new InputStreamReader(new FileInputStream(inDir + "/features2")))
+  var lineNum = 0
+  for(line <- scala.io.Source.fromFile(inDir + "/entities2").getLines()) {
+    val entity   = entityVocab(line.trim)
+    val mentions = fFeatures.readLine.trim.split("\t")
+    val rels     = fLabels.readLine.trim.split(",").filter(_ != "NONE").map(x => relVocab(x)) ++ Array(relVocab("NA"))
+
+    val relations = DenseVector.zeros[Double](relVocab.size)
+    rels.foreach( 
+      {r => 
+	relations(r) = 1.0
+     })
+
+    val features = new Array[SparseVectorCol[Double]](mentions.length)
+    for(i <- 0 until mentions.length) {
+      val mention = mentions(i)
+      features(i) = SparseVector.zeros[Double](featureVocab.size + 1)
+      features(i)(featureVocab.size) = 1.0		//Bias feature
+      mention.split(" ").map(x => featureVocab(x)).filter(x => x >= 0).foreach(
+	{x =>
+	  features(i)(x) = 1.0
+       })
+    }
+
+    data(lineNum) = new EntityPair(entity, entity, features, relations.t)
+    lineNum += 1
+  }  
 }
 
 //Class to read and manage data from google protobuf file format
