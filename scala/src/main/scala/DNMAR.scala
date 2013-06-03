@@ -326,7 +326,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       //if(postObs(r) < 100) {
       if(postObs(r) < 0) {
 	//postObs(r) *= 0.01 * (1.0 + math.min(data.fbData.entityFreq(e1), data.fbData.entityFreq(e2)))
-	postObs(r) *= 0.1 * (1.0 + math.min(data.fbData.entityFreq(e1), data.fbData.entityFreq(e2)))
+	postObs(r) *= 0.01 * (1.0 + math.min(data.fbData.entityFreq(e1), data.fbData.entityFreq(e2)))
 	//println(postObs(r))
       }
     }
@@ -543,8 +543,8 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     //val postObs = fbObsScore(ep)
     //val postObs = fbObsScore2(ep)
     //val postObs = fbObsScore3(ep)
-    val postObs = simpleObsScoreNER(ep)
-    //val postObs = fbObsScoreNER(ep)
+    //val postObs = simpleObsScoreNER(ep)
+    val postObs = fbObsScoreNER(ep)
 
     for(n <- 0 until nRandomRestarts) {
       val z       = DenseVector.zeros[Int](postZ.numRows)
