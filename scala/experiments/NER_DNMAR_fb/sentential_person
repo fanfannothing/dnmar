@@ -1,0 +1,1450 @@
+1.0	0.002364066193853428	person	true	in=John in=Lennon l=tears l=." l=#quote r=#quotes
+1.0	0.004728132387706856	person	true	in=Rex in=Ryan l=Jets l=coach r=pleased r=with r=the
+1.0	0.0070921985815602835	person	true	in=john in=wertheim l=genius l=&quot; l=by r=, r=play r=at
+0.75	0.0070921985815602835	person	false	in=Steve in=King l=: l=Rep l=. r=on r=ObamaCare r=,
+0.8	0.009456264775413711	person	true	in=J in=John l=#livethedream l=@joycemeyer l=, r=, r=@kerriweems r=oct
+0.8333333333333334	0.01182033096926714	person	true	in=John in=Henry in=Newman l=: l=Why l=move r=toward r=sainthood r=?:
+0.8571428571428571	0.014184397163120567	person	true	in=Crazy in=Steve l=from l=iCarly l=was r=, r=Carly r=was
+0.875	0.016548463356973995	person	true	in=John in=Chiles l=UT l=: r=out r=, r=Mike
+0.8888888888888888	0.018912529550827423	person	true	in=John in=Acuff r=joined r=@daveramseys r=team
+0.9	0.02127659574468085	person	true	in=Mike in=Davis l=Chiles l=out l=, r=in r=: r=Texas
+0.8181818181818182	0.02127659574468085	person	false	in=DJ in=Chris in=L l=playing l=inside l=and r=in r=Loft
+0.8333333333333334	0.02364066193853428	person	true	in=Steve in=Dave l=tell l=' l=em r=Podcast
+0.8461538461538461	0.026004728132387706	person	true	in=Samuel in=Savoirfaire in=Williams l=do l=tonight l=? r=at r=Potbelly r=Lincoln
+0.8571428571428571	0.028368794326241134	person	true	in=John in=Chiles l=Texas l=wide l=receiver r=has r=been r=ruled
+0.8666666666666667	0.030732860520094562	person	true	in=David l=@davidcushman r=, r=I r=just
+0.875	0.03309692671394799	person	true	in=Alex in=Amenabar l=by l=Spanish l=director r=who r=directed r="
+0.8823529411764706	0.03546099290780142	person	true	in=Michael in=Kraus l=Year-Over-Year l=: l=By r=on r=September r=17
+0.8333333333333334	0.03546099290780142	person	false	in=DJ in=Elements l=Boyz l=LIVE l=w/ r=103.5 r=&amp; r=Soreal
+0.8421052631578947	0.037825059101654845	person	true	in=Mark in=Rowan l=we l=will l=have r=from r=Novel r=Wines
+0.85	0.04018912529550828	person	true	in=Robert l=saw l=pictures l=of r=.... r=spent r=2
+0.8571428571428571	0.0425531914893617	person	true	in=Robert l=And l=so l=did r=.
+0.8636363636363636	0.04491725768321513	person	true	in=John l=@planetjedward l=were l='s r=and r=Edward r=...
+0.8695652173913043	0.04728132387706856	person	true	in=Tim in=Bulmer l=@BenArch l=100- r=had r=a r=100%
+0.875	0.04964539007092199	person	true	in=spencer l=your l=age l=, r=from r=iCarly r=was
+0.88	0.05200945626477541	person	true	in=Richard in=Kadrey l=Sandman l=Slim l=by r=. r=Love r=#wkndreads
+0.8846153846153846	0.054373522458628844	person	true	in=emily in=rodriguez l=fckn r=did r=n't r=bring
+0.8518518518518519	0.054373522458628844	person	false	in=Austin l=Dementia l=Playing l=in r=Tonite r=at r=The
+0.8214285714285714	0.054373522458628844	person	false	in=Simon in=&amp; in=Schuster l=MUSIC l=NEWS l=- r=has r=announced r=a
+0.8275862068965517	0.05673758865248227	person	true	in=George in=Parks in=Hitchcock l=at l=96 l=: r=was r=born r=on
+0.8333333333333334	0.0591016548463357	person	true	in=Michael in=Vick l=Report l=: r=Will r=Start r=for
+0.8387096774193549	0.061465721040189124	person	true	in=Chris l='On l=set l=filming r=" r=Rainy r=Days
+0.84375	0.06382978723404255	person	true	in=Tim in=Yip l=Olympics l=: l=By r=, r=Edmonton r=Journal
+0.8484848484848485	0.06619385342789598	person	true	in=Ralph in=Lauren l=week l=ends l=with r=, r=Oscar r=de
+0.8529411764705882	0.06855791962174941	person	true	in=Stan in=Bowman l=Blackhawks l=general l=manager r=said r=Cristobal r=Huet
+0.8285714285714286	0.06855791962174941	person	false	in=Hudson in=TMA l=hosted l=by l=the r=at r=Town r=Square
+0.8055555555555556	0.06855791962174941	person	false	in=Jupiter l=Iwebslog l=. l=com r=making r=closest r=approach
+0.7837837837837838	0.06855791962174941	person	false	in=Homecoming in=Week l=at l=school l=... r=... r=And r=Picture
+0.7631578947368421	0.06855791962174941	person	false	in=Arizona l=unbearable l=. l=Give r=a r=break r=.
+0.7692307692307693	0.07092198581560284	person	true	in=Tommy in=WIseau l=a l=classic l=. r=is r=a r=genius
+0.775	0.07328605200945626	person	true	in=Joe in=Torre l=Mattingly l=will l=replace r=as r=LA r=Dodgers
+0.7804878048780488	0.07565011820330969	person	true	in=Renee l=: l=Shared l=by r=Or r=as r=I'd
+0.7857142857142857	0.07801418439716312	person	true	in=Frank in=Solich l=Ohio l=head l=coach r=says r=Ohio r=State
+0.7906976744186046	0.08037825059101655	person	true	in=phil in=collins l=gatt l=holly l=, r=, r=the r=skin
+0.7954545454545454	0.08274231678486997	person	true	in=Jim in=Rohn l=it l=. l=- r=RT r=@TheSCICoach
+0.8	0.0851063829787234	person	true	in=Robert in=Laughlin l=@erutan l=Stanford l='s r=( r=Nobel r=Physics1998
+0.8043478260869565	0.08747044917257683	person	true	in=Mariel in=Concepcion l=Tour l=: l=by r=, r=NY r=|
+0.8085106382978723	0.08983451536643026	person	true	in=Robert in=Downey in=Jr l=) l=Starring l=: r=., r=Mickey r=Rourke
+0.8125	0.09219858156028368	person	true	in=Brown l=next l=Pope l=" r=: r=" r=I
+0.8163265306122449	0.09456264775413711	person	true	in=Dave l=! l=I l=hope r=gives r=him r=his
+0.82	0.09692671394799054	person	true	in=Steve in=&quot; in=Stylez in=&quot; l=8pm l=Hotel l=Elegante r=A.K.A. r=Desperado r=Birthday
+0.803921568627451	0.09692671394799054	person	false	in=DJ in=STRATEGY l=HAVE l=YOU l=HEARD r=IS r=NOW r=AT
+0.7884615384615384	0.09692671394799054	person	false	in=Kick-Ass l=while l=tonight l=. r=is r=very r=tempting
+0.7735849056603774	0.09692671394799054	person	false	in=CORT l=Lounge22 l=Powered l=by r=collection r=! r=The
+0.7777777777777778	0.09929078014184398	person	true	in=Denise in=Calaman l=market l=: l=by r=The r=July r=2010
+0.7636363636363637	0.09929078014184398	person	false	in=Exodus in=Porter l=1st l=batch l=of r=went r=into r=the
+0.7678571428571429	0.1016548463356974	person	true	in=50 in=tyson l=RT l=@medeadly l=: r=droppin r=a r=video
+0.7719298245614035	0.10401891252955082	person	true	in=Cudi l=RT l=@RapperBigPooh l=so r=got r=a r=problem
+0.7758620689655172	0.10638297872340426	person	true	in=Roger in=Waters l=chance l=to l=win r=tickets r=on r=KLH
+0.7796610169491526	0.10874704491725769	person	true	in=Adam l=a l=strong l=hunch r=will r=be r=a
+0.7833333333333333	0.1111111111111111	person	true	in=rose l=said l=' l=blame r=' r=she r=said
+0.7868852459016393	0.11347517730496454	person	true	in=Jimmie in=Johnson l=Happy l=B-Day r=FLYING r=LIZARD
+0.7903225806451613	0.11583924349881797	person	true	in=Mike r=vick r=back r=in
+0.7777777777777778	0.11583924349881797	person	false	in=DJ in=Got in=Us in=Fallin in=in in=Love l=Have r=in r=my r=head
+0.78125	0.1182033096926714	person	true	in=Dave in=Matthews l=Lebowski l=Fest l=, r=, r=Latin r=Music
+0.7692307692307693	0.1182033096926714	person	false	in=Pumpkin in=Moonshine l=RT l=: l=@corsairartisan r=has r=arrived r=in
+0.7575757575757576	0.1182033096926714	person	false	in=Pumpkin in=Moonshine l=RT l=: l=@corsairartisan r=has r=arrived r=in
+0.7611940298507462	0.12056737588652482	person	true	in=Pope l=RT l=@MarioBB9 l=: r=says r=atheists r=pick
+0.7647058823529411	0.12293144208037825	person	true	in=Pope l=RT l=@davehodg l=: r=says r=atheists r=pick
+0.7681159420289855	0.12529550827423167	person	true	in=Pope l=RT l=@davehodg l=: r=says r=atheists r=pick
+0.7714285714285715	0.1276595744680851	person	true	in=Umar in=Gul l=Reuters l=) l=- r=took r=... r=http://bit.ly/ckNyMG
+0.7605633802816901	0.1276595744680851	person	false	in=Willingham l=meeting l=, l=where r=probe r=took r=a
+0.7638888888888888	0.13002364066193853	person	true	in=Pope l=RT l=@Queen_UK l=: r=insists r=he r=left
+0.7671232876712328	0.13238770685579196	person	true	in=GaGa l=@ConorMc_Ginty r=played r=here r=a
+0.7702702702702703	0.1347517730496454	person	true	in=GaGa l=@ConorMc_Ginty r=played r=here r=a
+0.76	0.1347517730496454	person	false	in=goodbye in=moon l=gives l=me l=" r=". r=Probably r=a
+0.75	0.1347517730496454	person	false	in=Mark in=14:30 l=in l=some l=translations r=says r=: r="...
+0.7532467532467533	0.13711583924349882	person	true	in=Dan in=Martin l=says l=@Section8Chicago l='s r=in r=this r=week
+0.7435897435897436	0.13711583924349882	person	false	in=japan l=y/o l=kid l=from r=who r=won r=the
+0.7341772151898734	0.13711583924349882	person	false	in=Y in=La in=Bamba r=: r=Playing r=a
+0.7375	0.13947990543735225	person	true	in=Clark in=Duke l=total l=9 l=for r=RT r=@Naathan_B r=:
+0.7283950617283951	0.13947990543735225	person	false	in=AstronomersWithoutBorders l=RT l=@askyfullofstars l=: r=has r=a r=list
+0.7317073170731707	0.14184397163120568	person	true	in=Miley in=Cyrus l=OMG l=! r=Has r=A r=14-Year-Old
+0.7349397590361446	0.14420803782505912	person	true	in=Soulja in=Boy l=RT l=@johan0394 l=: r=| r=TheDeAndreWay r=.
+0.7380952380952381	0.14657210401891252	person	true	in=George in=N in=. in=Parks r=, r=UMass r=band
+0.7294117647058823	0.14657210401891252	person	false	in=COLLEGE in=REPUBLICAN in=TAILGATE l=Stop l=by l=the r=tomorrow r=@ r=9:30
+0.7325581395348837	0.14893617021276595	person	true	in=Jack in=L in=. l=Lea l=Brilmayer l=, r=Goldsmith[May r=01 r=,
+0.735632183908046	0.15130023640661938	person	true	in=Matt l=:O l=( l=Also r=will r=be r=saying
+0.7386363636363636	0.1536643026004728	person	true	in=Kwiruka l=RT l=@SavingGorillas l=: r=left r=her r=group
+0.7303370786516854	0.1536643026004728	person	false	in=RockHouse l=GuitarNews l=: r=: r=The r=Weekend
+0.7222222222222222	0.1536643026004728	person	false	in=Teenage in=Dream l=RT l=@Jasmynebieberr l=: r=is r=on r=the
+0.7252747252747253	0.15602836879432624	person	true	in=Sara in=B in=. l=the l=reminder l=, r=Focusing r=on r=the
+0.7282608695652174	0.15839243498817968	person	true	in=Eduardo in=Surita l=- l=1 l=) r=: r=your r=a
+0.7311827956989247	0.1607565011820331	person	true	in=kenny l=n l=justthen l=about r=signing r=his r=book
+0.723404255319149	0.1607565011820331	person	false	in=Champlain in=campus l=. l=Intervals l=from r=. r=Pretty r=.
+0.7157894736842105	0.1607565011820331	person	false	in=AZ l=of l=Mesa l=, r=who r=had r=heart
+0.7083333333333334	0.1607565011820331	person	false	in=Barbara in=Boxer l=fellow l=desert l=dweller r=at r=event r=today
+0.7010309278350515	0.1607565011820331	person	false	in=Rotary in=Club l=volunteering l=for l=the r=at r=the r=PoMo
+0.7040816326530612	0.16312056737588654	person	true	in=Charles l=own l=life l=, r=was r=never r=in
+0.7070707070707071	0.16548463356973994	person	true	in=Don in=Mattingly r=will r=replace r=Joe
+0.7	0.16548463356973994	person	false	in=Ft in=Mitchell l=the l=road l=in r=. r=No r=time
+0.7029702970297029	0.16784869976359337	person	true	in=Donald in=Trump l=a l=business l=.
+0.7058823529411765	0.1702127659574468	person	true	in=Dan l=: r=is r=using r=his
+0.6990291262135923	0.1702127659574468	person	false	in=UNC l=pd l=began l=. r=will r=be r=there
+0.7019230769230769	0.17257683215130024	person	true	in=Stephen in=Fry l=Sky l=3D l=enlists r=to r=explain r=the
+0.7047619047619048	0.17494089834515367	person	true	in=Stephen in=Fry l=Sky l=3D l=enlists r=to r=explain r=the
+0.7075471698113207	0.1773049645390071	person	true	in=Adam in=Beyer r=: r=Swedish r=Techno
+0.7102803738317757	0.17966903073286053	person	true	in=Marcus in=Bentley l=. l=( l=Awaiting r=! r=) r=#BB11
+0.7037037037037037	0.17966903073286053	person	false	in=Israel r=grinds r=to r=a
+0.6972477064220184	0.17966903073286053	person	false	in=Deep in=Sea in=Intervention l=17,201 l=0 l=-- r=has r=opened r=...
+0.6909090909090909	0.17966903073286053	person	false	in=Hangeland l=Pedersen l=: r=won't r=be r=at
+0.6936936936936937	0.18203309692671396	person	true	in=al-Mallohi l=BLOGGER l=: l=17-9-2010Tal r=, r=a r=19-year-old
+0.6964285714285714	0.18439716312056736	person	true	in=George in=Hitchcock r=, r=Kayak r=Magazine
+0.6902654867256637	0.18439716312056736	person	false	in=Luna in=Lounge l=night l=Casitas l=presents r=, r=the r=perfect
+0.6842105263157895	0.18439716312056736	person	false	in=SS in=2011 in=Fashion in=Week l=Fave l=Looks l=from r=: r=Jason r=Wu
+0.6869565217391305	0.1867612293144208	person	true	in=Yoav l=YouTube l=video l=-- r=" r=We r=All
+0.6810344827586207	0.1867612293144208	person	false	in=Alpha in=&amp; in=Omega l=for l=the l=kids- r=( r=PG r=)
+0.6752136752136753	0.1867612293144208	person	false	in=Testing in=Tomorrow l=-- l=Water l=by r=http://youtu.be/htAM7lgcelw?a
+0.6694915254237288	0.1867612293144208	person	false	in=DOES in=IT in=OFFEND in=YOU in=, in=YEAH in=? l=2 l=KELE l=and r=Sept r=21st r=@
+0.6722689075630253	0.18912529550827423	person	true	in=Kyle l=I l=chatted l=with r=was r=June r=.
+0.675	0.19148936170212766	person	true	in=Donovan in=McNabb l=Philadelphia l=Eagles l=: r=( r=even r=b4
+0.6776859504132231	0.1938534278959811	person	true	in=Tiger in=Woods l=top-ranked l=golfer l=, r=. r=If r=a
+0.680327868852459	0.19621749408983452	person	true	in=Alex l=gotta l=admit l=, r=sounds r=hot r=when
+0.6747967479674797	0.19621749408983452	person	false	in=iPad l=RT l=@TechZader l=: r=Refresh r=Due r=in
+0.6693548387096774	0.19621749408983452	person	false	in=Constitution in=Day l=Party l=, l=and r=: r=The r=inclusion
+0.664	0.19621749408983452	person	false	in=Nex-Tech l=Stop l=by l=teh r=and r=Nex-Tech r=Wireless
+0.6587301587301587	0.19621749408983452	person	false	in=Miami in=2 in=Ibiza l=of l=@swedishousemfia l=- r=on r=the r=show
+0.6614173228346457	0.19858156028368795	person	true	in=Stephen r=, r=the r=Intellectual
+0.65625	0.19858156028368795	person	false	in=Jupiter l=- l=Better l=catch r=next r=... r=http://l.mytr.in/aQn2Kg
+0.6589147286821705	0.20094562647754138	person	true	in=Jennifer l=Francisco l=6pm l=contact r=. r=Gainza@nmss r=.
+0.6538461538461539	0.20094562647754138	person	false	in=Spirit in=Week l=Next l=week l=is r=at r=school r=...
+0.6564885496183206	0.2033096926713948	person	true	in=David r='s r=new r=season
+0.6515151515151515	0.2033096926713948	person	false	in=how in=high l=baked l=, l=next r=, r=grandma r=boys
+0.6466165413533834	0.2033096926713948	person	false	in=AP l=is l=worse l=( r=) r=( r=Yahoo
+0.6417910447761194	0.2033096926713948	person	false	in=IPad l=next l=iPad l=. r=... r=http://bit.ly/9gplXp
+0.6370370370370371	0.2033096926713948	person	false	in=iTunes l=Instant l=: l=Search r=at r=high r=speed
+0.6323529411764706	0.2033096926713948	person	false	in=Fort in=Mason l=OFF l=the l=GRID r=at r=5PM r=TODAY
+0.6277372262773723	0.2033096926713948	person	false	in=Nex-Tech in=Wireless l=teh l=Nex-Tech l=and r=tent r=at r=TailGreat
+0.6231884057971014	0.2033096926713948	person	false	in=PAMPERS l=WIN l=FREE r=FOR r=A r=YEAR
+0.6258992805755396	0.20567375886524822	person	true	in=meatloaf l=and l=just l=sang r=at r=karoke r=.
+0.6214285714285714	0.20567375886524822	person	false	in=Blonde in=Redhead l=the l=Day l=: r=: r=A r=Different
+0.624113475177305	0.20803782505910165	person	true	in=george l=Lol l=, l=was r=with r=carmen r=today
+0.6197183098591549	0.20803782505910165	person	false	in=Ecclesiastes in=7:14 l=adversity l=consider l=. r=#JESUS r=#TRUTH r=#jesustweeters
+0.6223776223776224	0.21040189125295508	person	true	in=George in=N in=. in=Parks l=in l=Ohio l=: r=, r=for r=33
+0.6180555555555556	0.21040189125295508	person	false	in=Mesa l=old l=Penny l=of r=, r=AZ r=who
+0.6206896551724138	0.2127659574468085	person	true	in=Kirsten l=With r=( r=: r=going
+0.6164383561643836	0.2127659574468085	person	false	in=KY l=in l=stores l=. r=ships r=next r=week
+0.6122448979591837	0.2127659574468085	person	false	in=KY l=in l=stores l=. r=ships r=next r=week
+0.6148648648648649	0.21513002364066194	person	true	in=Jones l=Pub l=! l=DUDE r=playing r=inside r=and
+0.610738255033557	0.21513002364066194	person	false	in=Maroon in=5 l=with l=N.E.R.D. l=, r=and r=others r=at
+0.6133333333333333	0.21749408983451538	person	true	in=Beyonce l=Timberlake l=ft l=. r=- r=Until r=the
+0.609271523178808	0.21749408983451538	person	false	in=@Cromwell in=Field l=a l=practice l=session r=today r=at r=6pm
+0.6052631578947368	0.21749408983451538	person	false	in=Simon in=Posford l=, l=Shpongle l=( r=DJ r=set r=)
+0.6013071895424836	0.21749408983451538	person	false	in=Vegas l='s l=official l=!!! r=for r=the r=weekend
+0.6038961038961039	0.2198581560283688	person	true	in=tanya l=and l=steve l=and r=will r=be r=round
+0.6	0.2198581560283688	person	false	in=auburn l=toooonight l=. l=then r=game r=tomorrow r=!!!!
+0.6025641025641025	0.2222222222222222	person	true	in=Miley in=Cyrus l=Hilton l=, l=now r=! r=Cops r=responded
+0.5987261146496815	0.2222222222222222	person	false	in=puff in=puff in=pass l=grandma l=boys l=, r=, r=and r=4
+0.5949367088607594	0.2222222222222222	person	false	in=UMass l=. l=Parks l=, r=band r=director r=,
+0.5911949685534591	0.2222222222222222	person	false	in=ON l=in l=Orillia l=, r=at r=Leacock r=Museum
+0.5875	0.2222222222222222	person	false	in=Les in=Miserables l=cry l=w/me l=like r=:' r=)
+0.5900621118012422	0.22458628841607564	person	true	in=Wingo l=this l=week l=. r=tellin r=me r=and
+0.5925925925925926	0.22695035460992907	person	true	in=Andy in=Kaufman l=Our l=Modern l=Day r=?: r=... r=the
+0.5950920245398773	0.2293144208037825	person	true	in=Andy in=Kaufman l=Our l=Modern l=Day r=?: r=... r=the
+0.5914634146341463	0.2293144208037825	person	false	in=Deep in=Sea in=Intervention l=EXA-OIL l=. l=COM r=opens r=Singapore r=facility
+0.593939393939394	0.23167848699763594	person	true	in=Riley l=We l=bought r=a r=onesie r=today
+0.5903614457831325	0.23167848699763594	person	false	in=FDA l=RT l=@DrJennyK l=: r=Suggests r=#Afib r=Drug
+0.592814371257485	0.23404255319148937	person	true	in=Lindsay in=Lohan l=RT l=@peoplemag l=: r=fails r=court-mandated r=drug
+0.5892857142857143	0.23404255319148937	person	false	in=Microsoft l=+ l=bottle l=of r=provided r=champagne r=
+0.5857988165680473	0.23404255319148937	person	false	in=St in=John in='s in=wort l=Day l=three l=of r=tea r=for r=anxiety
+0.5882352941176471	0.2364066193853428	person	true	in=Michael l=to l=look l=after r=and r=his r=friend
+0.5906432748538012	0.23877068557919623	person	true	in=Pope r=says r=religion r='
+0.5872093023255814	0.23877068557919623	person	false	in=Demos l=hr l=special l=of r=@ r=3AM r=on
+0.5895953757225434	0.24113475177304963	person	true	in=paul in=simon l=likes l=prince l=, r=, r=and r=o.d.b.
+0.5919540229885057	0.24349881796690306	person	true	in=Lindsay in=Lohan l=: l=TMZ l=Reporting r=Just r=Failed r=Her
+0.5885714285714285	0.24349881796690306	person	false	in=HTC in=Desire in=Z l=word l=of l=the r=earlier r=in r=Lo
+0.5852272727272727	0.24349881796690306	person	false	in=HTC in=Desire in=Z l=word l=of l=the r=earlier r=in r=Lo
+0.5819209039548022	0.24349881796690306	person	false	in=Georgia l=&amp; l=N l=. r=. r=Do r=some
+0.5786516853932584	0.24349881796690306	person	false	in=dynamite l=ive l=heard l=" r=" r=on r=the
+0.5810055865921788	0.2458628841607565	person	true	in=Nick in=Jonas l=: l=I l=rape r=.
+0.5777777777777777	0.2458628841607565	person	false	in=Delirious l=With l=You l=- r=? r=[ r=World
+0.574585635359116	0.2458628841607565	person	false	in=Cleveland r=Browns r=( r=Official
+0.5714285714285714	0.2458628841607565	person	false	in=Progress in=Campus l=Centennial l=College l=( r=) r=in r=Scarborough
+0.5737704918032787	0.24822695035460993	person	true	in=Brian l=@briancag l=&quot;' r=.' r=Isn't r=available
+0.5706521739130435	0.24822695035460993	person	false	in=SB1070 l=spoke l=out l=against r=during r=the r=show
+0.5675675675675675	0.24822695035460993	person	false	in=SB1070 l=spoke l=out l=against r=during r=the r=show
+0.5645161290322581	0.24822695035460993	person	false	in=Evergreen in=Subaru l=Adoption l=Event l=with r=is r=from r=10am
+0.5668449197860963	0.25059101654846333	person	true	in=Jill l=weird l=to l=think r=will r=have r=a
+0.5691489361702128	0.25295508274231676	person	true	in=Pope l=be l=the l=next r=" r=Brown r=:
+0.5661375661375662	0.25295508274231676	person	false	in=Plano in=Balloon in=Festival l=Balloon l=Festival l=, r=2 r=... r=http://tinyurl.com/22kg6uz
+0.5684210526315789	0.2553191489361702	person	true	in=Dave l=for l=you l=&amp; r=!! r=( r=Was
+0.5654450261780105	0.2553191489361702	person	false	in=Yahoo in=! l=AP l=) l=( r=) r=: r=Share
+0.5625	0.2553191489361702	person	false	in=Toy in=story in=3 r=tonight r=on r=the
+0.5647668393782384	0.2576832151300236	person	true	in=~Wayne in=Dyer l=define l=yourself l=.
+0.5670103092783505	0.26004728132387706	person	true	in=Caliman l=for l=jazz l=great r=at r=First r=Baptist
+0.5641025641025641	0.26004728132387706	person	false	in=Halo in=Reach r=was r=a r=bit
+0.5663265306122449	0.2624113475177305	person	true	in=Allah l=&amp; l=blessings l=of r=be r=upon r=him
+0.5685279187817259	0.2647754137115839	person	true	in=Mike in=Vick l=for l=Sunday l=when r=get r=his r=shine
+0.5656565656565656	0.2647754137115839	person	false	in=Minneapolis l=of l=Talk l=- r=( r=First r=Avenue
+0.5628140703517588	0.2647754137115839	person	false	in=sirius l=7- l=9pm l=eastern r=211 r=. r=Xm
+0.56	0.2647754137115839	person	false	in=Elgin l=: l=Giddings l=faces r=tonite r=@ r=Wildcat
+0.5621890547263682	0.26713947990543735	person	true	in=RACHELLE l=! l=urgh l=. r=im r=gonnauh r=kill
+0.5643564356435643	0.2695035460992908	person	true	in=RACHELLE l=! l=urgh l=. r=im r=gonnauh r=kill
+0.5665024630541872	0.2718676122931442	person	true	in=Claire l=this l=girl l=, r=. r=( r=cont
+0.5637254901960784	0.2718676122931442	person	false	in=California l=REI l=Update l=: r=Home r=Sales r=Decline
+0.5658536585365853	0.27423167848699764	person	true	in=Soulja in=Boy r=| r=TheDeAndreWay r=.
+0.5679611650485437	0.2765957446808511	person	true	in=Soulja in=Boy r=| r=TheDeAndreWay r=.
+0.5700483091787439	0.2789598108747045	person	true	in=Soulja in=Boy r=| r=TheDeAndreWay r=.
+0.5721153846153846	0.28132387706855794	person	true	in=Soulja in=Boy r=| r=TheDeAndreWay r=.
+0.5741626794258373	0.28368794326241137	person	true	in=Tony in=Blair l=he l='s l=played r=.
+0.5714285714285714	0.28368794326241137	person	false	in=Summits l=? l=10pm l=at r=. r=Let r=me
+0.5687203791469194	0.28368794326241137	person	false	in=Blakehurst l=York l=tomorrow l=with r=. r=Contact r=us
+0.5707547169811321	0.2860520094562648	person	true	in=-Roald in=Dahl l=reverse l=it l=.
+0.568075117370892	0.2860520094562648	person	false	in=Body in=Heat l=Come l=to l=the r=signing r=at r=Hustler
+0.5654205607476636	0.2860520094562648	person	false	in=West in=Indies l=Lancashire l=have l=released r=fast r=bowler r=Daren
+0.5627906976744186	0.2860520094562648	person	false	in=Ryerson in=Quidditch in=team l=Eyeopener l=vs l=. r=this r=Sunday r=at
+0.5601851851851852	0.2860520094562648	person	false	in=#Padres l=strong l=with l=the r=tonight r=. r=We
+0.5576036866359447	0.2860520094562648	person	false	in=Maunalua l=the l=group r=will r=be r=playing
+0.555045871559633	0.2860520094562648	person	false	in=#Dallas l=Sunshine l=Band l=. r=#concerts r=http r=:/
+0.5570776255707762	0.28841607565011823	person	true	in=R in=. in=Lea in=Brilmayer l=and l=Materials l=: r=, r=Jack r=L
+0.5545454545454546	0.28841607565011823	person	false	in=Christchurch l=km l=south-west l=of r=. r=http://tinyurl.com/265n4mx r=#eqnz
+0.5520361990950227	0.28841607565011823	person	false	in=LCL l=. l=Updates l=on
+0.5540540540540541	0.2907801418439716	person	true	in=Michael l=leave l=you l=, r=. r=All r=our
+0.5560538116591929	0.29314420803782504	person	true	in=Josh l=was l=Megan l=and r=was r=fat r=.
+0.5535714285714286	0.29314420803782504	person	false	in=Brando l=no l=longer l=at r=? r=How r=come
+0.5511111111111111	0.29314420803782504	person	false	in=Detroit l=. l=22 l=in r=. r=Register r=now
+0.5530973451327433	0.29550827423167847	person	true	in=Derek l=@FakeDarcy l=: l=No r=, r=when r=guys
+0.5550660792951542	0.2978723404255319	person	true	in=Mr in=Ehrlich r=uses r=bd r=language
+0.5526315789473685	0.2978723404255319	person	false	in=Twitter l=- l=read l=this r=newspaper r=on r=http://bit.ly/aQOoSP
+0.5545851528384279	0.30023640661938533	person	true	in=Shane l=2 l=boys l=, r=&amp; r=Jonah r=.
+0.5521739130434783	0.30023640661938533	person	false	in=Figgy in=Soda l=tasting l=today l=: r=w/ r=a r=fresh
+0.5541125541125541	0.30260047281323876	person	true	in=justthen l=him l=b4 l=n r=about r=kenny r=signing
+0.5560344827586207	0.3049645390070922	person	true	in=Edward l='s l=John l=and r=... r=there r=Tweets
+0.5579399141630901	0.3073286052009456	person	true	in=JeA in=Unnie l=@Jeaworld l=Happy l=Birthday r=Have r=lots r=of
+0.5555555555555556	0.3073286052009456	person	false	in=Dayton in=NJ l=. l=Deliver l=on r=tomorrow r=(@ r=Ball
+0.5574468085106383	0.30969267139479906	person	true	in=Pinky l=: l=Y l=does r=have r=a r=music
+0.5550847457627118	0.30969267139479906	person	false	in=Reuters l=Sept l=17 l=( r=) r=- r=U
+0.5527426160337553	0.30969267139479906	person	false	in=Novel in=Wines l=Mark l=Rowan l=from r=here r=... r=http://fb.me/G2CLHL1H
+0.5504201680672269	0.30969267139479906	person	false	in=Browns l=Cleveland r=( r=Official r=Site
+0.5481171548117155	0.30969267139479906	person	false	in=MetroPCS r=has r=the r=worst
+0.5458333333333333	0.30969267139479906	person	false	in=iTunes l=App l=news l=: r=Instant r=: r=Search
+0.5477178423236515	0.3120567375886525	person	true	in=Deborah in=L l=the l=Month l=: r=#Speech r=#Pathologist-Childrens r=Rehab
+0.5454545454545454	0.3120567375886525	person	false	in=Alejandro l=during l=the l=' r=' r=Cover r=&quot;
+0.5432098765432098	0.3120567375886525	person	false	in=UFlex l=Institutional l=buying l=lifts r=30% r=in r=a
+0.5409836065573771	0.3120567375886525	person	false	in=Widener l=Game l=@ r=tonight r=at r=7:30
+0.5387755102040817	0.3120567375886525	person	false	in=Last in=Sacrifice l=81 l=Days l=Till
+0.5365853658536586	0.3120567375886525	person	false	in=CCU r=exercise r=science r=program
+0.5344129554655871	0.3120567375886525	person	false	in=Greenville l=Consultant(s l=) l=- r=, r=AL r=http://bit.ly/dflARA
+0.5362903225806451	0.3144208037825059	person	true	in=Jeff l=@Elcartoonifyer l=really l=? r=told r=me r=he
+0.5381526104417671	0.31678486997635935	person	true	in=God l=true l=nature l=of r=came r=in r=the
+0.536	0.31678486997635935	person	false	in=CampaignMonitor r=denied r=list r=of
+0.5338645418326693	0.31678486997635935	person	false	in=VISIONS in=LOUNGE l=IT l=UP l=AT r=!!!!! r=18+ r=NO
+0.5317460317460317	0.31678486997635935	person	false	in=delaware l=with l=family l=from r=, r=or r=leftover
+0.5335968379446641	0.3191489361702128	person	true	in=Mitchell l=those l=org l='s r=ad r=as r=@ASFried
+0.5354330708661418	0.3215130023640662	person	true	in=MADI l=TURNS l=OUT l=FUCKING r=HAS r=AN r=ILLNESS
+0.5372549019607843	0.32387706855791965	person	true	in=Herbie l=. l=Ending l=with r=&amp; r=Freddie r=!
+0.53515625	0.32387706855791965	person	false	in=Orillia l=show l=announced l=in r=, r=ON r=at
+0.5330739299610895	0.32387706855791965	person	false	in=Mar in=Adentro l=who l=directed l=" r=" r=( r="
+0.5310077519379846	0.32387706855791965	person	false	in=VMAs r=. r=( r=:
+0.528957528957529	0.32387706855791965	person	false	in=TMZ l=... l=sources l=tell r=.... r=http://bi r=...
+0.5269230769230769	0.32387706855791965	person	false	in=S.F. l=What l=Do r=Rabbis r=Eat r=Before
+0.524904214559387	0.32387706855791965	person	false	in=Showbiz in=Tonight l=VIDEO l=: r=- r=Is r=TV
+0.5229007633587787	0.32387706855791965	person	false	in=True in=Blood l=books l=of l=the r=novels r=in r=8
+0.5209125475285171	0.32387706855791965	person	false	in=June in=Fest in=2010 r=~ r=Forgotten r=Door
+0.5227272727272727	0.3262411347517731	person	true	in=Daren in=Powell l=Indies l=fast l=bowler r=a r=year r=befo
+0.5245283018867924	0.32860520094562645	person	true	in=Doc in=Lewis l=I l=miss l=in r=' r=class r=today
+0.5263157894736842	0.3309692671394799	person	true	in=Powell l=#cricket l=Lancashire l=let r=go r=early r=:
+0.5243445692883895	0.3309692671394799	person	false	in=Whole in=Hog in=Dinner l=@refuel_bar l=: l=Annual r=Wed r=Oct r=27
+0.5261194029850746	0.3333333333333333	person	true	in=Albin l=Coach l=Germano l=, r=, r=Haines r=and
+0.5241635687732342	0.3333333333333333	person	false	in=Brett in=Favre l=draft l=choice l=: r=.
+0.5259259259259259	0.33569739952718675	person	true	in=Jason in=Wu l=Fashion l=Week l=: r=read r=more r=http://bit.ly/brsV4V
+0.5239852398523985	0.33569739952718675	person	false	in=PLANO in=BALLOON in=FESTIVAL in=2010 r=TO r=START r=TODAY
+0.5257352941176471	0.3380614657210402	person	true	in=Patricia in=M l=#Pathologist-Childrens l=Rehab l=and r=#Referral/#Auth r=#Spec-#Womens r=#Care
+0.5274725274725275	0.3404255319148936	person	true	in=Mickey in=Rourke l=Downey l=Jr l=., r=Direc r=... r=http://bit.ly/a6iCPn
+0.5291970802919708	0.34278959810874704	person	true	in=Sarah in=Jessica in=Parker l=via l=POPSUGAR l=) r=and r=Gwen r=Stefani
+0.5272727272727272	0.34278959810874704	person	false	in=Wildcat in=Stadium l=Elgin l=tonite l=@ r=@ r=7:30 r=.
+0.5289855072463768	0.34515366430260047	person	true	in=billy l=tomorrow l=. l=Silly
+0.5306859205776173	0.3475177304964539	person	true	in=*Gwen in=Stefani l=niiiiiiiiiight l=;) l=. r=voice* r=:] r=.
+0.5287769784172662	0.3475177304964539	person	false	in=Keppinger l=for l=tonight l=. r=sits r=, r=Downs
+0.5268817204301075	0.3475177304964539	person	false	in=CANADA l=, l=Ontario l=, r=... r=http://bit.ly/aOe78A r=#jobs
+0.525	0.3475177304964539	person	false	in=Techland l=Alternative l=? l=- r=- r=TIME r=.
+0.5231316725978647	0.3475177304964539	person	false	in=Murphy in='s in=Law l=Salt l=motto l=+
+0.5212765957446809	0.3475177304964539	person	false	in=Wright in=family l=23rd l=and l=the r=Halloween r=bash r=!!
+0.519434628975265	0.3475177304964539	person	false	in=Gym in=Class in=Heroes l=Own l=Time l=-
+0.5211267605633803	0.34988179669030733	person	true	in=Justin in=Bieber l=just l=took l=" r=takes r=2 r=months
+0.5228070175438596	0.35224586288416077	person	true	in=Justin in=Bieber l=just l=took l=" r=takes r=2 r=months
+0.5244755244755245	0.3546099290780142	person	true	in=Justin in=Bieber l=just l=took l=" r=takes r=2 r=months
+0.5226480836236934	0.3546099290780142	person	false	in=BB in=Bold l=. l=&lt; l=3 r=, r=here r=I
+0.5208333333333334	0.3546099290780142	person	false	in=Rocks l=tonight l=. l=Thought r=well r=in r=game
+0.5190311418685121	0.3546099290780142	person	false	in=ESB l=State l=Building l= r=. r=Pretty r=bad
+0.5172413793103449	0.3546099290780142	person	false	in=Ontario l=: l=Toronto l=, r=, r=CANADA r=...
+0.5154639175257731	0.3546099290780142	person	false	in=XBOX l=THE l=MOTHER l=FUCKING r=. r=Worst r=fucking
+0.5136986301369864	0.3546099290780142	person	false	in=Eagles l=Alexei l=:: l=Philadelphia r=: r=Donovan r=McNabb
+0.515358361774744	0.35697399527186763	person	true	in=Lindsay in=Lohan l=RT l=@TMZ l=: r=tested r=positive r=for
+0.5136054421768708	0.35697399527186763	person	false	in=#StarWars in=#TheCloneWars l=season l=premiere l=of r=!!
+0.511864406779661	0.35697399527186763	person	false	in=corbin l=center l=) l=in r=.
+0.5101351351351351	0.35697399527186763	person	false	in=TMZ l=: l=Update l=: r=Reporting r=Lindsay r=Lohan
+0.5117845117845118	0.35933806146572106	person	true	in=MJ l=too l=much l=. r=still r=had r=it
+0.5134228187919463	0.3617021276595745	person	true	in=Michael l=you l=tomorrow l=:) r=I r=love r=you
+0.5117056856187291	0.3617021276595745	person	false	in=Testing in=Tomorrow l=YouTube l=video l=-- r=http://youtu.be/aOYInsel7Qw?a
+0.51	0.3617021276595745	person	false	in=Pringles l=in l=Chicago l=. r=, r=baby r=!
+0.5116279069767442	0.3640661938534279	person	true	in=Lindsay in=Lohan l=Drug l=Test l=: r=may r=be r=in
+0.5099337748344371	0.3640661938534279	person	false	in=MD r=Jobs r=| r=Executive
+0.5082508250825083	0.3640661938534279	person	false	in=Treasury l=. l=No l=. r=deprived r=of r=$4T
+0.506578947368421	0.3640661938534279	person	false	in=Arthurs in=Pass l=Lindis l=Pass l=and r=today r=http://ow.ly/2G4Re r=No
+0.5049180327868853	0.3640661938534279	person	false	in=Bio in=Spot r=6 r=Month r=Spot
+0.5032679738562091	0.3640661938534279	person	false	in=After in=Eventide r=( r=Kindle r=Edition)By
+0.501628664495114	0.3640661938534279	person	false	in=AT&amp;T l=#jobs l=#careers l=#Greenville r=Full r=Time r=Retail
+0.5	0.3640661938534279	person	false	in=Merlot l=Lots l=of r=on r=Thursday r=night
+0.49838187702265374	0.3640661938534279	person	false	in=Mayan in=Doomsday l=20 l=seconds l=Until r=, r=DEC r=22
+0.4967741935483871	0.3640661938534279	person	false	in=Ducks r=sign r=LW r=Beleskey
+0.4983922829581994	0.3664302600472813	person	true	in=Oscar in=de in=la in=Renta l=Ralph l=Lauren l=, r=, r=Gwen r=Stefani
+0.4967948717948718	0.3664302600472813	person	false	in=Xbox in=360 l=for l=PS3 l=, r=: r=by r=Widro
+0.4984025559105431	0.36879432624113473	person	true	in=Joy in=Huhn l=you l=" l=-
+0.4968152866242038	0.36879432624113473	person	false	in=Hyper in=V l=problem l=moving l=a r=guest r=from r=a
+0.49523809523809526	0.36879432624113473	person	false	in=GA l=Columbus l=, r=: r=@TimmNintey146 r=and
+0.4936708860759494	0.36879432624113473	person	false	in=Lebowski in=Fest l=Weekend l=Events l=: r=, r=Dave r=Matthews
+0.4952681388012618	0.37115839243498816	person	true	in=Willow in=Smith r=is r=not r=9
+0.4937106918238994	0.37115839243498816	person	false	in=VISIONS in=LOUNGE l=B4 l=11PM l=! r=( r=247 r=1ST
+0.49216300940438873	0.37115839243498816	person	false	in=Accel l=$6 l=Million l=From r=And r=Super r=Angels
+0.490625	0.37115839243498816	person	false	in=Accel l=$6 l=Million l=From r=And r=Super r=Angels
+0.48909657320872274	0.37115839243498816	person	false	in=iTunes l=Labels l=Happy l=About r=Alternative r=? r=-
+0.4906832298136646	0.3735224586288416	person	true	in=Danny l=- l=- l=&gt; r=. r=lol r=good
+0.49226006191950467	0.375886524822695	person	true	in=Jonah l=, l=Shane l=&amp; r=. r=And r=this
+0.49382716049382713	0.37825059101654845	person	true	in=Lohan r=Failed r=A r=Drug
+0.49538461538461537	0.3806146572104019	person	true	in=Kanye in=West l=Spotted l=: r=Celebrates r=LAMB r=With
+0.4938650306748466	0.3806146572104019	person	false	in=Yahoo r=: r=Jackie r=joins
+0.4923547400611621	0.3806146572104019	person	false	in=Yahoo r=: r=Jackie r=joins
+0.49390243902439024	0.3829787234042553	person	true	in=Freddie l=with l=Herbie l=&amp; r=!
+0.49240121580547114	0.3829787234042553	person	false	in=Kirkwood l=the l=corner l=, r=&amp; r=... r=http://fb.me/I6SZ52nW
+0.4909090909090909	0.3829787234042553	person	false	in=Avast in=AntiVirus in=4.8 in=PROFESIONAL l=Time l=Key l=: r=Full r=with r=Life
+0.48942598187311176	0.3829787234042553	person	false	in=Sotheby in=| in=' in=s l=Chinese l=symbols r=Hong r=Kong r=twentieth
+0.4879518072289157	0.3829787234042553	person	false	in=MD l=MD l=Job l=( r=) r=http://bit.ly/daNH6v r=#Job
+0.4894894894894895	0.38534278959810875	person	true	in=Kayak in=Magazine l=George l=Hitchcock l=, r=Founder r=, r=Dies
+0.4880239520958084	0.38534278959810875	person	false	in=Portland l=a l=show l=in r=, r=OR r=at
+0.48656716417910445	0.38534278959810875	person	false	in=California r=Woman r=Dies r=in
+0.4851190476190476	0.38534278959810875	person	false	in=With in=You l=And l=#nowplaying r=- r=Delirious r=?
+0.486646884272997	0.3877068557919622	person	true	in=Gwen in=Stefani l=la l=Renta l=, r=&amp; r=a r=Weir
+0.48520710059171596	0.3877068557919622	person	false	in=barksdale l=, l=play l=at r=in r=a r=bit
+0.4837758112094395	0.3877068557919622	person	false	in=Oakland l=Woot l=! l=My r=line r=made r=the
+0.4852941176470588	0.3900709219858156	person	true	in=Novak l=contest- l=Nadal l=and r=in r=the r=tub
+0.4838709677419355	0.3900709219858156	person	false	in=Small in=Biz in=Tech in=Tour in=2010 r=Launches r=Five r=City
+0.4853801169590643	0.39243498817966904	person	true	in=Lindsay in=Lohan l=OH-OH l=It l=seems r=maybe r=be r=heading
+0.4868804664723032	0.3947990543735225	person	true	in=-Larry in=Bird l=the l=end l=.
+0.4883720930232558	0.3971631205673759	person	true	in=God l=crying l=. l=24/7 r=is r=great r=!!!
+0.48985507246376814	0.39952718676122934	person	true	in=pope l=: l=When l=I'm r=the r=first r=thing
+0.4913294797687861	0.40189125295508277	person	true	in=Carly l=Crazy l=Steve l=, r=was r=Megan r=and
+0.49279538904899134	0.40425531914893614	person	true	in=Santy l=Hurry l=up l=! r=will r=be r=Leaving
+0.49137931034482757	0.40425531914893614	person	false	in=Reuters l=Sept l=17 l=( r=) r=- r=Umar
+0.4899713467048711	0.40425531914893614	person	false	in=Half in=baked r=, r=next r=how
+0.48857142857142855	0.40425531914893614	person	false	in=LAMB l=Kanye l=West l=Celebrates r=With r=Gwen r=Stefani
+0.49002849002849	0.4066193853427896	person	true	in=Germano l=Coach r=, r=Albin r=,
+0.4914772727272727	0.408983451536643	person	true	in=Catherine in=Olson l=( l=Kindle l=Edition)By r=Buy r=new r=:
+0.49008498583569404	0.408983451536643	person	false	in=Water l=YouTube l=video l=-- r=by r=Testing r=Tomorrow
+0.4915254237288136	0.41134751773049644	person	true	in=Brandy l=Hurry l=up l=! r=will r=be r=Leaving
+0.49014084507042255	0.41134751773049644	person	false	in=Zac in=Brown in=Band l=You l=Give l=~ r=40 r=days r=in
+0.4887640449438202	0.41134751773049644	person	false	in=MONTCLAIR l=Five l=City l=Tour r=N.J. r=...: r=The
+0.48739495798319327	0.41134751773049644	person	false	in=MONTCLAIR l=Five l=City l=Tour r=N.J. r=...: r=The
+0.4888268156424581	0.41371158392434987	person	true	in=Whitney l=ate&amp;#39 l=; l=with r=tonight r=, r=:P
+0.48746518105849584	0.41371158392434987	person	false	in=INDIGENOUS l=W/ l=SHAKEMODE l=AND r=...
+0.4861111111111111	0.41371158392434987	person	false	in=CALABASH in=LOUNGE l=SEDUCTION l=SATURDAYS l=@ r=SEP r=25TH r=#DABOSS
+0.48753462603878117	0.4160756501182033	person	true	in=Burrow l=, l=Haines l=and r=each r=had r=home
+0.4861878453038674	0.4160756501182033	person	false	in=iPhone l=size l=of l=my r=with r=less r=capacity
+0.48484848484848486	0.4160756501182033	person	false	in=The in=Buffs l=@ l=7:30 l=. r=will r=try r=to
+0.4835164835164835	0.4160756501182033	person	false	in=GuitarNews r=: r=RockHouse r=:
+0.4821917808219178	0.4160756501182033	person	false	in=Serious in=Eats r=: r=Leftovers r=:
+0.4808743169398907	0.4160756501182033	person	false	in=Jupiter r=: r=Closest r=Approach
+0.4822888283378747	0.41843971631205673	person	true	in=Blair l=RT l=@AlJahom l=: r=: r=" r=I'm
+0.483695652173913	0.42080378250591016	person	true	in=nini l=lmfao l=wooooooow l=( r=knws r=wsup r=ha
+0.48509485094850946	0.4231678486997636	person	true	in=Gwen in=Stefani l=Jessica l=Parker l=and r=Wrap r=Up r=Another
+0.4864864864864865	0.425531914893617	person	true	in=Tessa l=Game l=tonight l=with r=. r=I r=get
+0.48517520215633425	0.425531914893617	person	false	in=Lewis l=Desert l=Rd l=, r=, r=Rimutakas
+0.4838709677419355	0.425531914893617	person	false	in=belles in=mansion r=4 r=bday r=dinner
+0.48525469168900803	0.42789598108747046	person	true	in=Hyna l=@karensuluay r=the r=Brad r=paisley
+0.4839572192513369	0.42789598108747046	person	false	in=Lincoln in=park in=after in=dark l=Branching l=out l=from r=... r=Hello r="
+0.48533333333333334	0.4302600472813239	person	true	in=Eli l=in l=love l=with
+0.4867021276595745	0.4326241134751773	person	true	in=Teddy in=P l=, l=he l=does r=proud r=on r=Wake
+0.4854111405835544	0.4326241134751773	person	false	in=YOM in=KIPPUR l=years l=ago l=that r=would r=be r=trending
+0.48412698412698413	0.4326241134751773	person	false	in=Treasury l=" l=deprive l=" r=of r=$4T r=.
+0.48284960422163586	0.4326241134751773	person	false	in=Jets r=coach r=Rex r=Ryan
+0.4842105263157895	0.43498817966903075	person	true	in=Lindsay in=Lohan l=Friday l=afternoon l=that r=... r=http://bit.ly/aKHoZc
+0.48556430446194226	0.4373522458628842	person	true	in=Lindsay in=Lohan l=#lindsaylohan l=US l=- r=: r=Failed r=Drug
+0.4869109947643979	0.4397163120567376	person	true	in=Lohan r=fails r=drug r=test
+0.4856396866840731	0.4397163120567376	person	false	in=DC l=Just l=landed l=in r=. r=Is r=anybody
+0.484375	0.4397163120567376	person	false	in=Special in=Olympics l=raise l=$320000 l=for r=: r=By r=Tim
+0.4831168831168831	0.4397163120567376	person	false	in=Irvine l=Costco r=has r=fresh r=sushi
+0.4844559585492228	0.44208037825059104	person	true	in=KRISTEN in=BELL l=out l=yesterday l=that r=is r=the r=voice
+0.48320413436692505	0.44208037825059104	person	false	in=Philadelphia l=: l=Alexei l=:: r=Eagles r=: r=Donovan
+0.48195876288659795	0.44208037825059104	person	false	in=SEDUCTION in=SATURDAYS l=&gt; l=&gt; l=http://schmap.it/u046mn r=@ r=CALABASH r=LOUNGE
+0.480719794344473	0.44208037825059104	person	false	in=The in=DeAndre in=Way l=. l=com l=- r=in r=stores r=Nov
+0.4794871794871795	0.44208037825059104	person	false	in=The in=DeAndre in=Way l=. l=com l=- r=in r=stores r=Nov
+0.4782608695652174	0.44208037825059104	person	false	in=Forgotten in=Door l=Fest l=2010 l=~ r=LIVE r=! r=http://fb.me/G1pof3lO
+0.4770408163265306	0.44208037825059104	person	false	in=Dazed in=&amp; in=Confused l=excited l=4 l=' r=' r=on r=our
+0.4758269720101781	0.44208037825059104	person	false	in=Pedigree r=Donates r=Dog r=Food
+0.4746192893401015	0.44208037825059104	person	false	in=Camelbak l=Bite l=Valve l=by r=93 r=days r=in
+0.47341772151898737	0.44208037825059104	person	false	in=London in=Irish l=and l=whites l=against r=. r=Only r=a
+0.4722222222222222	0.44208037825059104	person	false	in=HOLLYWOOD l=AINT l=LIKE l=THESE r=AZZ r=RAPPERS r=WE
+0.47103274559193953	0.44208037825059104	person	false	in=HOLLYWOOD l=AINT l=LIKE l=THESE r=AZZ r=RAPPERS r=WE
+0.46984924623115576	0.44208037825059104	person	false	in=PlayStation in=Network l=Demo l=Coming l=to r=on r=September r=...
+0.46867167919799496	0.44208037825059104	person	false	in=The in=Town r=was r=a r=really
+0.47	0.4444444444444444	person	true	in=LADY in=GAGA r=IS r=BETTER r=THE
+0.4713216957605985	0.44680851063829785	person	true	in=Cristobal in=Huet l=Stan l=Bowman l=said r=will r=be r=gone
+0.472636815920398	0.4491725768321513	person	true	in=Paris in=Hilton l=Stalker l=!: l=First r=, r=now r=Miley
+0.47146401985111663	0.4491725768321513	person	false	in=Fall in=Out in=Boy l=agree l=RT l=@fanoffob r=is r=gay r=#reallymeans
+0.47029702970297027	0.4491725768321513	person	false	in=Information in=Underground r=: r=This r=Week
+0.47160493827160493	0.4515366430260047	person	true	in=mariaelena l=game l=tonight l=with r=, r=sarah r=,
+0.4729064039408867	0.45390070921985815	person	true	in=Drake l=Rick l=Ross l=and r=twice r=in r=the
+0.47174447174447176	0.45390070921985815	person	false	in=lush l=goblins l=nose l=,
+0.47058823529411764	0.45390070921985815	person	false	in=it in='s in=always in=sunny l=wonderful l=relationship l=with r=. r=Since r=I
+0.4718826405867971	0.4562647754137116	person	true	in=Gwen in=Stefani l=Celebrates l=LAMB l=With r=: r=New r=York
+0.47073170731707314	0.4562647754137116	person	false	in=He in='s in=Just in=A in=Boy l=@KenzieComersMum l=: l=&quot; r=&quot; r=music r=video
+0.46958637469586373	0.4562647754137116	person	false	in=Pxleyes r=Top r=50 r=Photography
+0.4684466019417476	0.4562647754137116	person	false	in=Metallica l=... l=A l=: r=.: r=http://chatter.com/ask-me-anything/kt2yo
+0.46731234866828086	0.4562647754137116	person	false	in=New in=York l=Fashion l=Week l=: r=Fa r=... r=http://bit.ly/aMaJNB
+0.46859903381642515	0.458628841607565	person	true	in=Anja in=Rubik r=Model r=in r=Lingerie
+0.4674698795180723	0.458628841607565	person	false	in=Forex l=#forex l=#fx l=: r=Articles r=for r=the
+0.46634615384615385	0.458628841607565	person	false	in=Playboy r=- r=10 r=October
+0.46522781774580335	0.458628841607565	person	false	in=Playboy r=- r=10 r=October
+0.46411483253588515	0.458628841607565	person	false	in=Madden r=tonite r=!!! r=the
+0.4630071599045346	0.458628841607565	person	false	in=Mothers in=Day l=:) l=Surrounded l=by r=and r=Dreading r=It
+0.46190476190476193	0.458628841607565	person	false	in=GLASGOW l=ARE l=COMMING l=TO r=!!!!!!!!!!!!!!!!!!!
+0.46318289786223277	0.46099290780141844	person	true	in=The in=pope r=isn't r=really r=making
+0.46445497630331756	0.46335697399527187	person	true	in=Pope in=Benedict r=trip r=: r=Why
+0.46335697399527187	0.46335697399527187	person	false	in=Crocs l=every l=pair l=of r=you r=bought r=contributed
+0.46226415094339623	0.46335697399527187	person	false	in=Xbox in=360 r=: r=Enslaved r=:
+0.4611764705882353	0.46335697399527187	person	false	in=Blades r=trade r=Travis r=Toomey
+0.460093896713615	0.46335697399527187	person	false	in=Copa in=Sudamericana r=#2010 r=: r=Thursday
+0.4613583138173302	0.4657210401891253	person	true	in=rose l=' l=who l='s r=?' r=lmao
+0.4602803738317757	0.4657210401891253	person	false	in=Futoosh l=I l=went l=to r=, r=the r=owner
+0.4592074592074592	0.4657210401891253	person	false	in=Twitter l=RT l=@duchess_rebecca l=: r=is r=going r=to
+0.45813953488372094	0.4657210401891253	person	false	in=Dems r=to r=voters r=:
+0.45707656612529	0.4657210401891253	person	false	in=Student in=Centre l=a.m. l=in l=the r=at r=Centennial r=College
+0.45601851851851855	0.4657210401891253	person	false	in=Dems l=#news r=to r=voters r=:
+0.45496535796766746	0.4657210401891253	person	false	in=ipod l=got l=cody l='s r=in r=the r=mail
+0.45622119815668205	0.46808510638297873	person	true	in=Ben l=do l=n't l=worry r=, r=we r=already
+0.4574712643678161	0.47044917257683216	person	true	in=Jackie r=joins r=Twitter r=50
+0.45871559633027525	0.4728132387706856	person	true	in=Josh l=Good l=man l=that r=.
+0.4576659038901602	0.4728132387706856	person	false	in=Tdot l=TIFF l=is l=in r=, r=ALWAYS r=have
+0.45662100456621	0.4728132387706856	person	false	in=Time in=Warner in=Cable r=Boycotting r=Epix r=Movie
+0.45785876993166286	0.475177304964539	person	true	in=brittany l=sarah l=, l=and r=! r=Mood r=:
+0.45681818181818185	0.475177304964539	person	false	in=Edmonton r=dealers r=raise r=$320000
+0.4557823129251701	0.475177304964539	person	false	in=Starstruck r=Promo r=Special r=:
+0.45475113122171945	0.475177304964539	person	false	in=Costco r=Irvine r=has r=fresh
+0.45598194130925507	0.47754137115839246	person	true	in=Simpson l=is l=pregnant l=?? r=is r=pregnant r=with
+0.4572072072072072	0.4799054373522459	person	true	in=Keeva l=on l=your l=engagement r=, r=delighted r=for
+0.45617977528089887	0.4799054373522459	person	false	in=Tenshi in=ni in=Fureta in=yo l=I've l=listened l=to r=so r=many r=times
+0.4551569506726457	0.4799054373522459	person	false	in=Widro l=360 l=: l=by r=- r=September r=17
+0.4563758389261745	0.48226950354609927	person	true	in=Dylan r=refuses r=to r=take
+0.45535714285714285	0.48226950354609927	person	false	in=Jonas in=Bros l=ticket l=for l=the r=this r=Sunday r=,
+0.45657015590200445	0.4846335697399527	person	true	in=Anna in=Wintor l=aunt l=worked l=for r=in r=NY r=.
+0.4577777777777778	0.48699763593380613	person	true	in=Margaret in=Hamburg l=, l=FDA l=Commissioner r=present r=... r=http://bit.ly/9i1AEg
+0.4567627494456763	0.48699763593380613	person	false	in=AIS in=U21 l=Jets l=Youth l=v r=@ r=18 r=Sep
+0.4557522123893805	0.48699763593380613	person	false	in=Shpongle l=( l=Live) l=, r=( r=Simon r=Posford
+0.45474613686534215	0.48699763593380613	person	false	in=East in=Nu l=Hey l=y'all l=" r=," r=round r=Two
+0.45374449339207046	0.48699763593380613	person	false	in=The in=DeAndre in=Way l=. l=com l=-- r=in r=stores r=Nov
+0.45494505494505494	0.48936170212765956	person	true	in=SCOTT in=WEILAND r=Announces r=Memoir r=Release
+0.45394736842105265	0.48936170212765956	person	false	in=dabigatran l=Good l=prospects l=for r=on r=Monday r=.
+0.45295404814004375	0.48936170212765956	person	false	in=Eagles l=Will l=Start l=for r=on r=Sunday r=http://t.co/UqXcSXT
+0.4519650655021834	0.48936170212765956	person	false	in=Sunset in=Bistro l=at l=the l=ol r=tonight r=... r=come
+0.45098039215686275	0.48936170212765956	person	false	in=Jersey in=Shore l=to l=watch l=some r=haha
+0.45217391304347826	0.491725768321513	person	true	in=sfitzy93 r=asked r=: r=No
+0.45336225596529284	0.4940898345153664	person	true	in=Yli l=almost l=3 l=. r=gets r=out r=in
+0.4523809523809524	0.4940898345153664	person	false	in=General in=Hospital l=video l=out l=-- r=Spoilers r=Week r=9-27-10
+0.4514038876889849	0.4940898345153664	person	false	in=Lucid in=Dementia r=Playing r=in r=Austin
+0.4504310344827586	0.4940898345153664	person	false	in=K-On l=four l=episodes l=of r=for r=the r=first
+0.45161290322580644	0.49645390070921985	person	true	in=Santa l=Little l=Girl l=: r=Is r=So r=Awesome
+0.45278969957081544	0.4988179669030733	person	true	in=Pedersen r=: r=Hangeland r=won't
+0.4518201284796574	0.4988179669030733	person	false	in=Rimutakas l=, l=Lewis l=,
+0.45085470085470086	0.4988179669030733	person	false	in=FDA l=this l=week l=, r=Commissioner r=Margaret r=Hamburg
+0.44989339019189767	0.4988179669030733	person	false	in=Army in=Run l=you l=at l=the r=on r=Sunday r=?
+0.451063829787234	0.5011820330969267	person	true	in=Haines l=, l=Albin l=, r=and r=Burrow r=each
+0.45222929936305734	0.5035460992907801	person	true	in=Kid in=Cudi r=Opens r=Up r=About
+0.4533898305084746	0.5059101654846335	person	true	in=Hendrix r=died r=40 r=years
+0.452431289640592	0.5059101654846335	person	false	in=Stakes in=Day l=the l=punt l=until r=... r=#sadbuttrue
+0.45147679324894513	0.5059101654846335	person	false	in=GOTTA in=BODY l=DEMAND l=TONITE l=" r=" r=MUST r=LISTEN
+0.45052631578947366	0.5059101654846335	person	false	in=Playboy l=2010 l=Slovenia l=: r=- r=10 r=October
+0.4495798319327731	0.5059101654846335	person	false	in=Playboy l=2010 l=Slovenia l=: r=- r=10 r=October
+0.44863731656184486	0.5059101654846335	person	false	in=Mai in=Tai l=m l=DJing l=at r=in r=Long r=Beach
+0.4476987447698745	0.5059101654846335	person	false	in=Scarborough l=Campus l=) l=in r=. r=@ccsai
+0.44676409185803756	0.5059101654846335	person	false	in=AL l=- l=Greenville l=, r=http://bit.ly/dflARA
+0.44583333333333336	0.5059101654846335	person	false	in=CJ l=plays l=2B l=, r=bats r=5th r=.
+0.44490644490644493	0.5059101654846335	person	false	in=DC l=, l=9-1 l=in r=. r=Come r=by
+0.44398340248962653	0.5059101654846335	person	false	in=Engadget r=: r=Sky r=3D
+0.44306418219461696	0.5059101654846335	person	false	in=grandma in=boys l=how l=high l=, r=, r=puff r=puff
+0.44214876033057854	0.5059101654846335	person	false	in=Sage in=Award l=extends l=deadline l=for r=to r=Nov r=.
+0.44123711340206184	0.5059101654846335	person	false	in=tumblr l=-via l=someone l='s
+0.44238683127572015	0.508274231678487	person	true	in=Big in=Sam l=: l=I l=think r=was r=misquoted r=when
+0.4414784394250513	0.508274231678487	person	false	in=Rainy in=Days l=filming l=Chris l=" r=" r=video r=.
+0.4405737704918033	0.508274231678487	person	false	in=Edmonton in=Journal l=Tim l=Yip l=, r=September r=17 r=,
+0.4396728016359918	0.508274231678487	person	false	in=Eyeopener l=RT l=@robmoysey r=vs r=. r=Ryerson
+0.4387755102040816	0.508274231678487	person	false	in=Eyeopener l=RT l=@robmoysey r=vs r=. r=Ryerson
+0.4378818737270876	0.508274231678487	person	false	in=Kindle l=After l=Eventide l=( r=Edition)By r=Catherine r=Olson
+0.43902439024390244	0.5106382978723404	person	true	in=Davidson l=Wake l=, r=, r=Charlotte r=and
+0.4381338742393509	0.5106382978723404	person	false	in=BORDER in=LINEA r=IS r=TONIGHT r=!
+0.43724696356275305	0.5106382978723404	person	false	in=Flip in=MinoHD l=Record l=Time l=: r=Video r=Camera r=--
+0.43636363636363634	0.5106382978723404	person	false	in=First in=Baptist l=great l=Caliman l=at r=on r=Harvard r=http://bit.ly/bsnOkT
+0.43548387096774194	0.5106382978723404	person	false	in=the in=Lions l=on l=Vs l=.
+0.4346076458752515	0.5106382978723404	person	false	in=US l=#lindsaylohan r=- r=Lindsay r=Lohan
+0.43373493975903615	0.5106382978723404	person	false	in=Younger in=Brother l=NOVEMBER l=18 l=... r=( r=Live) r=,
+0.43286573146292584	0.5106382978723404	person	false	in=Friday in=Night in=Lights l=Season l=3 l=of r=... r=It r=seems
+0.432	0.5106382978723404	person	false	in=Marie in=Clair l=photo l=shoot l=with r=. r=@OHEMMGEEZY
+0.4311377245508982	0.5106382978723404	person	false	in=KISS l=a l=show l=with r=tomorrow r=. r=Can't
+0.4302788844621514	0.5106382978723404	person	false	in=Chevron r=gouging r=consumers r=by
+0.4294234592445328	0.5106382978723404	person	false	in=Hoegaarden l=local l=grocery l=carries r=.
+0.42857142857142855	0.5106382978723404	person	false	in=Amazon in=U.K. r=Offering r=HTC r=Desire
+0.4277227722772277	0.5106382978723404	person	false	in=A in=Different in=Kind in=Of in=Ache l=Blonde l=Redhead l=: r=http://n.pr/9O8yXE
+0.4268774703557312	0.5106382978723404	person	false	in=twitter l=tally l=) l=tonight r=!!
+0.4260355029585799	0.5106382978723404	person	false	in=Knighttime in=Billiards l=Saturday l=Night l=, r=with r=4D r=!
+0.4271653543307087	0.5130023640661938	person	true	in=LW in=Beleskey l=Ducks l=sign r=to r=2-year r=extension
+0.4263261296660118	0.5130023640661938	person	false	in=Mystery in=Jets l=Marina&amp;Diamonds l=@ElReyTheatre l=, r=@TheTroubadour r=( r=via
+0.42549019607843136	0.5130023640661938	person	false	in=Flip in=MinoHD l=#VideoRecorder l=#7 l=: r=Video r=Camera r=--
+0.42661448140900193	0.5153664302600472	person	true	in=Megan l=, l=Carly l=was r=and r=Josh r=was
+0.427734375	0.5177304964539007	person	true	in=Jackie l=Yahoo l=: r=joins r=Twitter r=50
+0.42884990253411304	0.5200945626477541	person	true	in=Jackie l=Yahoo l=: r=joins r=Twitter r=50
+0.4280155642023346	0.5200945626477541	person	false	in=SHAKEMODE l=FROM l=MIAMI l=W/ r=AND r=INDIGENOUS r=...
+0.429126213592233	0.5224586288416075	person	true	in=Pope in=Benedict in=XVI l=toward l=sainthood l=?: r=plans r=on r=Sunday
+0.42829457364341084	0.5224586288416075	person	false	in=new in=Teaze in=cafe l=waffles l=! l=@ r=by r=the r=library
+0.4274661508704062	0.5224586288416075	person	false	in=30+ in=Beautiful in=Ladies l=Hosted l=By l=: r=! r=[ r=PLz
+0.4266409266409266	0.5224586288416075	person	false	in=Iron in=Man in=2 l=#October r=( r=Three-Disc r=Blu-ray/DVD
+0.4258188824662813	0.5224586288416075	person	false	in=Good in=Friday l=@kanyewest l=drop l=his r=song r=yet r=today
+0.425	0.5224586288416075	person	false	in=Above&amp;Beyond l=http://sk.mu/aEnsGunwfr9 l=: r=- r=Trance r=Around
+0.42418426103646834	0.5224586288416075	person	false	in=League in=Pass l=NBA l=now l=? r=withdrawal r=symptoms r=......
+0.42337164750957856	0.5224586288416075	person	false	in=Christmas l=RT l=@AllTeensThings l=: r=was r=so r=much
+0.4225621414913958	0.5224586288416075	person	false	in=Marvin in=Gaye in=Day l=#BlackHoliday
+0.4217557251908397	0.5224586288416075	person	false	in=The in=Persuaders l=. l=http://www.pbs.org/wgbh/pages/frontline/ l=Watched r=in r=class r=today
+0.4228571428571429	0.524822695035461	person	true	in=Katie r=up r=6-0 r=after
+0.42395437262357416	0.5271867612293144	person	true	in=-Coco in=Chanel l=a l=Weir l=...: r=" r=I r=design
+0.42314990512333966	0.5271867612293144	person	false	in=China l=the l=headline l=" r=needs r=to r=elaborate
+0.42234848484848486	0.5271867612293144	person	false	in=Netflix l=A l=Deal l=With r=http://dlvr.it/5RgcL
+0.4215500945179584	0.5271867612293144	person	false	in=CamelBak in=BPA-Free in=Better in=Bottle in=with in=Bite in=Valve l=#cl r=by r=Camelbak r=93
+0.4226415094339623	0.5295508274231678	person	true	in=Mackenna l=. l=Love l=,
+0.423728813559322	0.5319148936170213	person	true	in=TAYLOR l=! l=~HAPPY l=B-DAY r=!!! r=LUVZ r=YA~
+0.42293233082706766	0.5319148936170213	person	false	in=Giddings l=Buffs l=FB l=: r=faces r=Elgin r=tonite
+0.42213883677298314	0.5319148936170213	person	false	in=Houston l=of l=meetings l=with r=, r=Fes r=is
+0.42134831460674155	0.5319148936170213	person	false	in=Lindis in=Pass l=Milford l=Rd l=, r=and r=Arthurs r=Pass
+0.4205607476635514	0.5319148936170213	person	false	in=iPhone4 l=less l=capacity l=than r=... r=4 r=years
+0.4197761194029851	0.5319148936170213	person	false	in=COP l=Check l=out l=the r=tailgate r=... r=65
+0.41899441340782123	0.5319148936170213	person	false	in=UNKLE l=with l=@blindoldfreak l=, r=&amp; r=@trent_reznor r=all
+0.41821561338289964	0.5319148936170213	person	false	in=OFF in=the in=GRID l=Soyrizo l=Tamales l=at r=Fort r=Mason r=at
+0.4174397031539889	0.5319148936170213	person	false	in=NY l=Mariel l=Concepcion l=, r=| r=September r=1
+0.4166666666666667	0.5319148936170213	person	false	in=RR l=the l=one l=in r=on r=Friday r=.
+0.41589648798521256	0.5319148936170213	person	false	in=running in=wit in=mjd l=#2 l=tonite l=" r=" r=will r=be
+0.4151291512915129	0.5319148936170213	person	false	in=Hurricane in=Earl l=@PolarBeverages l=: l=Before r=comes r=, r=stock
+0.4143646408839779	0.5319148936170213	person	false	in=Peppers r=with r=Kathy r=...
+0.41360294117647056	0.5319148936170213	person	false	in=Delmar l=! l=CWE l=and r=are r=around r=the
+0.41284403669724773	0.5319148936170213	person	false	in=Christine in=O'Donnell l=masturbators l=marched l=against r=today r=http://bit.ly/9nTWQw r=Seriously
+0.41208791208791207	0.5319148936170213	person	false	in=Sabrina l=up l=and l=watch r=!!! r=Thanks r=@louisha
+0.4113345521023766	0.5319148936170213	person	false	in=BCAT l=@ l=3AM l=on r=feat r=@BlissyCakes r=@YaGirlNicolette
+0.4124087591240876	0.5342789598108747	person	true	in=Casey in=Stoner l=Marlboro l=Ducati l='s r=wasted r=no r=time
+0.4116575591985428	0.5342789598108747	person	false	in=Hyde in=Park in=Corner l=- l=London l=- r=- r=1.30 r=pm
+0.4109090909090909	0.5342789598108747	person	false	in=The in=Ride l=peak l=of l=' r=' r=my r=ride
+0.4101633393829401	0.5342789598108747	person	false	in=Park(ing in=) in=Day l=I l=heart r=! r=Photo r=of
+0.411231884057971	0.5366430260047281	person	true	in=Wake r=, r=Davidson r=,
+0.41229656419529837	0.5390070921985816	person	true	in=Lohan r=faces r=more r=jail
+0.41155234657039713	0.5390070921985816	person	false	in=Criminal in=Minds l=season l=six l=of r=! r=Can't r=wait
+0.41081081081081083	0.5390070921985816	person	false	in=Patchogue) l=West l=Ave l=, r=. r=http://4sq.com/aX6N26
+0.4118705035971223	0.541371158392435	person	true	in=Joel l=bad l=thing l=, r=on r=Technology r=http://bit.ly/9KKobr
+0.4111310592459605	0.541371158392435	person	false	in=Valentines in=Day l=dinner l=planned l=for r=. r=Me r=:
+0.4103942652329749	0.541371158392435	person	false	in=iPad r=Refresh r=Due r=in
+0.41144901610017887	0.5437352245862884	person	true	in=Lari l=When r=and r=I r=went
+0.4107142857142857	0.5437352245862884	person	false	in=the in=States l=What l=part l=of r=are r=you r=from
+0.4117647058823529	0.5460992907801419	person	true	in=joe l=are l=welcome l=, r=included
+0.4128113879003559	0.5484633569739953	person	true	in=joe l=are l=welcome l=, r=included
+0.41207815275310833	0.5484633569739953	person	false	in=Berkeley l=the l=show l=at r=in r=Oct r=6th
+0.41134751773049644	0.5484633569739953	person	false	in=iPhones l=showing l=off l=their r=on r=facebook r=today
+0.41061946902654867	0.5484633569739953	person	false	in=Fight in=Club l=Night l=, l=Wednesday-MvC3 r=in r=Chicago r=.
+0.411660777385159	0.5508274231678487	person	true	in=Seanzie l=get l=to l=see r=if r=he r=goes
+0.4109347442680776	0.5508274231678487	person	false	in=Singapore l=Sea l=Intervention l=opens r=facility r=: r=September
+0.4102112676056338	0.5508274231678487	person	false	in=Eagles l=Vista l=del l=Lago r=, r=well r=some
+0.4094903339191564	0.5508274231678487	person	false	in=strokes in=of in=genius l=pinot l=, l=&quot; r=&quot; r=by r=john
+0.4087719298245614	0.5508274231678487	person	false	in=iPad l=of l=the l=next r=. r=IPad r=...
+0.4080560420315236	0.5508274231678487	person	false	in=SUENALO l=JANNUS l=LIVE l=... r=! r=FROM r=MIAMI
+0.40734265734265734	0.5508274231678487	person	false	in=Family in=Guy l=YouTube l=video l=-- r=- r=Songs r=Named
+0.40663176265270506	0.5508274231678487	person	false	in=Float-Ellicott in=City l=Executive l=Pharmacist-Full l=Time r=, r=MD r=Job
+0.4076655052264808	0.5531914893617021	person	true	in=God l=mean l=and l=harsh r=was r=, r=remind
+0.40695652173913044	0.5531914893617021	person	false	in=Reivers l=afternoon l=! l=Go r=!
+0.4079861111111111	0.5555555555555556	person	true	in=Tyler in=Lewis l=out l=2012 l=pg r=since r=contact r=pd
+0.4072790294627383	0.5555555555555556	person	false	in=Primus l=Natives l=@TheMusicBoxLA l=, r=@ClubNokia r=Marina&amp;Diamonds r=@ElReyTheatre
+0.40657439446366783	0.5555555555555556	person	false	in=iCarly l=, l=spencer l=from r=was r=Crazy r=Steve
+0.4058721934369603	0.5555555555555556	person	false	in=Princess in=Lover in=OVA in=1 l=not l=forget l=the r=teaser r=pic r=,
+0.4051724137931034	0.5555555555555556	person	false	in=UI l=! l=Free l=for r=faculty/staff r=&amp; r=their
+0.4044750430292599	0.5555555555555556	person	false	in=Avast in=AntiVirus in=4 in=8 in=PROFIONAL r=Full r=Life r=Time
+0.40378006872852235	0.5555555555555556	person	false	in=Rep in=. in=Bono in=Mack r=to r=criticize r=fellow
+0.40308747855917665	0.5555555555555556	person	false	in=Hong in=Kong l=| l=' l=s r=twentieth r=century r=Chinese
+0.4041095890410959	0.557919621749409	person	true	in=Paco l=a l=time l=with r=( r=Thats r=my
+0.40512820512820513	0.5602836879432624	person	true	in=KELE l=Win l=tix l=2 r=and r=DOES r=IT
+0.4044368600682594	0.5602836879432624	person	false	in=Serie in=A l='s l=hope l=the r=continues r=to r=be
+0.403747870528109	0.5602836879432624	person	false	in=Newcastle in=Jets in=Youth l=#futbol l=&gt; r=v r=AIS r=U21
+0.4030612244897959	0.5602836879432624	person	false	in=This in=Is in=Our in=Someday l=@jettathatsme l=: l=#nowplaying- r=- r=Big r=Time
+0.40407470288624786	0.5626477541371159	person	true	in=Mannie in=Fresh l=Metro l=Sept l=26 r=and r=Jermaine r=Dupri
+0.4033898305084746	0.5626477541371159	person	false	in=DoE l=around l=. l=The r=may r=well r=have
+0.40439932318104904	0.5650118203309693	person	true	in=Hughie in=O'Donoghue l=A r=painting r=, r=some
+0.40540540540540543	0.5673758865248227	person	true	in=Ben l=And l=don't l=worry r=, r=we r=already
+0.40640809443507586	0.5697399527186762	person	true	in=Brady l=wanted l=to l=diminish r=&amp; r=end r=up
+0.4057239057239057	0.5697399527186762	person	false	in=Orange in=&amp; in=Blue in=Skate l=RT l=@IlliniCampusRec l=: r=tonight r=, r=7:30
+0.4050420168067227	0.5697399527186762	person	false	in=S8 in=blog l=this l=week l='s r=: r=http://ow.ly/2G43u
+0.40436241610738255	0.5697399527186762	person	false	in=Dancing in=Queen l=Friday l=- l=" r=" r=http://bit.ly/d49VXU'
+0.4036850921273032	0.5697399527186762	person	false	in=VMB in=awards l=RT l=@NAT3OH3 l=: r=last r=night r=were
+0.40301003344481606	0.5697399527186762	person	false	in=Lancashire l=go l=early l=: r=have r=released r=West
+0.4040066777963272	0.5721040189125296	person	true	in=Terry in=Fox l=at l=the l=PoMo r=run r=. r=Should
+0.4033333333333333	0.5721040189125296	person	false	in=Band in=hall r=. r=Game r=time
+0.40266222961730447	0.5721040189125296	person	false	in=git l=have l=opened l=a r=manual r=.
+0.4019933554817276	0.5721040189125296	person	false	in=ADHD l=Aggressive l=Kids l=With r=May r=Not r=Need
+0.4013266998341625	0.5721040189125296	person	false	in=AHFA l=Green l=Newsfeed l=: r=extends r=deadline r=for
+0.40066225165562913	0.5721040189125296	person	false	in=Pretty in=Little in=Liars l=Episodes l=1-10 l=of r=will r=air r=in
+0.4	0.5721040189125296	person	false	in=Thanksgiving l=On r=after r=you r=done
+0.39933993399339934	0.5721040189125296	person	false	in=Thanksgiving l=On r=after r=you r=done
+0.3986820428336079	0.5721040189125296	person	false	in=Copenhagen l=Dancing l=" l=( r=March r=2010 r=)
+0.3980263157894737	0.5721040189125296	person	false	in=Epix in=Movie in=Channel l=Warner l=Cable l=Boycotting r=Because r=It r=Did
+0.39901477832512317	0.574468085106383	person	true	in=Jerraud in=Powers l=Second-year l=CBs r=and r=Jacob r=Lacey
+0.3983606557377049	0.574468085106383	person	false	in=twitter l=introduced l=@TheSmokingGunn l=to r=. r=May r=he
+0.397708674304419	0.574468085106383	person	false	in=NC l=IN l=HICKORY l=, r=ON r=WEDNESDAY r=;
+0.39869281045751637	0.5768321513002365	person	true	in=Fes l=with l=Houston l=, r=is r=back r=in
+0.39804241435562804	0.5768321513002365	person	false	in=xmas l='m l=excited l=for r=, r=haha r=.
+0.3990228013029316	0.5791962174940898	person	true	in=Prophet in=Muhammad r=[ r=peace r=&amp;
+0.3983739837398374	0.5791962174940898	person	false	in=Sky in=3D l=CyberNation r=enlists r=Stephen r=Fry
+0.3977272727272727	0.5791962174940898	person	false	in=Crown in=College l=soccer l=vs l=. r=at r=home r=tomorrow
+0.39708265802269044	0.5791962174940898	person	false	in=YouTube l=Our l=Favorite r=Videos r=This r=Week
+0.3964401294498382	0.5791962174940898	person	false	in=YouTube l=Our l=Favorite r=Videos r=This r=Week
+0.39579967689822293	0.5791962174940898	person	false	in=YouTube l=@mashable l=Our l=Favorite r=Videos r=This r=Week
+0.3951612903225806	0.5791962174940898	person	false	in=YouTube l=Our l=Favorite r=Videos r=This r=Week
+0.394524959742351	0.5791962174940898	person	false	in=YouTube l=Our l=Favorite r=Videos r=This r=Week
+0.39389067524115756	0.5791962174940898	person	false	in=YouTube l=Our l=Favorite r=Videos r=This r=Week
+0.39325842696629215	0.5791962174940898	person	false	in=YouTube l=Our l=Favorite r=Videos r=This r=Week
+0.3926282051282051	0.5791962174940898	person	false	in=YouTube l=Our l=Favorite r=Videos r=This r=Week
+0.392	0.5791962174940898	person	false	in=Guitar in=Hero l=Rock l=Band l=or r=, r=you r=may
+0.3913738019169329	0.5791962174940898	person	false	in=MLB l=Away l=From l=in r=Odds r=: r=When
+0.39074960127591707	0.5791962174940898	person	false	in=International in=Observe in=the in=Moon in=Night r=( r=9/18/2010 r=)
+0.39012738853503187	0.5791962174940898	person	false	in=JFK l=a l=kitten l=on r=, r=the r=owners
+0.38950715421303655	0.5791962174940898	person	false	in=Lingerie in=football in=league r=come r=on r=tonight
+0.3888888888888889	0.5791962174940898	person	false	in=Constitution in=Day l=Happy r=!
+0.38827258320126784	0.5791962174940898	person	false	in=The in=Drama in=Edition l=This l=Week l=: r=- r=Had r=any
+0.3876582278481013	0.5791962174940898	person	false	in=Paranormal in=Activity in=2 l=we l=go l=again r=http://j.mp/ascgZr r=I r='m
+0.38704581358609796	0.5791962174940898	person	false	in=iBGP l='ve l=been l=configuring r=and r=eBGP r=on
+0.3864353312302839	0.5791962174940898	person	false	in=Texas l=Davis l=in l=: r=wide r=receiver r=John
+0.38740157480314963	0.5815602836879432	person	true	in=Travis in=Toomey l=Blades l=trade r=to r=Seattle r=for
+0.38836477987421386	0.5839243498817966	person	true	in=Beyonce l=New l=Post l=: r=: r=I r=Am
+0.3877551020408163	0.5839243498817966	person	false	in=Natives l=Shows l=Tonight-Local r=@TheMusicBoxLA r=, r=Primus
+0.3887147335423197	0.5862884160756501	person	true	in=Mike l=amazing l=products l=from r='s r=Life r=.
+0.38967136150234744	0.5886524822695035	person	true	in=Jacob in=Lacey l=Jerraud l=Powers l=and r=don't r=remember r=much
+0.390625	0.5910165484633569	person	true	in=carmen l=was l=george l=with r=today r=;D
+0.39001560062402496	0.5910165484633569	person	false	in=LONDON l=beat l=England l=: r=, r=Sept r=17
+0.3894080996884735	0.5910165484633569	person	false	in=We in=All in=Are in=Dancing l=-- l=Yoav l=" r=" r=( r=Copenhagen
+0.38880248833592534	0.5910165484633569	person	false	in=TIFO in=CREW l=: l=Join l=the r=says r=@Section8Chicago r='s
+0.38819875776397517	0.5910165484633569	person	false	in=Morgan in=Le in=Fays l=you l=tonight l=at r=!! r=Great r=time
+0.3891472868217054	0.5933806146572104	person	true	in=Mr in=. in=Van l=RT l=@ArtVanFurniture l=: r=sure r=is r=busy
+0.38854489164086686	0.5933806146572104	person	false	in=Manchester l=I l=position l=to r=tomorrow r=on r=BA
+0.38794435857805254	0.5933806146572104	person	false	in=Optimise l=week l=in l=the r=office r=, r=another
+0.3888888888888889	0.5957446808510638	person	true	in=Nadal l=photo l=caption l=contest- r=and r=Novak r=in
+0.3882896764252696	0.5957446808510638	person	false	in=Stars l=show l=. l=Tonight r=in r=Vordingborg r=-
+0.38769230769230767	0.5957446808510638	person	false	in=Ryerson in=Quidditch l=Eyeopener l=vs l=. r=team r=this r=Sunday
+0.3870967741935484	0.5957446808510638	person	false	in=Lancashire l=#cricket r=let r=Powell r=go
+0.38650306748466257	0.5957446808510638	person	false	in=dj in=finese l=oldskool l=night l=wiith
+0.38591117917304746	0.5957446808510638	person	false	in=Ohio l=FOOTBALL l=FEVER l=: r=head r=coach r=Frank
+0.3853211009174312	0.5957446808510638	person	false	in=Centennial in=College l=Student l=Centre l=at r=( r=Progress r=Campus
+0.3847328244274809	0.5957446808510638	person	false	in=VEVO l=Playlist l=Featured l=on r=Live r=Week r=[
+0.38414634146341464	0.5957446808510638	person	false	in=the in=BLAST l=Whos l=Goin l=to
+0.3835616438356164	0.5957446808510638	person	false	in=Phil l=driving l=away l=to r=. r=Tasty r=dinner
+0.3829787234042553	0.5957446808510638	person	false	in=Phil l=driving l=away l=to r=. r=Tasty r=dinner
+0.38239757207890746	0.5957446808510638	person	false	in=OH l=in l=Greenville l=,
+0.38333333333333336	0.5981087470449172	person	true	in=Desperado l=Stylez l=&quot; l=A.K.A. r=Birthday r=Bash r=!
+0.3827534039334342	0.5981087470449172	person	false	in=mcdonalds l=i l=want l=a r=at r=this r=time
+0.3821752265861027	0.5981087470449172	person	false	in=MOTOGP r=: r=Round r=13
+0.3815987933634992	0.5981087470449172	person	false	in=Twitter l=campaign l=: l=Had r=been r=an r=option
+0.3810240963855422	0.5981087470449172	person	false	in=Twitter l=campaign l=: l=Had r=been r=an r=option
+0.3819548872180451	0.6004728132387707	person	true	in=Rousseff l=Right l=arm r=, r=Erenice r=War
+0.38288288288288286	0.6028368794326241	person	true	in=Greg l=Roy l='s l=and r='s r=old r=band
+0.383808095952024	0.6052009456264775	person	true	in=pope l=day l=of l=sorting r=visit r=to r=birmingham
+0.38323353293413176	0.6052009456264775	person	false	in=Remington in='s in=Annual in=Octoberfest l=9th l=2010 l=... r=!!
+0.38266068759342303	0.6052009456264775	person	false	in=Delhomme l=) l=&gt; l=&gt; r=doubtful r=for r=Sunday
+0.382089552238806	0.6052009456264775	person	false	in=Davidson l=Headed l=to r=vs r=Blount r=with
+0.38152011922503726	0.6052009456264775	person	false	in=Pavonia in=Avenue l=Square l=Place l=on r=in r=the r=Newport
+0.38095238095238093	0.6052009456264775	person	false	in=Harvard l=First l=Baptist l=on r=http://bit.ly/bsnOkT r=Musical r=celebration
+0.3803863298662704	0.6052009456264775	person	false	in=Sour in=Patch in=kids l=for l=the l=most r=eaten r=by r=an
+0.3798219584569733	0.6052009456264775	person	false	in=CocoFunka l=Costa l=Rican l=group r=power r=this r=week
+0.37925925925925924	0.6052009456264775	person	false	in=CocoFunka l=Costa l=Rican l=group r=power r=this r=week
+0.378698224852071	0.6052009456264775	person	false	in=Naples l=: l=Performing l=in r=tomorrow r=with r=N.E.R.D.
+0.37813884785819796	0.6052009456264775	person	false	in=BranchOut l=Facebook l=Job-Hunting l=App r=Raises r=$6 r=Million
+0.3775811209439528	0.6052009456264775	person	false	in=The in=31st in=annual in=Plano in=Balloon in=Festival l=START l=TODAY l=: r=, r=Plano r=Balloon
+0.37702503681885124	0.6052009456264775	person	false	in=U in=of in=W l=Theater l=and l=Film r=ROOM r=0T15 r=11:30
+0.3779411764705882	0.607565011820331	person	true	in=Elvis l=of l=you l=and r=on r=stage r=yesterday
+0.37738619676945667	0.607565011820331	person	false	in=MD l=Float-Ellicott l=City l=, r=Job r=( r=MD
+0.37683284457478006	0.607565011820331	person	false	in=macdonalds l=before l=she l=discovered
+0.37774524158125916	0.6099290780141844	person	true	in=Joaquin in=Phoenix l=Is r=Our r=Modern r=Day
+0.3786549707602339	0.6122931442080378	person	true	in=Joaquin in=Phoenix l=Is r=Our r=Modern r=Day
+0.3795620437956204	0.6146572104018913	person	true	in=Jessica in=Simpson r=is r=PREGNANT r=!?!:
+0.37900874635568516	0.6146572104018913	person	false	in=Google in=Music r=Rumors r=: r=Labels
+0.3784570596797671	0.6146572104018913	person	false	in=port in=city in=java l=@julie_cook l=: l=thanks r=for r=the r=caffeine
+0.37790697674418605	0.6146572104018913	person	false	in=#BB11 l=Bentley l=! l=)
+0.37735849056603776	0.6146572104018913	person	false	in=HICKORY l=VISIONS l=LOUNGE l=IN r=, r=NC r=ON
+0.3782608695652174	0.6170212765957447	person	true	in=Trisha l=a l=meeting l=with r=in r=Paris r=for
+0.3791606367583213	0.6193853427895981	person	true	in=Pope l=No l=. l=The r=asked r=me r=to
+0.3786127167630058	0.6193853427895981	person	false	in=The in=Devils in=Art l=songs l=from l=" r=" r=at r=Words
+0.37806637806637805	0.6193853427895981	person	false	in=Korean in=War r=spy r=rivalries r=persist
+0.37752161383285304	0.6193853427895981	person	false	in=Atlanta l=overseeding l=season l=for r=&amp; r=N r=.
+0.376978417266187	0.6193853427895981	person	false	in=New in=Life l=morning l=gathering l=at r=can r=be r=watched
+0.37787356321839083	0.6217494089834515	person	true	in=Jermaine in=Dupri l=Mannie l=Fresh l=and r=fa r=da r=after
+0.3787661406025825	0.624113475177305	person	true	in=BB l=spent l=time l=with r=.
+0.37822349570200575	0.624113475177305	person	false	in=Botanic in=Gdns l=weekend l=go l=to r=, r=for r=Taste
+0.3776824034334764	0.624113475177305	person	false	in=Winter in='s in=Bone l=to l=@glasgowfilm l=for r=- r=need r=to
+0.37714285714285717	0.624113475177305	person	false	in=Winter in='s in=Bone l=to l=@glasgowfilm l=for r=- r=need r=to
+0.3780313837375178	0.6264775413711584	person	true	in=anna l=wasz l=Fun l=cusz r=Came r=juss r=for
+0.37749287749287747	0.6264775413711584	person	false	in=PS3 l=' l=Vanquish l=for r=, r=Xbox r=360
+0.37695590327169276	0.6264775413711584	person	false	in=Morton in='s in=Salt l=Today l= r=motto r=+ r=Murphy
+0.37642045454545453	0.6264775413711584	person	false	in=Subway l=workout l=. l=Good r=sandwich r=. r=Nice
+0.375886524822695	0.6264775413711584	person	false	in=On in=My in=Own in=Time r=- r=Gym r=Class
+0.37677053824362605	0.6288416075650118	person	true	in=Yanni l=the l=voices l=with r=in r=concert r=here
+0.37623762376237624	0.6288416075650118	person	false	in=Devil l=&quot; l=until l=&quot; r=&quot; r=starts r=!
+0.3757062146892655	0.6288416075650118	person	false	in=Dim in=Mak l=| l=Afterparty l=at r=Tuesdays r=@CinespaceLA
+0.3751763046544429	0.6288416075650118	person	false	in=Clemson l=on l=Saturday l=- r=party r=at r=http://bit.ly/cds8Pd
+0.37464788732394366	0.6288416075650118	person	false	in=Clemson l=on l=Saturday l=- r=party r=at r=http://bit.ly/cds8Pd
+0.37412095639943743	0.6288416075650118	person	false	in=Clemson l=on l=Saturday l=- r=party r=at r=http://bit.ly/cds8Pd
+0.375	0.6312056737588653	person	true	in=Murkowski l=goes l=down l=, r=goes r=write-in r=.
+0.3744740532959327	0.6312056737588653	person	false	in=Milford in=Rd l=expected l=today l=on r=, r=Lindis r=Pass
+0.3739495798319328	0.6312056737588653	person	false	in=Sky in=3D l=Engadget l=: r=enlists r=Stephen r=Fry
+0.3734265734265734	0.6312056737588653	person	false	in=Unsung l=Donnie l=Hathaway l='s r=I r=just r=get
+0.3729050279329609	0.6312056737588653	person	false	in=Loyola l=Analogy l=time l=! r=Chicago r=: r=Alexei
+0.3723849372384937	0.6312056737588653	person	false	in=Calcio l=has l=fans l=of r=worried r=....
+0.37186629526462395	0.6312056737588653	person	false	in=APO r=disaster r=relief r=tomorrow
+0.3713490959666203	0.6312056737588653	person	false	in=TailGreat l=Wireless l=tent l=at r=tomorrow r=evening r=for
+0.37083333333333335	0.6312056737588653	person	false	in=Breaking in=Dawn l=' r=' r=Returns r=to
+0.37031900138696255	0.6312056737588653	person	false	in=NEW in=YORK l=makers l=post-'flash l=crash': r=, r=Sept r=17
+0.3698060941828255	0.6312056737588653	person	false	in=Walk in=at in=Work in=Day l=participates l=in l=national r=http://bit.ly/cJ0wpo
+0.36929460580912865	0.6312056737588653	person	false	in=frat in=house in=Hattiesburg l=truly l=tonight l=at r=on r=the r=1s
+0.3687845303867403	0.6312056737588653	person	false	in=frat in=house in=Hattiesburg l=truly l=tonight l=at r=on r=the r=1s
+0.3682758620689655	0.6312056737588653	person	false	in=Dior l=I l=just l=bought r=mascara r=for r=the
+0.3677685950413223	0.6312056737588653	person	false	in=MN l=Municipal l=Airport l=, r=Winds r=are r=Calm
+0.3672627235213205	0.6312056737588653	person	false	in=AEG l=at l=time l=. r=just r=wanted r=more
+0.36675824175824173	0.6312056737588653	person	false	in=alabama l=da l=gump l=today r=here r=I r=come
+0.3662551440329218	0.6312056737588653	person	false	in=Enslaved in=: in=Odyssey in=to in=the in=West l=Xbox l=360 l=: r=Demo r=Coming r=to
+0.36575342465753424	0.6312056737588653	person	false	in=Indiesent in=Exposure l=this l=week l='s r=http://ht.ly/2G4nS r=by r=@fuseboxradio
+0.3652530779753762	0.6312056737588653	person	false	in=Indiesent in=Exposure l=this l=week l='s r=http://ht.ly/2G4nS r=by r=@fuseboxradio
+0.36475409836065575	0.6312056737588653	person	false	in=Civil in=House l=minister l=of l=the r=in r=April r=this
+0.36425648021828105	0.6312056737588653	person	false	in=Fashion in=week r=ends r=with r=Ralph
+0.3651226158038147	0.6335697399527187	person	true	in=Lindsay in=Lohan r=allegedly r=failed r=her
+0.3659863945578231	0.6359338061465721	person	true	in=Lindsay in=Lohan r=allegedly r=failed r=her
+0.36684782608695654	0.6382978723404256	person	true	in=sarah l=with l=mariaelena l=, r=, r=and r=brittany
+0.36635006784260515	0.6382978723404256	person	false	in=Buck in=mountain r=tomorrow r=. r=#adirondacks
+0.36585365853658536	0.6382978723404256	person	false	in=Brixton l=make l=tonight l='s r=bashment r=our r=birthday
+0.36671177266576455	0.640661938534279	person	true	in=JUTHTIN in=BEAVERRRR l=one l=time l=! r=!!!!
+0.3662162162162162	0.640661938534279	person	false	in=Halo l=retrospective l=on l=the r=franchise r=along r=with
+0.3657219973009447	0.640661938534279	person	false	in=CAFE in=NINE r=TONIGHT r=AT r=11
+0.36522911051212936	0.640661938534279	person	false	in=VMAs l=watching l=the r=Eminem r=is r=BeAsT
+0.36473755047106327	0.640661938534279	person	false	in=Sacramento l=Woke l=up l=in r=. r=The r=CA
+0.364247311827957	0.640661938534279	person	false	in=Desert in=Rd l=No l=warnings l=for r=, r=Lewis r=,
+0.3651006711409396	0.6430260047281324	person	true	in=Ellen l=@TheEllenShow l=#AskEllen l=Hi r=. r=Can r=you
+0.3646112600536193	0.6430260047281324	person	false	in=Downs l=Keppinger l=sits l=, r=plays r=2B r=,
+0.36412315930388217	0.6430260047281324	person	false	in=TD in=Jakes in=Day l=#blackholidays
+0.3649732620320856	0.6453900709219859	person	true	in=Pope l=about l=the l=bloody r=clogging r=up r=London
+0.3644859813084112	0.6453900709219859	person	false	in=Euroleague l=EBL l=tmrw l=, r=qualifiers r=tues r=but
+0.364	0.6453900709219859	person	false	in=Lions l=Sunday l=. l=Go r=!!
+0.36351531291611183	0.6453900709219859	person	false	in=The in=Maccabees r=are r=the r=love
+0.36436170212765956	0.6477541371158393	person	true	in=Castle r=goes r=down r=,
+0.36387782204515273	0.6477541371158393	person	false	in=LIVESTRONG in=Day r=is r=10-02-10 r=around
+0.363395225464191	0.6477541371158393	person	false	in=DT l=by l=a l=few r=fans r=because r=I
+0.3629139072847682	0.6477541371158393	person	false	in=Game in=Informer l=misaddressing l=them l=, r=FINALLY r=corrected r=my
+0.36243386243386244	0.6477541371158393	person	false	in=Russian in=navy l=... l=Hello l=" r=" r=it r='s
+0.3619550858652576	0.6477541371158393	person	false	in=Newcastle-Upon-Tyne l=see l=you l=at r=in r=Feb r=,
+0.36147757255936674	0.6477541371158393	person	false	in=Constitution in=Day l=@NROcorner l=: l=Why r=Matters r=:
+0.36100131752305664	0.6477541371158393	person	false	in=KLH l=Waters l=tickets l=on r=tonight r=between r=6:15
+0.3605263157894737	0.6477541371158393	person	false	in=eBGP l=configuring l=iBGP l=and r=on r=Cisco r=AND
+0.3600525624178712	0.6477541371158393	person	false	in=JENNIFERS in=BODY l=I l=CAN l=WATCH r=:O r=I r=KNOW
+0.35958005249343833	0.6477541371158393	person	false	in=Ghostland in=Observatory l=ticket l=sales l=for r=extended r=until r=6
+0.35910878112712974	0.6477541371158393	person	false	in=uk l=theycame l=to l=the r=this r=year r=,
+0.3586387434554974	0.6477541371158393	person	false	in=BBL r=started r=tonight r=,
+0.35947712418300654	0.6501182033096927	person	true	in=God l=: l=" l=If r=brings r=you r=to
+0.360313315926893	0.6524822695035462	person	true	in=Jacquelin l=, l=a l=pregnant r=... r=http://yhoo.it/9VAD4A
+0.36114732724902215	0.6548463356973995	person	true	in=Jacquelin l=, l=a l=pregnant r=... r=http://yhoo.it/9VAD4A
+0.3606770833333333	0.6548463356973995	person	false	in=Barbados l=and l=fly l=to r=on r=Sunday
+0.3602080624187256	0.6548463356973995	person	false	in=V-I-K-I-N-G-S l=game l=tonight l=!!!!! r=!!!!!!!
+0.35974025974025975	0.6548463356973995	person	false	in=The in=Wolves r=to r=host r=the
+0.35927367055771725	0.6548463356973995	person	false	in=BAR l=: l=Working l=at r=tonight r=. r=1309
+0.3588082901554404	0.6548463356973995	person	false	in=San in=Mateo l=btwn l=SF l=and
+0.35834411384217335	0.6548463356973995	person	false	in=American in=Professional in=Football in=Association l=birthday l=of l=the r=( r=we r=call
+0.3578811369509044	0.6548463356973995	person	false	in=Cyber-Ark l=technology l=today l=http://bit.ly/9cugk1 r=to r=Showcase r=Business
+0.35870967741935483	0.6572104018912529	person	true	in=Justin l='RT l=@JustinsHairFlip l=: r=was r=TOTALLY r=prancing
+0.3595360824742268	0.6595744680851063	person	true	in=Jorge l=that l=me l=and r=will r=be r=playing
+0.3590733590733591	0.6595744680851063	person	false	in=Coke l=, l=drinking l=a r=. r=MLIA r=#Quotealicious
+0.35861182519280205	0.6595744680851063	person	false	in=Coke l=, l=drinking l=a r=. r=MLIA r=#Quotealicious
+0.3581514762516046	0.6595744680851063	person	false	in=Baka in=Boyz l=Tonight l=@AZUKARlounge r=LIVE r=w/ r=DJ
+0.358974358974359	0.6619385342789598	person	true	in=Ayodhya l=of l=reactions l=after r=verdict r=.
+0.3585147247119078	0.6619385342789598	person	false	in=the in=Fitzwilliam l=well l=spent l=in r=.
+0.35805626598465473	0.6619385342789598	person	false	in=Dick in='s in=Carpet l=Networking l=Mixer l=at r=next r=T r=...
+0.35887611749680715	0.6643026004728132	person	true	in=JFK l=50 l=years l=after r=campaign r=: r=Had
+0.35841836734693877	0.6643026004728132	person	false	in=JFK l=50 l=years l=after r=campaign r=: r=Had
+0.3579617834394904	0.6643026004728132	person	false	in=USM r=get r=ready r=yours
+0.3575063613231552	0.6643026004728132	person	false	in=USM r=get r=ready r=yours
+0.3570520965692503	0.6643026004728132	person	false	in=Parking in=Day l=Parking l=Day l=- r=hosted r=by r=the
+0.3565989847715736	0.6643026004728132	person	false	in=JANNUS in=LIVE l=ON l=TONIGHT l=AT r=... r=SUENALO r=!
+0.3561470215462611	0.6643026004728132	person	false	in=Real l=he l=could l=manage r=. r=What r=he
+0.3556962025316456	0.6643026004728132	person	false	in=Gabriel in=Resources l=much l=opportunity l=. r=shares r=shoot r=up
+0.3552465233881163	0.6643026004728132	person	false	in=HTC in=Desire in=Z l=Amazon l=U.K. l=Offering r=Unlocked r=October r=11
+0.3547979797979798	0.6643026004728132	person	false	in=HTC in=Desire in=Z l=Amazon l=U.K. l=Offering r=Unlocked r=October r=11
+0.35561160151324084	0.6666666666666666	person	true	in=Scooter in=Braun l=with l=your l=dad r=, r=your r=life
+0.35642317380352645	0.6690307328605201	person	true	in=Scooter in=Braun l=with l=your l=dad r=, r=your r=life
+0.3572327044025157	0.6713947990543735	person	true	in=Scooter in=Braun l=with l=your l=dad r=, r=your r=life
+0.35804020100502515	0.6737588652482269	person	true	in=Scooter in=Braun l=with l=your l=dad r=, r=your r=life
+0.3588456712672522	0.6761229314420804	person	true	in=Scooter in=Braun l=with l=your l=dad r=, r=your r=life
+0.3583959899749373	0.6761229314420804	person	false	in=The in=Town r=might r=be r=one
+0.3579474342928661	0.6761229314420804	person	false	in=The in=Town r=might r=be r=one
+0.3575	0.6761229314420804	person	false	in=Parking in=Day r=- r=Parking r=Day
+0.3570536828963795	0.6761229314420804	person	false	in=Paris l=with l=Trisha l=in r=for r=this r=week
+0.3566084788029925	0.6761229314420804	person	false	in=South in=Park- l=thru l=Sunday l=in r=please r=retweet r=please
+0.3574097135740971	0.6784869976359338	person	true	in=sam l=shut l=up l=, r='s r=coming r=tomorrow
+0.35696517412935325	0.6784869976359338	person	false	in=Leroy in=Jenkins in=Day l=people l=need l=a r=. r=We r=need
+0.3577639751552795	0.6808510638297872	person	true	in=charlene l=have l=a l=baby r=. r=: r=L
+0.3573200992555831	0.6808510638297872	person	false	in=MRB in=@ in=61 in=Roadhouse in=BBQ l='Come l=to l=" r=" r=Sunday r=,
+0.35687732342007433	0.6808510638297872	person	false	in=super in=nintendo r=sega r=genesis r=,
+0.3564356435643564	0.6808510638297872	person	false	in=EBL l=started l=tonight l=, r=tmrw r=, r=Euroleague
+0.35599505562422745	0.6808510638297872	person	false	in=Piranha in=3D l=in l=years l=... r=just r=exceeded r=the
+0.35555555555555557	0.6808510638297872	person	false	in=Republic l=Tonight l=@damionyancy l=at r=!
+0.35511713933415534	0.6808510638297872	person	false	in=HoveLive in=Festival l=to l=be l=at r=tomorrow r=in r=Belgium
+0.35467980295566504	0.6808510638297872	person	false	in=FedEx l=fun l=item l=from r=today r=. r=I'm
+0.35547355473554737	0.6832151300236406	person	true	in=gatt in=holly l=chinese l=takeaways l=, r=, r=phil r=collins
+0.35503685503685506	0.6832151300236406	person	false	in=Pepsi l=http://bit.ly/aTTQYq l=When r=to r=ring r=usually
+0.3558282208588957	0.6855791962174941	person	true	in=Betsey in=Johnson l=of l=my l=favorite r=necklaces r=today r=!!
+0.35661764705882354	0.6879432624113475	person	true	in=Fabi l=&lt; l=3 l=and r=. r='ll r=have
+0.3561811505507956	0.6879432624113475	person	false	in=Mississippi in=Studios l=PM l=today l=at r=http://artistdata.com/a/1kdx
+0.35574572127139364	0.6879432624113475	person	false	in=Visa l=Win l=$100 r=card r=! r=http://www.alimartell.com/index.php/2010/09/14/its-the-most-wonderful-time-of-the-year-and-im-about-to-make-it-100-better
+0.3553113553113553	0.6879432624113475	person	false	in=Casitas l=Every l=Saturday l=night r=presents r=Luna r=Lounge
+0.3548780487804878	0.6879432624113475	person	false	in=London l=Pope l=clogging l=up r=tomorrow r=. r=I
+0.3556638246041413	0.6903073286052009	person	true	in=mike l=@Loserface_Laura l=when r=lets r=me r=know
+0.35523114355231145	0.6903073286052009	person	false	in=Daily in=Mail l=RT l=@tabloidwatch l=: r='s r=not-at-all r=predictable
+0.3560145808019441	0.6926713947990544	person	true	in=Bonita l=! l=Lets l=help r=celebrate r=her r=Birthday
+0.35558252427184467	0.6926713947990544	person	false	in=Cap'n in=Jazz l=Estate l=, l=and r=are r=quite r=possibly
+0.35515151515151516	0.6926713947990544	person	false	in=Hustler in=Hollywood l=Heat l=signing l=at r=Sep r=23rd r=8-10pm
+0.35472154963680386	0.6926713947990544	person	false	in=Hotel in=Elegante l=18th l=2010 l=8pm r=Steve r=&quot; r=Stylez
+0.3542926239419589	0.6926713947990544	person	false	in=Easy in=A l=time l=watching l=&quot; r=&quot; r=until r=&quot;
+0.3538647342995169	0.6926713947990544	person	false	in=Disney in=World l=planning l=the l=next r=trip r=.
+0.3546441495778046	0.6950354609929078	person	true	in=Roy l=i l=just l=found r='s r=and r=Greg
+0.3542168674698795	0.6950354609929078	person	false	in=CWE l=at l=Pi l=! r=and r=Delmar r=are
+0.35379061371841153	0.6950354609929078	person	false	in=Juniper l=on l=Cisco l=AND r=routers r=for r=America
+0.35336538461538464	0.6950354609929078	person	false	in=Not in=a in=Genuine in=Black in=Man l=selection l=is l=" r=" r=by r=@BrianCopie
+0.35294117647058826	0.6950354609929078	person	false	in=Vanquish l=Platinum l=Games l=' r=for r=PS3 r=,
+0.3537170263788969	0.6973995271867612	person	true	in=Dermot l=stalking l=Cheryl l=AND r=tomorrow r=.... r=NO
+0.3532934131736527	0.6973995271867612	person	false	in=R'lyeh, l=a l=visual l=for r=though r=. r=I
+0.35287081339712917	0.6973995271867612	person	false	in=the in=Lions l=Wolves l=to l=host r=for r=game r=time
+0.35244922341696533	0.6973995271867612	person	false	in=London in=Fashion in=Week l=Here l='s l=the r=schedule r=: r=http://nyti.ms/bW0N3u
+0.3520286396181384	0.6973995271867612	person	false	in=Information in=Underground l=This l=Week l=on r=http://fb.me/JGgSgWBg
+0.35160905840286055	0.6973995271867612	person	false	in=Fulham l=won't l=be l=at r=for r=long r=http://bit.ly/aCXCNE
+0.35119047619047616	0.6973995271867612	person	false	in=AK l=reportedly l=ahead l=in r=.
+0.3507728894173603	0.6973995271867612	person	false	in=Club in=Penguin l=are l=this l=weeks r=FUN r=Art r=Drawings
+0.3515439429928741	0.6997635933806147	person	true	in=Ed in=Miliband l=Leadership l=Market- l=http://bit.ly/cD3Rn8 r='s r=odds r=have
+0.35231316725978645	0.7021276595744681	person	true	in=Alexei l=Loyola l=Chicago l=: r=:: r=Philadelphia r=Eagles
+0.35308056872037913	0.7044917257683215	person	true	in=trey in=songz l=@iLL87WiLL l=: l=When r=was r=a r=kid
+0.3526627218934911	0.7044917257683215	person	false	in=Stetson l=a l=show l=at r=in r=November r=..
+0.35224586288416077	0.7044917257683215	person	false	in=TEACHER'S in=DAY in=2 l=TODAY l=IS l=THE r=! r=HAPPY r=TEACHER'S
+0.35182998819362454	0.7044917257683215	person	false	in=Auburn l=at l=http://bit.ly/cds8Pd l=; r=party r=at r=http://bit.ly/9X1KP8
+0.35141509433962265	0.7044917257683215	person	false	in=Auburn l=at l=http://bit.ly/cds8Pd l=; r=party r=at r=http://bit
+0.3510011778563015	0.7044917257683215	person	false	in=Spoons in=NW in=Bistro l=Choice l=Menu l=at r=for r=tonight r=...:
+0.3517647058823529	0.706855791962175	person	true	in='Rickey in=Smiley r=had r=me r=laughing
+0.3525264394829612	0.7092198581560284	person	true	in=Amber in=Le in=Bon r=is r=to r=walk
+0.352112676056338	0.7092198581560284	person	false	in=Grammar in=Boot in=Camp r=starts r=on r=Monday
+0.3516998827667057	0.7092198581560284	person	false	in=Battle in=of in=Britain l=Sunday l=to l=mark r=http://dlvr.it/5RhwW
+0.351288056206089	0.7092198581560284	person	false	in=Slovenia l=10 l=October l=2010 r=: r=Playboy r=-
+0.3508771929824561	0.7092198581560284	person	false	in=Slovenia l=10 l=October l=2010 r=: r=Playboy r=-
+0.35046728971962615	0.7092198581560284	person	false	in=Super in=Angels l=From l=Accel l=And r=: r=When r=you
+0.3500583430571762	0.7092198581560284	person	false	in=FACEBOOK l=WAS l=JUST l=ON r=1 r=MIN r=AGO
+0.34965034965034963	0.7092198581560284	person	false	in=Elliot in=Miner l=good l=luck l=at r=:D r=yous r=were
+0.3492433061699651	0.7092198581560284	person	false	in=WB in=WILDCATS l=excited l=!! l=GOO r=!
+0.3488372093023256	0.7092198581560284	person	false	in=11 in=Bantam in=Draft l=Pick l=in l=' r=. r=7 r=20-year
+0.34959349593495936	0.7115839243498818	person	true	in=Rob l=got l=to l=help r=finish r=the r=decorating
+0.3491879350348028	0.7115839243498818	person	false	in=NY l=Arthur l=Airport l=, r=Winds r=are r=North
+0.3487833140208575	0.7115839243498818	person	false	in=estonia r=tomorrow r=with r=@MyiaOnFyia
+0.34837962962962965	0.7115839243498818	person	false	in=Air in=Music in=Jump l=FREE l=: r=. r=if r=you
+0.34797687861271676	0.7115839243498818	person	false	in=Good in=Day in=Sunshine r=http://bit.ly/cK4PB8 r=is r=available
+0.34757505773672054	0.7115839243498818	person	false	in=VISIONS in=LOUNGE l=IS l=NOW l=AT r=IN r=HICKORY r=,
+0.34717416378316035	0.7115839243498818	person	false	in=twitter l=who l=cares l=about
+0.3467741935483871	0.7115839243498818	person	false	in=N.E.R.D. l=Naples l=tomorrow l=with r=, r=Maroon r=5
+0.34637514384349827	0.7115839243498818	person	false	in=Software in=Freedom in=Day l=! l=Today l='s r=. r=Join r=us
+0.34597701149425286	0.7115839243498818	person	false	in=Dicks l=: l=going l=to r=tonight r=.
+0.3455797933409874	0.7115839243498818	person	false	in=The in=Metro r=Sept r=26 r=Mannie
+0.3451834862385321	0.7115839243498818	person	false	in=Halloween l=the l=Wright l=family r=bash r=!! r=It
+0.3459335624284078	0.7139479905437353	person	true	in=Rick in=Ross l=you l=ran l=into r=and r=Drake r=twice
+0.34668192219679633	0.7163120567375887	person	true	in=Bennett- l=vs l=Blount l=with r=love r=spending r=time
+0.3462857142857143	0.7163120567375887	person	false	in=Lake in=Charles l=to l=Shreveport l=then r=-might r=as r=well
+0.3458904109589041	0.7163120567375887	person	false	in=It in='s in=Gucci in=Time l=head l=rockin'. l=&quot; r=!&quot; r=#nodisrespect r=I
+0.34549600912200684	0.7163120567375887	person	false	in=TEACHER'S in=DAY in=2 l=2 l=! l=HAPPY r=ME r=!!! r=YEAAAAHHHH
+0.3451025056947608	0.7163120567375887	person	false	in=Yom in=Kippur l=who l=is l=celebrating r=have r=an r=easy
+0.3447098976109215	0.7163120567375887	person	false	in=Sports in=Day l=tomorrow l=for l=@cbc r=in r=Canada r=#yyc
+0.3443181818181818	0.7163120567375887	person	false	in=aintree l=mine l=in l=bbt r=today r=. r=Played
+0.3439273552780931	0.7163120567375887	person	false	in=North in=York l=Accounts l=Payable l=Coordinator r=- r=$37K r=(
+0.3435374149659864	0.7163120567375887	person	false	in=Elements l=Betta l=be l=at r=tonight r=BOGO r=drinks
+0.3431483578708947	0.7163120567375887	person	false	in=UT l=are l=dressed l=in r=gear r=tomorrow r=,
+0.3438914027149321	0.7186761229314421	person	true	in=Levin l=for l=sure l=meet r=, r=Hien r=&lt;
+0.3446327683615819	0.7210401891252955	person	true	in=sanchez l=buckboardday l=parade l=then r=family r=reunion r=then
+0.3442437923250564	0.7210401891252955	person	false	in=Business in=Alliance r=will r=save r=you
+0.3438556933483653	0.7210401891252955	person	false	in=Breaking in=&amp; in=Entering l=the l=return l=of r=. r=Be r=sure
+0.34459459459459457	0.723404255319149	person	true	in=EVA in=MENDES l=a l=pic l=of r=! r=Didn't r=know
+0.344206974128234	0.723404255319149	person	false	in=MAC l=have l=n't l=tried r=. r=Next r=time
+0.3438202247191011	0.723404255319149	person	false	in=xmas l=I'm l=excited l=for r=, r=haha r=.
+0.3434343434343434	0.723404255319149	person	false	in=Vancouver l=' l=Returns l=to r=on r=January r=11th
+0.34417040358744394	0.7257683215130024	person	true	in=Charlotte l=, l=Davidson l=, r=and r=NC r=St
+0.3449048152295633	0.7281323877068558	person	true	in=Bush l=WaPo l=: l=renewing r=tax r=cuts r=would
+0.34451901565995524	0.7281323877068558	person	false	in=High in=House in=Farm l=local l=apples l=from r= r=mighty r=fine
+0.34413407821229053	0.7281323877068558	person	false	in=Music in=News in=Net l=Memoir l=Release l=- r=: r=MUSIC r=NEWS
+0.34375	0.7281323877068558	person	false	in=Sydney l=9 l=days l=then
+0.3433667781493868	0.7281323877068558	person	false	in=Twitter l=to l=Blogging l=and r=: r=Two r=amazing
+0.3429844097995546	0.7281323877068558	person	false	in=bc l=haven't l=driven l=to r=in r=years r=,
+0.3426028921023359	0.7281323877068558	person	false	in=Greenville l=property l=tomorrow l=in r=, r=OH
+0.3422222222222222	0.7281323877068558	person	false	in=twitpic l=these l=days l=... r=ur r=new r=haircut
+0.341842397336293	0.7281323877068558	person	false	in=Twins l=this l=weekend l=? r=? r=Vikings r=?
+0.34146341463414637	0.7281323877068558	person	false	in=The in=Scoot in=Inn l=Austin l=Tonite l=at r=at r=1am r=!
+0.34108527131782945	0.7281323877068558	person	false	in=Cahill l=for l=tonight l='s r=event r=: r=http://youtu.be/KX5jNnDMfxA
+0.3407079646017699	0.7281323877068558	person	false	in=Primal l=- l=Tonight l=at r=Its r=@Roscoedash r=,
+0.3414364640883978	0.7304964539007093	person	true	in=Boris in=Kodjoe l=chance l=2 l=meet r=? r=He'll r=be
+0.34216335540838855	0.7328605200945626	person	true	in=Wonder in=Woman l=@whitneytweets l=@matthewlawton l=and r=!
+0.3428886438809261	0.735224586288416	person	true	in=Cooper l=funny l=about l=testicles r=as r=you r=will
+0.34251101321585903	0.735224586288416	person	false	in=Sacramento l=Just l=arrived l=in r=! r=What r=a
+0.34213421342134215	0.735224586288416	person	false	in=Coffee l=Kahlua l=&lt; r=over r=looking r=the
+0.34175824175824177	0.735224586288416	person	false	in=Hamm l=You l=gone l=go r=next r=Thursday r=on
+0.3424807903402854	0.7375886524822695	person	true	in=prince l=he l=likes r=, r=paul r=simon
+0.34210526315789475	0.7375886524822695	person	false	in=Columbus r=, r=GA r=:
+0.3417305585980285	0.7375886524822695	person	false	in=Pakistan l=six l=wickets l=as r=beat r=England r=:
+0.3413566739606127	0.7375886524822695	person	false	in=MTV l=what l=criteria l=does r=use r=to r=give
+0.34207650273224044	0.7399527186761229	person	true	in=Baveh in=Nate l=, l=us l=and r=... r=meant r=to
+0.34170305676855894	0.7399527186761229	person	false	in=The in=Lodge l=tonight l=at r=: r=braised r=bison
+0.34133042529989094	0.7399527186761229	person	false	in=Disney l=I l=think l=of r=movies r=&amp; r=that
+0.340958605664488	0.7399527186761229	person	false	in=twitter l=tired l=.. l=Goodnight r=! r=tty r=tomorrow
+0.3416757344940152	0.7423167848699763	person	true	in=Jan in=Brewer r=: r=Beheadings r=?
+0.34130434782608693	0.7423167848699763	person	false	in=camp in=rock in=2 l=watching r=again r=... r=all
+0.34093376764386535	0.7423167848699763	person	false	in=Empire in=State in=Building l=two l=weeks l=. r= r=ESB r=.
+0.3405639913232104	0.7423167848699763	person	false	in=Empire in=State in=Building l=two l=weeks l=. r= r=ESB r=.
+0.3401950162513543	0.7423167848699763	person	false	in=Agora l=Awarded l=movie l=" r=" r=by r=Spanish
+0.3398268398268398	0.7423167848699763	person	false	in=VMA l=watching l=the r=pre-show r=again r=lol
+0.34054054054054056	0.7446808510638298	person	true	in=salsa in=caliente l=you l=are l=with r=and r=get r=in
+0.3412526997840173	0.7470449172576832	person	true	in=salsa in=caliente l=you l=are l=with r=and r=get r=in
+0.3419633225458468	0.7494089834515366	person	true	in=Jemma l=after l=christmas l=. r=; r=they r=already
+0.3415948275862069	0.7494089834515366	person	false	in=Christmas l=battle l=to l=save r=.
+0.341227125941873	0.7494089834515366	person	false	in=Twitter l=: l=Jackie l=joins r=50 r=years r=after
+0.34086021505376346	0.7494089834515366	person	false	in=Twitter l=: l=Jackie l=joins r=50 r=years r=after
+0.34049409237379163	0.7494089834515366	person	false	in=Three in=Days in=Grace l=video l=out l=-- r=- r=Break r=(
+0.34012875536480686	0.7494089834515366	person	false	in=Erenice in=War l=arm l=Rousseff l=, r=, r=51 r=years
+0.3408360128617363	0.75177304964539	person	true	in=Jessum r='s r=Question r=of
+0.3404710920770878	0.75177304964539	person	false	in=Eastern in=Bloc r=25th r=b'day r=party
+0.34010695187165774	0.75177304964539	person	false	in=Vuelter in=blog l=Today l='s r=: r=http://bit.ly/choe8Y
+0.33974358974358976	0.75177304964539	person	false	in=Motoland in=of in=Aragon l=Round l=13 l=, r=, r=Spain r=,
+0.33938100320170755	0.75177304964539	person	false	in=Long in=Island in=Mac in=Arthur in=Airport l=at l=Islip l=, r=, r=NY r=Winds
+0.3400852878464819	0.7541371158392435	person	true	in=JC l=Shopping l=day l=with r=- r=so r=excited
+0.3397231096911608	0.7541371158392435	person	false	in=kings in=of in=leon l=@DaymiCarolina l=: l=Yayaayayay r=tonight r=!!!
+0.3393617021276596	0.7541371158392435	person	false	in=Romeo in=&amp; in=Julliet l=Free r=under r=the r=stars
+0.3390010626992561	0.7541371158392435	person	false	in=Temecula l=: l=Observances l=in r=and r=elsewhere r=throughout
+0.3386411889596603	0.7541371158392435	person	false	in=Stanford l=@erutan r='s r=Robert r=Laughlin
+0.33828207847295866	0.7541371158392435	person	false	in=Guinness l=: l=It l='s r=O'clock. r=&lt; r=--
+0.3379237288135593	0.7541371158392435	person	false	in=Chicago l=at l=103.5 l=in r=today r=http://tumblr.com/xvliuc7q5
+0.33756613756613757	0.7541371158392435	person	false	in=The in=Heatwave l=this l=week l=is r=7th r=birthday r=...
+0.3372093023255814	0.7541371158392435	person	false	in=ASPEN l=St l=Johns l=before
+0.3368532206969377	0.7541371158392435	person	false	in=ASPEN l=St l=Johns l=before
+0.33649789029535865	0.7541371158392435	person	false	in=St in=. in=Luke in='s r=emergency r=department r=wait
+0.3361433087460485	0.7541371158392435	person	false	in=Coolum l=to l=live l=around r=. r=Sun r=,
+0.3357894736842105	0.7541371158392435	person	false	in=NEW in=ORLEANS r=! r=- r=Tonight
+0.33543638275499477	0.7541371158392435	person	false	in=London l=Tomorrow l=- r=- r=Hyde r=Park
+0.33508403361344535	0.7541371158392435	person	false	in=Danger in=Days in=: in=True in=Lives in=of in=The in=Fabulous in=Killjoys l=RT l=@josielovesmcr l=: r=#mychemicalromance
+0.33473242392444913	0.7541371158392435	person	false	in=Viera l=Done l=teaching l=in r=time r=for r=some
+0.33438155136268344	0.7541371158392435	person	false	in=the in=Fearless in=Tour l=I l=think l=of r=, r=I r=think
+0.33403141361256544	0.7541371158392435	person	false	in=The in=Replacement l=way l=home l=for r=.
+0.33368200836820083	0.7541371158392435	person	false	in=facebook l=writing l=it l=on r=.....
+0.3333333333333333	0.7541371158392435	person	false	in=muse l=Ill l=be l=at r=717 r=6th r=St
+0.33402922755741127	0.7565011820330969	person	true	in=Kristen r=is r=MY r=LIFE
+0.33368091762252344	0.7565011820330969	person	false	in=The in=Room l=Watching r=for r=like r=the
+0.3333333333333333	0.7565011820330969	person	false	in=MTV l=others l=at l=the r=show r=. r=Tonight
+0.33298647242455776	0.7565011820330969	person	false	in=Great in=Pumpkin l=weeks l=until l=the r=rises r=! r=Maybe
+0.33264033264033266	0.7565011820330969	person	false	in=Cisco l=and l=eBGP l=on r=AND r=Juniper r=routers
+0.3322949117341641	0.7565011820330969	person	false	in=The in=Weekend in=Grind l=right l=way l=with r=from r=8-10pm r=tonight
+0.3329875518672199	0.7588652482269503	person	true	in=Joel in=Ward l=I l=call l=him r=if r=he r='s
+0.33264248704663213	0.7588652482269503	person	false	in=GA l=@Tink3rbell94 l=going l=to r=, r=don't r=know
+0.3333333333333333	0.7612293144208038	person	true	in=Charlene l=sisters l=pals l=. r=; r=it r='s
+0.3340227507755946	0.7635933806146572	person	true	in=Bush l=on l=extending l=the r=tax r=cuts r=slips
+0.3347107438016529	0.7659574468085106	person	true	in=Justin in=Timberlake r=ft r=. r=Beyonce
+0.33436532507739936	0.7659574468085106	person	false	in=Chicago r=Weekend r=Events r=:
+0.334020618556701	0.7659574468085106	person	false	in=Green in=Day l=what l=the l=new r=album r=will r=called
+0.3336766220391349	0.7659574468085106	person	false	in=Friday in=Night in=Lights l=going l=to l=see r=?
+0.3333333333333333	0.7659574468085106	person	false	in=Yanks l=Let l='s l=go r=! r=Sad r=that
+0.3329907502569373	0.7659574468085106	person	false	in=Knight in=and in=Day l=favorite l=actor l=! r=is r=so r=cool
+0.3326488706365503	0.7659574468085106	person	false	in=Marlboro in=Ducati l=day l=one l=. r='s r=Casey r=Stoner
+0.3323076923076923	0.7659574468085106	person	false	in=Music in=Box l=Sept l=21st l=@ r=: r=contest@ r=dimmak.com
+0.3319672131147541	0.7659574468085106	person	false	in=facebook l=their l=iPhones l=on r=today r=, r=so
+0.33162743091095187	0.7659574468085106	person	false	in=The in=Get in=Up in=Kids r=, r=Sunny r=Day
+0.3312883435582822	0.7659574468085106	person	false	in=iPod l=, l=flipped l=the r=over r=to r=shuffle
+0.33094994892747703	0.7659574468085106	person	false	in=ufc l=Catching l=up l=on r=now
+0.3306122448979592	0.7659574468085106	person	false	in=U.S. in=Capitol in=building l=love l=seeing l=the r=in r=my r=rearview
+0.3302752293577982	0.7659574468085106	person	false	in=Yom in=Kippur l=: l=It l='s r=eve r=, r=so
+0.329938900203666	0.7659574468085106	person	false	in=Nostalgia l=copy l=of l=" r=" r=for r=years
+0.3296032553407935	0.7659574468085106	person	false	in=vodka l=1 l=too l=many r='s r=last r=night
+0.32926829268292684	0.7659574468085106	person	false	in=Land in=of in=Talk l=#plan r=- r=Minneapolis r=(
+0.32893401015228424	0.7659574468085106	person	false	in=Fayette in=County l=bumper l=stickers l=of r=: r=" r=Ever
+0.3286004056795132	0.7659574468085106	person	false	in=target l=to l=walk l=into r=yesterday r=, r=I
+0.3282674772036474	0.7659574468085106	person	false	in=Twitter l=day l=. l=For r=, r=is r=when
+0.32793522267206476	0.7659574468085106	person	false	in=The in=Echo l=@jdsamson l=/MEN l=at r=.
+0.32861476238624876	0.7683215130023641	person	true	in=Kathy l=Peppers l=with r=... r=where r=we
+0.3292929292929293	0.7706855791962175	person	true	in=steve l=coming l=tomorrow l=and r=and r=tanya r=will
+0.32996972754793136	0.7730496453900709	person	true	in=taylor l=her l=name l=is r=and r=i r=love
+0.32963709677419356	0.7730496453900709	person	false	in=Burnaby l=9:00 l=pm l=at r=8Rinks r=. r=Please
+0.3293051359516616	0.7730496453900709	person	false	in=Costa in=do in=Sauipe l=twenty-four l=days l=for r=*-*
+0.3289738430583501	0.7730496453900709	person	false	in=kilkenny l=http://www.youtube.com/watch?v l=we l=beat r=after r=they r=beat
+0.32864321608040203	0.7730496453900709	person	false	in=kilkenny l=http://www.youtube.com/watch?v l=we l=beat r=after r=they r=beat
+0.32831325301204817	0.7730496453900709	person	false	in=Doha l=36 l=seconds l=to r=....
+0.3279839518555667	0.7730496453900709	person	false	in=Twitter l=Jackie l=joins r=50 r=years r=after
+0.3286573146292585	0.7754137115839244	person	true	in=Lindsay l=We l=just l=congratulated r=an r=hour r=ago
+0.3283283283283283	0.7754137115839244	person	false	in=UK l=air l=in l=the r=on r=October r=18
+0.328	0.7754137115839244	person	false	in=Limelight l=artists l=showcased l=at r=on r=St r=.
+0.3276723276723277	0.7754137115839244	person	false	in=N.J. l=City l=Tour l=MONTCLAIR r=...: r=The r=all
+0.3273453093812375	0.7754137115839244	person	false	in=N.J. l=City l=Tour l=MONTCLAIR r=...: r=The r=all
+0.3270189431704885	0.7754137115839244	person	false	in=KSC l=good l=stuff l=at r=.
+0.32669322709163345	0.7754137115839244	person	false	in=FHSU l=water l=and l=an r=foam r=finger r=.
+0.3263681592039801	0.7754137115839244	person	false	in=South in=107 l=to l=compete l=in r='s r=Battle r=of
+0.32703777335984097	0.7777777777777778	person	true	in=Eminem l=watching l=the l=VMAs r=is r=BeAsT r=and
+0.32671300893743793	0.7777777777777778	person	false	in=DOUCHEBAG in=LOS in=ANGELES in=OPENING in=WEEKEND in=EXTRAVAGANZA l=Come l=to l=" r=" r=Friday r=,
+0.3263888888888889	0.7777777777777778	person	false	in=twitter l=i l=was l=on r=violating r=some r=girl
+0.3260654112983152	0.7777777777777778	person	false	in=Lancers l=saying l=" l=Go r=!!" r=teehee r=.
+0.32574257425742575	0.7777777777777778	person	false	in=GOP l=us l=, l=but r=is r=worse r=(
+0.3254203758654797	0.7777777777777778	person	false	in=GOP l=us l=, l=but r=is r=worse r=(
+0.32608695652173914	0.7801418439716312	person	true	in=Anya in=Kamenetz l=Join r=on r=Monday r='s
+0.32576505429417574	0.7801418439716312	person	false	in=Sunny in=Day in=Real in=Estate l=Up l=Kids l=, r=, r=and r=Cap'n
+0.3254437869822485	0.7801418439716312	person	false	in=Shreveport l=@TRAEABN l=Headed l=to r=then r=Lake r=Charles
+0.3251231527093596	0.7801418439716312	person	false	in=Dillion in=High in=School l=no l=one l=at r=graduates r=.
+0.3248031496062992	0.7801418439716312	person	false	in=Leacock in=Museum l=, l=ON l=at r=on r=October r=24
+0.32448377581120946	0.7801418439716312	person	false	in=NRSC l=Probably l=not l=the r='s r=best-ever r=week
+0.3241650294695481	0.7801418439716312	person	false	in=Yom in=Kippur l=@MARLONLWAYANS l=: l=Happy r=to r=all r=my
+0.323846908734053	0.7801418439716312	person	false	in=Wisconsin l=going l=home l=to r=for r=a r=few
+0.3235294117647059	0.7801418439716312	person	false	in=Sandman in=Slim l=enjoy l=my l=#wkndread r=by r=Richard r=Kadrey
+0.32419196865817823	0.7825059101654847	person	true	in=Benitez l=leads l=4-1 l=after r=scores r=again r=,
+0.3238747553816047	0.7825059101654847	person	false	in=Benitez l=leads l=4-1 l=after r=scores r=again r=,
+0.3235581622678397	0.7825059101654847	person	false	in=Nijverdal l=i'll l=go l=to r=and r=meet r=@ElineEpica
+0.3232421875	0.7825059101654847	person	false	in=Chicago in=Blackhawks r=general r=manager r=Stan
+0.3229268292682927	0.7825059101654847	person	false	in=rocky in=horror in=show l='s l=in l=the r=next r=week r=which
+0.3226120857699805	0.7825059101654847	person	false	in=Until in=the in=End in=of in=Time l=. l=Beyonce l=- r=http://t.co/kUe6djJ r=via r=@youtube
+0.3222979552093476	0.7825059101654847	person	false	in=6th in=Biannual in=24 in=Hour in=Prayer in=Focus l=Come l=to l=" r=" r=Saturday r=,
+0.3219844357976654	0.7825059101654847	person	false	in=Vordingborg l=Tonight l=Stars l=in r=- r=few r=tic
+0.3216715257531584	0.7825059101654847	person	false	in=twitter l=Just l=changed l=my r=background r=, r=check
+0.3213592233009709	0.7825059101654847	person	false	in=Bradley in=Soccer l=Season l=opener l=for r=tonight r=!
+0.32201745877788557	0.7848699763593381	person	true	in=Justice in=Breyer r='s r=About r=Face
+0.32170542635658916	0.7848699763593381	person	false	in=Society in=of in=Mining in=and in=Metallurgy in=Engineers l=tonight l=with l=the r=.
+0.3213939980638916	0.7848699763593381	person	false	in=Society in=of in=Mining in=and in=Metallurgy in=Engineers l=tonight l=with l=the r=.
+0.32205029013539654	0.7872340425531915	person	true	in=God l=to l=myself l=and r=. r=Brings r=peace
+0.3217391304347826	0.7872340425531915	person	false	in=Trophy in=Club in=Gwinnett l=Golf l=Mixer l=at r=3254 r=Clu r=...
+0.32142857142857145	0.7872340425531915	person	false	in=Central in=Park l=you l=went l=to r=after r=dark r=you'd
+0.32208293153326906	0.789598108747045	person	true	in=LiLo l=Oh l=no l=, r=! r=Several r=gossip
+0.3217726396917148	0.789598108747045	person	false	in=Twitter l=following l=us l=on r=and r=get r=a
+0.32146294513955725	0.789598108747045	person	false	in=Florida l=away l=from l=the r=heat r=.
+0.3211538461538462	0.789598108747045	person	false	in=Florida l=away l=from l=the r=heat r=.
+0.3208453410182517	0.789598108747045	person	false	in=Lounge22 l=about l=the l=new r=Powered r=by r=CORT
+0.32053742802303264	0.789598108747045	person	false	in=Private in=Practice l=, l=but l=is r=coming r=back r=this
+0.3202301054650048	0.789598108747045	person	false	in=D.C. l=must l=go l=to r=next r=month r=.
+0.31992337164750956	0.789598108747045	person	false	in=twitter l=favorite l=days l=on r=ever r=. r=@radhallman
+0.3196172248803828	0.789598108747045	person	false	in=London l=two l=nighter l=in r=NOVEMBER r=18 r=...
+0.3193116634799235	0.789598108747045	person	false	in=Trance in=Around in=The in=World in=338 in=( in=Wippenberg in=Guestmix in=) l=: l=Above&amp;Beyond l=- r=( r=17 r=September
+0.31900668576886343	0.789598108747045	person	false	in=Murkowski l=been l=wrong l=about r=, r=look r=like
+0.3187022900763359	0.789598108747045	person	false	in=Toronto l=year l=Contract)Location l=: r=, r=Ontario r=,
+0.31839847473784555	0.789598108747045	person	false	in=MIAMI l=SUENALO l=! l=FROM r=W/ r=SHAKEMODE r=AND
+0.3180952380952381	0.789598108747045	person	false	in=Twitter l=@RoundhouseLDN l=has l=a r=account r=. r=So
+0.31779257849666986	0.789598108747045	person	false	in=twitter l=via l=fb l=and r=. r=Mwahaha r=!
+0.31749049429657794	0.789598108747045	person	false	in=The in=Pub l=Friday l=night l=at r=! r=DUDE r=Jones
+0.31718898385565053	0.789598108747045	person	false	in=Soho l=Bond l=Street l=in r=. r=If r=your
+0.31688804554079697	0.789598108747045	person	false	in=#Astros r=lineup r=for r=tonight
+0.3175355450236967	0.7919621749408984	person	true	in=Giles in=Deacon l=to l=walk l=in r='s r=Monday r=LFW
+0.3172348484848485	0.7919621749408984	person	false	in=The in=Inbetweeners l=tried l=to l=watch r=for r=the r=first
+0.3169347209082308	0.7919621749408984	person	false	in=Words in=and in=Wine l=Art l=" l=at r=September r=... r=http://fb.me/AyezVfH3'
+0.3166351606805293	0.7919621749408984	person	false	in=birmingham l=pope l=visit l=to r=stuff r=out r=.....
+0.31633616619452315	0.7919621749408984	person	false	in=Costa in=Lounge l=come l=check l=out r=TONIGHT r=! r=Say
+0.3160377358490566	0.7919621749408984	person	false	in=Costa in=Lounge l=come l=check l=out r=TONIGHT r=! r=Say
+0.3157398680490104	0.7919621749408984	person	false	in=Belgium l=Festival l=tomorrow l=in r=! r=http://fb.me/v5CUZkEY
+0.3163841807909605	0.7943262411347518	person	true	in=Pope l=headline l=tomorrow l=: r='s r=battle r=to
+0.31702728127939794	0.7966903073286052	person	true	in=4Dbling r='s r=place r=til
+0.3167293233082707	0.7966903073286052	person	false	in=WoW l=group l=wrong l=in r=. r=Sometimes r=you
+0.3164319248826291	0.7966903073286052	person	false	in=DADT l=his l=help l=with r=. r=Thanks r=for
+0.31613508442776733	0.7966903073286052	person	false	in=Dodgers l=Torre l=as l=LA r=manager r=after r=this
+0.3158388003748828	0.7966903073286052	person	false	in=iPhone l=Must l=say r=is r=more r=accurate
+0.31647940074906367	0.7990543735224587	person	true	in=Tim l=3 l=of l=chef r='s r=boozy r=ice
+0.3161833489242282	0.7990543735224587	person	false	in=Gainesville l=are l=staying l=in r=, r=come r=check
+0.31588785046728973	0.7990543735224587	person	false	in=Gainesville l=are l=staying l=in r=, r=come r=check
+0.3165266106442577	0.8014184397163121	person	true	in=Leo l=@OGOchoCinco l=depends l=what r='s r=revamped r=D
+0.3162313432835821	0.8014184397163121	person	false	in=Cowboy in=Mouth l=she l='s l=missing r=tonight r=:(
+0.3168685927306617	0.8037825059101655	person	true	in=Donnie in=Hathaway l=time l=I l=watch r='s r=Unsung r=I
+0.31750465549348234	0.806146572104019	person	true	in=o.d.b. l=simon l=, l=and r=i r=may r=have
+0.3172093023255814	0.806146572104019	person	false	in=the in=Apollo l=First l=time l=to r=.
+0.31691449814126393	0.806146572104019	person	false	in=Twitter l=, l=you're l=on r=. r=Sorry r=!
+0.3166202414113278	0.806146572104019	person	false	in=Twitter l=Not l=much r=action r=here r=tonight
+0.3172541743970315	0.8085106382978723	person	true	in=Jarred in=Gidley l=to l=the l=homie r=!
+0.3169601482854495	0.8085106382978723	person	false	in=Ohio l=after l=performance l=in r=: r=George r=N
+0.31666666666666665	0.8085106382978723	person	false	in=*Boston* l=to l=hear l=a r=accent r=again r=.
+0.31637372802960223	0.8085106382978723	person	false	in=ACF in=Friday in=Large in=Group l=! l=Today l='s r=is r=at r=PITT
+0.31608133086876156	0.8085106382978723	person	false	in=New in=York in=Fashion in=Week l=Up l=Another l=Successful r=: r=New r=York
+0.3157894736842105	0.8085106382978723	person	false	in=Big in=Time in=Rush l=Our l=Someday l=- r=&lt; r=3 r=:)
+0.3154981549815498	0.8085106382978723	person	false	in=fb l=long l=distance l=via r=and r=twitter r=.
+0.3161290322580645	0.8108747044917257	person	true	in=Jesus in=Christ l=the l=person l=of
+0.31583793738489874	0.8108747044917257	person	false	in=Happy in=Valley l=the l=weekend l=in r=!
+0.31646734130634774	0.8132387706855791	person	true	in=Dee l=!!!!!!!!!!!... l=Where l=is r=when r=I r=need
+0.3161764705882353	0.8132387706855791	person	false	in=The in=Standard l=DJ l=set l=at r=in r=LA r=tonight
+0.31588613406795224	0.8132387706855791	person	false	in=The in=Sea in=Inside l=" l=( l=" r=" r=) r=.
+0.3165137614678899	0.8156028368794326	person	true	in=Cheryl l=Just l=casually l=stalking r=AND r=Dermot r=tomorrow
+0.3162236480293309	0.8156028368794326	person	false	in=ASU in=Step in=Gallery l=, l=artists l=! r=wants r=your r="
+0.3159340659340659	0.8156028368794326	person	false	in=St in=. in=Mary's. l=at l=Limelight l=on
+0.31564501372369624	0.8156028368794326	person	false	in=Buffalo in=Municipal in=Airport l=64 l=F l=at r=, r=MN r=Winds
+0.3162705667276051	0.817966903073286	person	true	in=Jan in=Bloom l=as l=well l=: r=... r=her r=two
+0.31598173515981737	0.817966903073286	person	false	in=you in=tube l=on l=to l=@mckenziecomer r=channel r=today r=5
+0.3156934306569343	0.817966903073286	person	false	in=Newport l=Avenue l=in l=the r=... r=http://tumblr.com/xmyiud0zl
+0.31631722880583407	0.8203309692671394	person	true	in=Lady in=Gaga l=going l=to l=see r=:)
+0.31602914389799636	0.8203309692671394	person	false	in=FB l=status l=updates l=on r=, r=they r=are
+0.31574158325750684	0.8203309692671394	person	false	in=DC l=: l=Here l=in r=! r=About r=to
+0.31636363636363635	0.8226950354609929	person	true	in=Justin in=Bieber l=HELP l=us l=meet r=on r=November r=6
+0.3169845594913715	0.8250591016548463	person	true	in=Lois l=to l=them l=, r=was r=always r=&quot;
+0.31669691470054445	0.8250591016548463	person	false	in=Tournament in=of in=Champions l=head l=to l=the r=!!!!!!! r=Super r=excited
+0.31640979147778786	0.8250591016548463	person	false	in=Swayzes in=Venue l=are l=playing l=at r=. r=Please r=come
+0.3161231884057971	0.8250591016548463	person	false	in=EuroVPS r=celebrates r=its r=6
+0.3158371040723982	0.8250591016548463	person	false	in=Club in=Penguin l=FAN l=Art l=in r=:) r=: r=Here
+0.3155515370705244	0.8250591016548463	person	false	in=maryland l=at l=tomorrow l=in r=??
+0.3152664859981933	0.8250591016548463	person	false	in=America l=Juniper l=routers l=for r='s r=largest r=wireless
+0.31498194945848373	0.8250591016548463	person	false	in=Crooked l=@TheWon_A r=is r=in r=town
+0.3146979260595131	0.8250591016548463	person	false	in=ATL l=thought l=about l=it r=stood r=out r=in
+0.3144144144144144	0.8250591016548463	person	false	in=Bowl in=Long in=Island l=I'm l=at r=( r=138 r=West
+0.31503150315031503	0.8274231678486997	person	true	in=Charice l=Glee l=premiere l=&amp; r='s r=will r=soar
+0.3147482014388489	0.8274231678486997	person	false	in=NC in=St l=, l=Charlotte l=and r=. r=have r=all
+0.31446540880503143	0.8274231678486997	person	false	in=iTunes l=be l=#1 l=on r=.
+0.31508078994614	0.8297872340425532	person	true	in=Penny l=3 l=year l=old r=of r=Mesa r=,
+0.3147982062780269	0.8297872340425532	person	false	in=server in=2008 l=guest l=from l=a r=to r=server r=2008
+0.31451612903225806	0.8297872340425532	person	false	in=sega in=genesis l=super l=nintendo r=, r=when r=i
+0.315129811996419	0.8321513002364066	person	true	in=Benjamin in=Button l=that l=Lil l=Mama/ r=disease
+0.3148479427549195	0.8321513002364066	person	false	in=youtube l=dear r=why r=does r=it
+0.3145665773011618	0.8321513002364066	person	false	in=YouTube l=I l=favorited l=a r=video r=-- r=Yoav
+0.3151785714285714	0.83451536643026	person	true	in=ellwood r='s r=sushi r=,
+0.31489741302408564	0.83451536643026	person	false	in=CANWEST in=Center l=auditions l=Sept l=25 r=for r=Theater r=and
+0.3146167557932264	0.83451536643026	person	false	in=TIFF l=When r=is r=in r=Tdot
+0.31522707034728403	0.8368794326241135	person	true	in=Portia l=Can l=you l=ask r=when r=she r='s
+0.31494661921708184	0.8368794326241135	person	false	in=Pepsi l=guy l=driving l=a r=truck r=, r=drinking
+0.31466666666666665	0.8368794326241135	person	false	in=Pepsi l=guy l=driving l=a r=truck r=, r=drinking
+0.31438721136767317	0.8368794326241135	person	false	in=chipotle l=to l=start l=buying r=for r=ONE r=lucky
+0.31410825199645076	0.8368794326241135	person	false	in=Badass in=Babes in=Savin in=' in=The in=Day l=BLOG l=- l=' r=' r=-- r=CHIX
+0.3147163120567376	0.8392434988179669	person	true	in=Conn l=If r=is r=less r=than
+0.3153232949512843	0.8416075650118203	person	true	in=Charlie in=Chaplin l=time l=and l=killed r=.
+0.31504424778761064	0.8416075650118203	person	false	in=gucci l=dude l=got r=symbol r=tatted r=all
+0.3156498673740053	0.8439716312056738	person	true	in=Jenny l=I'd l=forgotten l=when r=was r=actually r=really
+0.31537102473498235	0.8439716312056738	person	false	in=San in=Jose in=Mercury in=News l=2-year l=extension l=- r=http://dlvr.it/5RcvP r=#ANADucks
+0.31509267431597526	0.8439716312056738	person	false	in=Town in=Square in=Place l=Hudson l=TMA l=at r=on r=Pavonia r=Avenue
+0.3148148148148148	0.8439716312056738	person	false	in=North in=Phoenix in=ATA l=Day l=tomorrow l=at r=. r=Kids r=Self-Defense
+0.3145374449339207	0.8439716312056738	person	false	in=YouTube l=I l=liked l=a r=video r=-- r=Family
+0.3142605633802817	0.8439716312056738	person	false	in=Music in=Jump l=may l=also l=like r=. r=http://appj.mp/AirMusicJump
+0.31398416886543534	0.8439716312056738	person	false	in=Harrison l=your l=time l=in r=.
+0.31370826010544817	0.8439716312056738	person	false	in=The in=Heartbeat l=&amp; l=@fordinho l=at r=tonight r=, r=or
+0.31343283582089554	0.8439716312056738	person	false	in=Danger in=Days in=: in=The in=True in=Lives in=Of in=The in=Fabulous in=Killjoys l=@amandacarolinne l=: l=" r="'
+0.3131578947368421	0.8439716312056738	person	false	in=TMZ l=a l=story l=on r=tonight r=. r=Gulp
+0.3128834355828221	0.8439716312056738	person	false	in=Gigli l=forgave l=you l=for r=. r=Really r=.
+0.3126094570928196	0.8439716312056738	person	false	in=Gigli l=forgave l=you l=for r=. r=Really r=.
+0.3123359580052493	0.8439716312056738	person	false	in=San in=Francisco l=tonight l=only l=, r=6pm r=contact r=Jennifer
+0.3120629370629371	0.8439716312056738	person	false	in=Secrets l=could l=get l=in r=free r=on r=Thursday
+0.31179039301310046	0.8439716312056738	person	false	in=Twitter l=about l=the l=new r=. r=com r=today
+0.31151832460732987	0.8439716312056738	person	false	in=M&amp;M l=said l=, l=&quot; r='s r=melt r=in
+0.3112467306015693	0.8439716312056738	person	false	in=Vikings l=? l=Twins l=? r=? r=anyone r=going
+0.31097560975609756	0.8439716312056738	person	false	in=NFL) l=call l=it l=the r=. r=First r=draft
+0.31070496083550914	0.8439716312056738	person	false	in=CLUB in=BLU r=tonite r=...... r=90
+0.31043478260869567	0.8439716312056738	person	false	in=Ball in=Metal in=Container l=NJ l=tomorrow l=(@ r=)
+0.31016507384882713	0.8439716312056738	person	false	in=YouTube l=I l=favorited l=a r=video r=-- r=Water
+0.3098958333333333	0.8439716312056738	person	false	in=Chicago l=Lincoln l=Park l=in r=, r=IL r=http://bit.ly/bKMFgi
+0.3096270598438855	0.8439716312056738	person	false	in=AUS l=one l=Tuesday l=in r=and r=the r=one
+0.31022530329289427	0.8463356973995272	person	true	in=Ash l=that l=last l=week r=. r=I r=think
+0.30995670995670993	0.8463356973995272	person	false	in=national in=flat in=picking in=championship l=who l=won l=the r=flipping r=amazing r=r/l
+0.3096885813148789	0.8463356973995272	person	false	in=the in=tall in=ship in=Silva l=We're l=on r=tonight r=. r=Still
+0.3094209161624892	0.8463356973995272	person	false	in=Potbelly in=Lincoln in=Park l=Savoirfaire l=Williams l=at r=in r=Chicago r=,
+0.30915371329879104	0.8463356973995272	person	false	in=Blount l=to l=Davidson l=vs r=with r=Bennett- r=love
+0.3097497842968076	0.8486997635933806	person	true	in=Chelsea in=Handler l=smexy l=!!; l=)And r=is r=hilarious r=!
+0.30948275862068964	0.8486997635933806	person	false	in=England l=it l='s l=in r=. r=Will r=tweet
+0.30921619293712316	0.8486997635933806	person	false	in=30stm l=been l=to l=13 r=concerts r=now r=and
+0.3089500860585198	0.8486997635933806	person	false	in=St in=Johns l=Greek l=Festival l=at r=before r=ASPEN
+0.30868443680137575	0.8486997635933806	person	false	in=St in=Johns l=Greek l=Festival l=at r=before r=ASPEN
+0.3084192439862543	0.8486997635933806	person	false	in=Swagger/Kofi in=Match l=TV l=after l=the r=Lol
+0.30815450643776826	0.8486997635933806	person	false	in=India l=so l=much l=on r=, r=looks r=like
+0.3078902229845626	0.8486997635933806	person	false	in=JPN l=day l=:) l=from r=.
+0.30762639245929735	0.8486997635933806	person	false	in=Southgate in=House l=12th l=at l=the r=! r=I've r=been
+0.3082191780821918	0.851063829787234	person	true	in=trey l=been l=listenin l=to r=alllll r=week r=...
+0.30795551753635586	0.851063829787234	person	false	in=Conflicts in=of in=Law in=: in=Cases in=and in=Materials r=: r=R r=.
+0.3076923076923077	0.851063829787234	person	false	in=Yom in=Kippur l=Before l=and l=After r=? r=We r=Asked
+0.3074295473953886	0.851063829787234	person	false	in=buckboardday in=parade l=up l=early l=for r=then r=sanchez r=family
+0.30716723549488056	0.851063829787234	person	false	in=Romania l=shoot l=up l=after r=mo
+0.3069053708439898	0.851063829787234	person	false	in=kings in=and in=queens l=on l=stage l=during/before r=:( r=((
+0.30664395229982966	0.851063829787234	person	false	in=kings in=and in=queens l=on l=stage l=during/before r=:( r=((
+0.30638297872340425	0.851063829787234	person	false	in=Twitter l=Personal r=is r=now r=ago
+0.30612244897959184	0.851063829787234	person	false	in=New in=York in=Fashion in=Week l=Gwen l=Stefani l=: r=is r=coming r=to
+0.3058623619371283	0.851063829787234	person	false	in=Cathedral in=of in=Learning in=G24 l=It l='s l=at r=at r=7pm r=!
+0.30560271646859083	0.851063829787234	person	false	in=Conan l=ratins l=up l=before r=Get r=back-Big r=Jack
+0.3053435114503817	0.851063829787234	person	false	in=msn l=never l=go l=on r=! r=I'll r=dm
+0.3050847457627119	0.851063829787234	person	false	in=National in=POW/MIA in=Recognition in=Day l=recognizes l=today l=as r=. r=Visit r=http://www.dtic.mil/dpmo/pow_day/
+0.3048264182895851	0.851063829787234	person	false	in=Wrawby l=here l=though l=, r=is r=where r=I
+0.30456852791878175	0.851063829787234	person	false	in=Burning in=Bush in=Grille l=will l=be l=at r=, r=13206 r=W
+0.305156382079459	0.8534278959810875	person	true	in=bieber l=sure l=almost l=all r=fans r=have r=it
+0.30574324324324326	0.8557919621749409	person	true	in=Lindsay in=Lohan l=a l=shot l=for r=tonight r=. r=Maybe
+0.30548523206751055	0.8557919621749409	person	false	in=New in=Jersey l=A l=week l=in r=, r=of r=all
+0.30522765598650925	0.8557919621749409	person	false	in=imdb l=should l=be l=on r=;)
+0.3049705139005897	0.8557919621749409	person	false	in=SF l=time l=now l=btwn r=and r=San r=Mateo
+0.3055555555555556	0.8581560283687943	person	true	in=JFK l=50 l=years l=after r=campaign r=[ r=AP
+0.30613961312026916	0.8605200945626478	person	true	in=Rihanna l=He l=said r=all r=low r=toned
+0.3058823529411765	0.8605200945626478	person	false	in=windows l=making l=me l=purchase r=, r=antivirus r=and
+0.3056255247691016	0.8605200945626478	person	false	in=Pi l=or l=after l=at r=! r=CWE r=and
+0.3053691275167785	0.8605200945626478	person	false	in=iPad l=@borkware l=Somehow l=my r=in r=Airplane r=mode
+0.30511316010058676	0.8605200945626478	person	false	in=Atlas in=Shrugs l=After l=All l=via r=http://tinyurl.com/39wg73o
+0.304857621440536	0.8605200945626478	person	false	in=Miley in=and in=Mandy in=show l=Miley l=will l=upgrade r=? r=I r=miss
+0.30460251046025105	0.8605200945626478	person	false	in=garden in=grove l=after l=off l=to
+0.30434782608695654	0.8605200945626478	person	false	in=Kahlua r=&lt; r=Coffee r=over
+0.30409356725146197	0.8605200945626478	person	false	in=myspace l=I l=remember l=when r=was r=a r=big
+0.3038397328881469	0.8605200945626478	person	false	in=wipro l=a l=big l=day r='s r=interview r=checking
+0.3035863219349458	0.8605200945626478	person	false	in=Chicago l=Fight l=Club l=in r=. r=Pringles r=,
+0.30333333333333334	0.8605200945626478	person	false	in=SHS l=go l=to l=a r=football r=game r=cuz
+0.30308076602830974	0.8605200945626478	person	false	in=Cebu l=on l=vacation l=in r=, r=you r=do
+0.30282861896838603	0.8605200945626478	person	false	in=CA l=Sacramento l=. l=The r=weather r=feels r=great
+0.3025768911055694	0.8605200945626478	person	false	in=Manning in=Bowl in=I l=remember l=much l=about r=. r=Both r=were
+0.303156146179402	0.8628841607565012	person	true	in=Lilia l=lol l=Only l=when r=wears r=them r=;)
+0.3029045643153527	0.8628841607565012	person	false	in=ray in=rice l=tomorrow l=.... l=go r=!!!!!!!
+0.30265339966832505	0.8628841607565012	person	false	in=Long in=Beach l=Mai l=Tai l=in r=. r=I'm r=considering
+0.3024026512013256	0.8628841607565012	person	false	in=YouTube l=I l=liked l=a r=video r=-- r=Testing
+0.3021523178807947	0.8628841607565012	person	false	in=Brazil l=@TomCruise l=I'm l=from r=.... r=and r=I
+0.30190239867659224	0.8628841607565012	person	false	in=St in=. in=Patty in='s in=Day l=Half l=Way l=to r=Party r=Tonight r=!
+0.30247933884297523	0.8652482269503546	person	true	in=Obama l=of l=$4T l=when r=spent r=it r=all
+0.3022295623451693	0.8652482269503546	person	false	in=facebook l=did l=get l=a r=so r=who r=cares
+0.30198019801980197	0.8652482269503546	person	false	in=london in=fashion in=week l=dress l=up l=for r=and r=party r=in
+0.3017312448474856	0.8652482269503546	person	false	in=london in=fashion in=week l=dress l=up l=for r=and r=party r=in
+0.3014827018121911	0.8652482269503546	person	false	in=Canada l=Sports l=Day l=in r=#yyc r=#sportsday r=http://ow.ly/2G4sf
+0.3012345679012346	0.8652482269503546	person	false	in=K in=! in=Tour l=bought l=my l=Newcastle r=ticket r=! r=XD
+0.30098684210526316	0.8652482269503546	person	false	in=Glee l=until l=after l=the r=premiere r=&amp; r=Charice
+0.30073952341824156	0.8652482269503546	person	false	in=Herbivore l=Heading l=to r=tonight r=for r=dinner
+0.30049261083743845	0.8652482269503546	person	false	in=HCA in=8K l=us l=for l=the r=! r=We r=start
+0.3002461033634126	0.8652482269503546	person	false	in=gucci l=long l=walks l=in r=shoes r=...
+0.3	0.8652482269503546	person	false	in=Danger in=Days in=: in=The in=True in=Lives in=Of in=The in=Fabulous in=Killjoys l=RT l=@Vivi_Venom l=" r=." r=22nd r=november'
+0.29975429975429974	0.8652482269503546	person	false	in=Chicago l=time l=! l=Loyola r=: r=Alexei r=::
+0.2995090016366612	0.8652482269503546	person	false	in=Fenway l=1st l=trip l=to r=tonight r=http://twitpic.com/2pdwoo
+0.2992641046606705	0.8652482269503546	person	false	in=Hawaii l=!! l=How l='s r=?? r=when r=are
+0.29901960784313725	0.8652482269503546	person	false	in=Electric in=Lady in=Studios l=at l=NYC l='s r=, r=past r=and
+0.2987755102040816	0.8652482269503546	person	false	in=tucson l=going l=to r=tonight r=:/
+0.29853181076672103	0.8652482269503546	person	false	in=when in=im in=gone l=#nowplaying r=eminem r=:)
+0.2982885085574572	0.8652482269503546	person	false	in=Facebook l=" l=us l=on r=, r=get r=entered
+0.2988599348534202	0.8676122931442081	person	true	in=diggy l=@diggy_simmons l=#diggyfollows50 r=should r=follow r=me
+0.2994304312449146	0.8699763593380615	person	true	in=Wale l=a l=problem l=with r=now r=? r=why
+0.2991869918699187	0.8699763593380615	person	false	in=LA l=our l=SF l=and r=offices r=. r=Glad
+0.29894394800974816	0.8699763593380615	person	false	in=old in=navy l=I l=went l=to r=today r=and r=bought
+0.299512987012987	0.8723404255319149	person	true	in=tom l=i l=wonder l=wat r=. r=is r=......
+0.29927007299270075	0.8723404255319149	person	false	in=Ultimate in=Magic l=up l=for l=the r=playtest r=that r=starts
+0.29902755267423015	0.8723404255319149	person	false	in=Jasmin l=Robinhoods l=bay l=In r=. r=Good r=weekend
+0.29959514170040485	0.8747044917257684	person	true	in=M in=. in=Night l=ragging l=on l=poor r=for r=weeks r=now
+0.2993527508090615	0.8747044917257684	person	false	in=Robinhoods in=bay l=Off l=camping l=to r=In r=Jasmin r=.
+0.2991107518189167	0.8747044917257684	person	false	in=Eagles l=Come l=support l=your r=! r=Praying r=for
+0.29967689822294025	0.8770685579196218	person	true	in=Oscar r='s r=new r=favorite
+0.2994350282485876	0.8770685579196218	person	false	in=World in=War in=3 l=going l=to l=be r=!!!!!!
+0.2991935483870968	0.8770685579196218	person	false	in=Vegas l=first l=day l=in r=and r=I r=am
+0.2989524576954069	0.8770685579196218	person	false	in=vancouver l=have l=fun l=in r=tonight r=!
+0.2995169082125604	0.8794326241134752	person	true	in=Justin l=@JBieber_isHOT l=: l=When r=gets r=a r=girlfriend
+0.3000804505229284	0.8817966903073287	person	true	in=Justin l=@CantBeliebIt l=: l=When r=gets r=a r=girlfriend
+0.30064308681672025	0.8841607565011821	person	true	in=Kerri in=russel l=my l=day l=Photoshopping r=into r=a r=mutant
+0.30120481927710846	0.8865248226950354	person	true	in=Jessica in=Simpson l=is l=PREGNANT l=!?!: r=is r=pregnant r=??
+0.30096308186195825	0.8865248226950354	person	false	in=green in=tea l=Peace r=time r=!! r=Happyzone
+0.30072173215717724	0.8865248226950354	person	false	in=GA l=bad l=time l=for r=fans r=at r=the
+0.3004807692307692	0.8865248226950354	person	false	in=the in=funny in=bone l='s l=go l=to r=to r=see r=@deraydavis
+0.3010408326661329	0.8888888888888888	person	true	in=Todo in=Cabio l=@sfgiantsfan55 l=omg r=has r=been r=my
+0.3008	0.8888888888888888	person	false	in=The in=Bay l=to l=rain l=in r=on r=Sunday r=...
+0.30135891286970423	0.8912529550827423	person	true	in=PEI l=Oh r=, r=i r=always
+0.3011182108626198	0.8912529550827423	person	false	in=MAiZE l=to l=go l=to r=tomorrow r=night r=with
+0.300877893056664	0.8912529550827423	person	false	in=Dortmunder in=Gold l=On l=my l=third r=.
+0.30063795853269537	0.8912529550827423	person	false	in=JV in=soccer r=leads r=4-1 r=after
+0.300398406374502	0.8912529550827423	person	false	in=JV in=soccer r=leads r=4-1 r=after
+0.30095541401273884	0.8936170212765957	person	true	in=Jesus in=Christ l=the l=love l=of r=will r=overtake r=it
+0.30071599045346065	0.8936170212765957	person	false	in=Ohio in=State l=Frank l=Solich l=says r=knows r=they r=have
+0.3004769475357711	0.8936170212765957	person	false	in=SF l=week l=in l=our r=and r=LA r=offices
+0.30103256552819696	0.8959810874704491	person	true	in=Larry in=Bird l=work l=calls l=me r=when r=I r=shoot
+0.3007936507936508	0.8959810874704491	person	false	in=New in=York l='s l=go l=to r=tomorrow r=with r=Blakehurst
+0.30055511498810467	0.8959810874704491	person	false	in=BlackBerry l=upgrade l=to l=a r=in r=November r=!!
+0.30031695721077656	0.8959810874704491	person	false	in=server in=2008 in=R2 l=server l=2008 l=to r=host r=? r=Having
+0.3000791765637371	0.8959810874704491	person	false	in=First in=Day in=of in=Autumn in=Networking in=Mixer r=at r=Dick r='s
+0.2998417721518987	0.8959810874704491	person	false	in=lhs l=i l=went l=to
+0.29960474308300394	0.8959810874704491	person	false	in=LA l=Joe l=Torre l=as r=Dodgers r=manager r=after
+0.29936808846761453	0.8959810874704491	person	false	in=boilers l=tonight l=:) l=yeeah r=.. r=oh r=wait
+0.2999210734017364	0.8983451536643026	person	true	in=snoop l=@SnoopDogg l=hey r=my r=wife r=Cath
+0.2996845425867508	0.8983451536643026	person	false	in=True in=Blood l=when l=season l=3 r=is r=back r=on
+0.2994483845547675	0.8983451536643026	person	false	in=Pizza in=Hut l=May l=to l=order r=. r=Definitely r=not
+0.2992125984251969	0.8983451536643026	person	false	in=#Vh1 l=to l=be l=on r=so r=by r=the
+0.2989771833202203	0.8983451536643026	person	false	in=bahamas l=leaving l=for l=the r=tomorrow r=though r=!!
+0.29952830188679247	0.900709219858156	person	true	in=Mandy l=@mandyjiroux r=when r=you r=and
+0.2992930086410055	0.900709219858156	person	false	in=Grand in=Masquerade l=before l=heading l=to r=next r=week r=.
+0.29984301412872844	0.9030732860520094	person	true	in=Justin in=Bieber l=: l=the l=day r=was r=born r=was
+0.3003921568627451	0.9054373522458629	person	true	in=Abby l=the l=big l=sis r=tonite
+0.3001567398119122	0.9054373522458629	person	false	in=Sellotape l=a l=lot l=of r=today r=:) r=printing
+0.2999216914643696	0.9054373522458629	person	false	in=inglewood l=the l=time l=in r=the r=other r=half
+0.2996870109546166	0.9054373522458629	person	false	in=Nashville l=has l=arrived l=in r=-- r=Give r=it
+0.29945269741985925	0.9054373522458629	person	false	in=Nashville l=has l=arrived l=in r=-- r=Give r=it
+0.29921875	0.9054373522458629	person	false	in=Chapel in=Hill l=police l=escort l=in r=... r=game r=tonight
+0.29898516783762685	0.9054373522458629	person	false	in=Japan l=experiencing l=loos l=in r=, r=I'm r=spoiled
+0.29875195007800315	0.9054373522458629	person	false	in=Loveless in=Cafe l=to l=eat l=at r=tonight r=! r=:)
+0.2985190958690569	0.9054373522458629	person	false	in=Da in=Bears l=fans l=remember l=when r=demolished r=you r=guys
+0.2982866043613707	0.9054373522458629	person	false	in=Nokia in=5800 l=, l=winning l=a r=?
+0.2980544747081712	0.9054373522458629	person	false	in=iPhone l=I l=get l=my r=that r='s r=when
+0.2978227060653188	0.9054373522458629	person	false	in=CityTV l=seeing l=u l=on r=!
+0.2975912975912976	0.9054373522458629	person	false	in=Lake in=Charles l=slab l=show l=in r=..
+0.2981366459627329	0.9078014184397163	person	true	in=betos l=family l=reunion l=then r=gbye r=party r=so
+0.2986811481768813	0.9101654846335697	person	true	in=Gelato in=Gilberto l=the l=world l=is r=? r=Tonight r=the
+0.29844961240310075	0.9101654846335697	person	false	in=android l=to l=get l=an r=device r=, r=but
+0.29821843532145625	0.9101654846335697	person	false	in=Tipitina l=Find l=us l=at r='s r=tonight r=and
+0.2979876160990712	0.9101654846335697	person	false	in=ngmoco l=forced l=ads l=in r=games r=are r=outstandingly
+0.2977571539056458	0.9101654846335697	person	false	in=Glover in=Park l=We'll l=be l=@ r=farmers r=market r=,
+0.2975270479134467	0.9101654846335697	person	false	in=UK l=moving l=to l=the r=in r=approx r=12
+0.2972972972972973	0.9101654846335697	person	false	in=USA l=my l=ride l=across r=, r=tonight r=only
+0.2978395061728395	0.9125295508274232	person	true	in=paris in=hilton l=my l=days l=like r=doing r=blowjobs r=on
+0.29760986892829605	0.9125295508274232	person	false	in=Chicago l=Deal l=Pro l=in r=in r=November r=!
+0.29738058551617874	0.9125295508274232	person	false	in=Packer l=it l=during l=a r=game r=.
+0.29715165511932257	0.9125295508274232	person	false	in=Newcastle l=Just l=bought l=my r=K r=! r=Tour
+0.2969230769230769	0.9125295508274232	person	false	in=Oh in=Canada in=Team l=was l=featured l=on r='s r=blog r=:
+0.29669485011529595	0.9125295508274232	person	false	in=NYC l=of l=early l=80s r=was r=if r=you
+0.2964669738863287	0.9125295508274232	person	false	in=Taorminaa l=i'll l=be l=in r=:D r=DD r=^^
+0.29623944742901	0.9125295508274232	person	false	in=Holyroodhouse l=his l=cigarettes l=at r=. r=One r='s
+0.2960122699386503	0.9125295508274232	person	false	in=Scotland l=out l=here l=in r=yet r=? r=i've
+0.296551724137931	0.9148936170212766	person	true	in=Hien l=meet l=Levin l=, r=&lt; r=3 r=and
+0.29632465543644715	0.9148936170212766	person	false	in=club in=penguin l=was l=on r=with r=@twilightmarisa r=till
+0.29609793420045905	0.9148936170212766	person	false	in=flipboard l=when l=I l=opened r=just r=now r=.
+0.2958715596330275	0.9148936170212766	person	false	in=#BattlestarGalactica l=only l=is l=it r='s r=32nd r=Anniversary
+0.29564553093964857	0.9148936170212766	person	false	in=Seahawk l=ready l=for l=some r=football r=? r=Can't
+0.2954198473282443	0.9148936170212766	person	false	in=facebook l=put l=them l=on r=now r=!!
+0.2951945080091533	0.9148936170212766	person	false	in=London l='s l=getting l=across r=that r='s r=the
+0.29496951219512196	0.9148936170212766	person	false	in=Hawaii l=show l=tomorrow l=in r=?
+0.2947448591012947	0.9148936170212766	person	false	in=Hawaii l=show l=tomorrow l=in r=?
+0.2945205479452055	0.9148936170212766	person	false	in=twitter l=mad l=I'm l=on r=!
+0.29429657794676806	0.9148936170212766	person	false	in=America l=it l='s l=time r=was r=run r=like
+0.29407294832826747	0.9148936170212766	person	false	in=KC in=and in=The in=Sunshine in=Band l=Down l=Tonight l=with r=. r=#Dallas r=#concerts
+0.2938496583143508	0.9148936170212766	person	false	in=iOS l=apps l=from l=my r=devices r=!
+0.2936267071320182	0.9148936170212766	person	false	in=Mumpreneur in=Awards l=off l=to l=the r=tomorrow r=and r=leaving
+0.2934040940106141	0.9148936170212766	person	false	in=NYC l=next l=Friday l=in r=...
+0.29318181818181815	0.9148936170212766	person	false	in=Seattle l=Travis l=Toomey l=to r=for r=4th r=Rd
+0.29295987887963665	0.9148936170212766	person	false	in=london l=my l=girls l=in r=or r=travelling r=up
+0.2927382753403933	0.9148936170212766	person	false	in=Vista in=del in=Lago l=pissed l=off l=the r=Eagles r=, r=well
+0.2925170068027211	0.9148936170212766	person	false	in=SUPAHFEST l=facial l=, l=then r=tonight r=i r=need
+0.29229607250755285	0.9148936170212766	person	false	in=Around in=The in=World in=Twice l=valley l=want l=" r=" r=written r=by
+0.29283018867924526	0.91725768321513	person	true	in=Justin in=Bieber l=trampled l=at l=a r=concert r=, r=yoiu
+0.2933634992458522	0.9196217494089834	person	true	in=Justin in=Bieber l=trampled l=at l=a r=concert r=, r=yoiu
+0.293896006028636	0.9219858156028369	person	true	in=Justin in=Bieber l=trampled l=at l=a r=concert r=, r=yoiu
+0.2944277108433735	0.9243498817966903	person	true	in=Justin in=Bieber l=trampled l=at l=a r=concert r=, r=yoiu
+0.2949586155003762	0.9267139479905437	person	true	in=Justin in=Bieber l=trampled l=at l=a r=concert r=, r=yoiu
+0.2954887218045113	0.9290780141843972	person	true	in=Justin in=Bieber l=trampled l=at l=a r=concert r=, r=yoiu
+0.29526671675432004	0.9290780141843972	person	false	in=alderwood l=! l=going l=to r=again r=:) r=yay
+0.2957957957957958	0.9314420803782506	person	true	in=Lord in=Jesus l=] l=May l=our r=be r=with r=u
+0.2955738934733683	0.9314420803782506	person	false	in=TWITTER l=I l=HAVE l=A r=FOR r=MA r=...'
+0.29535232383808097	0.9314420803782506	person	false	in=verizon l=starting l=to l=hate r=. r=I r=normally
+0.2951310861423221	0.9314420803782506	person	false	in=A&amp;E l=;) l=I l=hate r=&lt; r=shudders r=&gt;
+0.2949101796407186	0.9314420803782506	person	false	in=GA l=much l=prefer l=a r=announcement r=that r=they
+0.29468960359012714	0.9314420803782506	person	false	in=Facebook l=Social l=networking l=site r=officially r=has r=500
+0.2952167414050822	0.933806146572104	person	true	in=john l=dark l=today l=.. r=says r=its r=cuz
+0.29574309185959674	0.9361702127659575	person	true	in=Liam l=lied l=big l=time r=!
+0.2955223880597015	0.9361702127659575	person	false	in=Zune in=HD l=gonna l=buy l=a r=... r=but r=now
+0.2953020134228188	0.9361702127659575	person	false	in=Sweden l=will l=be l=in r=, r=so r=you
+0.29582712369597614	0.9385342789598109	person	true	in=-Rumi l=make l=me l=everything
+0.2956068503350707	0.9385342789598109	person	false	in=Glenveagh in=national in=park l=a l=stop l=in r=, r=should r=be
+0.29538690476190477	0.9385342789598109	person	false	in=ravens l=wait l=for l=the r=game r=tomorrow r=....
+0.29516728624535316	0.9385342789598109	person	false	in=Disney in=world l=to l=be l=at r=, r=but r=its
+0.29569093610698366	0.9408983451536643	person	true	in=Rashad l=had l=talking l=to r=... r=:)
+0.29547141796585	0.9408983451536643	person	false	in=England l=as l=Pakistan l=beat r=: r=LONDON r=,
+0.2952522255192878	0.9408983451536643	person	false	in=nintendo l=life l=is l=no r=game r=but r=you
+0.2950333580429948	0.9408983451536643	person	false	in=LA l=The l=Standard l=in r=tonight r=! r=http://fb.me/I91IUaEq
+0.29555555555555557	0.9432624113475178	person	true	in=Miley l=when l=you l=and r=will r=upgrade r=Miley
+0.29533678756476683	0.9432624113475178	person	false	in=Jup in=Force in=PvP l=I'm l=afraid l=the r=event r=is r=delayed
+0.2958579881656805	0.9456264775413712	person	true	in=Justin in=Bieber l=radio l=off l=this r=you r=smile r=I
+0.29563932002956395	0.9456264775413712	person	false	in=Belfast l=you l=are l=in r=this r=weekend r=go
+0.29542097488921715	0.9456264775413712	person	false	in=richmond l=he l=goes l=to r=??
+0.2959409594095941	0.9479905437352246	person	true	in=Brad in=paisley l=@karensuluay l=Hyna l=the r=concert r=we r=were
+0.29572271386430676	0.9479905437352246	person	false	in=Twitter l=I l=get l=a r=software r=to r=spew
+0.29624170965364777	0.950354609929078	person	true	in=chelsea l=@jaredleto l=i l=saw r=today r=u r=weren't
+0.2960235640648012	0.950354609929078	person	false	in=PITT in=University l=Group l=is l=at r=! r=It r='s
+0.2958057395143488	0.950354609929078	person	false	in=lhs l=will l=be l=more r=games r=then r=i
+0.29558823529411765	0.950354609929078	person	false	in=Facebook l=An l=Entire r=Photo r=Album r=Captured
+0.29537105069801617	0.950354609929078	person	false	in=Facebook l=#stupidnews l=An l=Entire r=Photo r=Album r=Captured
+0.29515418502202645	0.950354609929078	person	false	in=Gardens l=time l=I'm l=at r=we r=are r=joining
+0.2949376375641966	0.950354609929078	person	false	in=orlando l=and l=back l=to r=, r=possibly r=swing
+0.29472140762463345	0.950354609929078	person	false	in=NYC l=A l=look l=at r='s r=Electric r=Lady
+0.29523809523809524	0.9527186761229315	person	true	in=JL l=I l=hit l=that r=joint r=when r=it
+0.29502196193265007	0.9527186761229315	person	false	in=yakuza l=you l=see l=the r=vs r=zombies r=....
+0.2948061448427213	0.9527186761229315	person	false	in=Kent l=and l=back l=to r=!'
+0.2953216374269006	0.9550827423167849	person	true	in=Lindsay l=Gets l=To l=See r=Tonight r=! r=:D
+0.29510591672753833	0.9550827423167849	person	false	in=Blackberry l=I l=update l=my r=....
+0.2956204379562044	0.9574468085106383	person	true	in=JA l=i'm l=excited l=for r=and r=wish r=him
+0.2961342086068563	0.9598108747044918	person	true	in=mcfly l=.. l=i l=know r=told r=me r=they
+0.29591836734693877	0.9598108747044918	person	false	in=twitter l=Why l=is r=dead r=? r=Oh
+0.2964311726147123	0.9621749408983451	person	true	in=Justin l=people l=say l=when r=gets r=a r=gf
+0.29621542940320233	0.9621749408983451	person	false	in=Facebook l=#sp r=Job-Hunting r=App r=BranchOut
+0.296	0.9621749408983451	person	false	in=Facebook r=Job-Hunting r=App r=BranchOut
+0.29651162790697677	0.9645390070921985	person	true	in=God l=pray l=an l=give r=glory r=even r=when
+0.2962962962962963	0.9645390070921985	person	false	in=VT l=I'd l=move l=to r=and r=buy r=some
+0.2960812772133527	0.9645390070921985	person	false	in=Super in=City l=Can't l=believe l=the r=is r=nearly r=open
+0.2958665699782451	0.9645390070921985	person	false	in=miami l=@hannibal_flow l=I l=got r=pics r=for r=days
+0.29637681159420287	0.966903073286052	person	true	in=Justin in=Bieber l=2night l=! l=an r=concert r=in r=Dec
+0.2961622013034033	0.966903073286052	person	false	in=Salt in=Lake l=is l=back l=in r=.
+0.2959479015918958	0.966903073286052	person	false	in=Sex in=In in=The in=City l=Tonight l=! l=" r=" r=Pt r=.
+0.29645697758496026	0.9692671394799054	person	true	in=simone l=omg r=is r=coming r=over
+0.29624277456647397	0.9692671394799054	person	false	in=HSBC in=center l=! l=off l=to r=to r=soundcheck r=for
+0.296028880866426	0.9692671394799054	person	false	in=sharks l=Good l=start l=for r=tonight r=can r=only
+0.2958152958152958	0.9692671394799054	person	false	in=sharks l=Good l=start l=for r=tonight r=can r=only
+0.29632299927901945	0.9716312056737588	person	true	in=Shane l=they l=hate l=on r=instead r=:( r=:'
+0.2961095100864553	0.9716312056737588	person	false	in=White in=Eagle l=yeah l=!! l=(@ r=) r=http://4sq.com/b5Wloc
+0.2966162706983441	0.9739952718676123	person	true	in=God l=sleep l=: l=when r=tel r=me r=to
+0.29640287769784174	0.9739952718676123	person	false	in=Belgium l=So l=here l=in r=its r=now r=7minutes
+0.29618979151689434	0.9739952718676123	person	false	in=AMerican l=kick l=back l=on r=flight r=back r=to
+0.2959770114942529	0.9739952718676123	person	false	in=facebook l=a l=request l=on r=... r=we r=hadnt
+0.29576453697056715	0.9739952718676123	person	false	in=kings in=of in=leon l=i l=had l=a r=marathon r=. r=i
+0.29555236728837875	0.9739952718676123	person	false	in=Christmas l=is l=right l=, r=is r=only r=98
+0.2953405017921147	0.9739952718676123	person	false	in=Hi in=Pac l=come l=down l=to r=and r=check r=it
+0.29512893982808025	0.9739952718676123	person	false	in=Rock in=Band l=if l=you l=like r=or r=Guitar r=Hero
+0.2949176807444524	0.9739952718676123	person	false	in=mv l=other l=half l=in r=... r=where r=u
+0.2947067238912732	0.9739952718676123	person	false	in=iPad l=bring l=me l=an r=! r=http://grtpmpkin.com/4fj
+0.2944960686204432	0.9739952718676123	person	false	in=UK l=actually l=anything l=on r=tv r=tonight r=!
+0.29428571428571426	0.9739952718676123	person	false	in=GA l=back l=home l=to r=. r=It r=sucks
+0.2940756602426838	0.9739952718676123	person	false	in=Chicago l=Beautiful l=day l=in r=! r=Nice r=to
+0.29386590584878747	0.9739952718676123	person	false	in=Chicago l=Beautiful l=day l=in r=! r=Nice r=to
+0.2936564504632929	0.9739952718676123	person	false	in=NBA l=i l=can l=haz r=now r=? r=League
+0.2934472934472934	0.9739952718676123	person	false	in=Australia l=already l=tomorrow l=in r=so r=can r=you
+0.29323843416370104	0.9739952718676123	person	false	in=DC l=ill l=be l=in r=tonight r=where r=u
+0.2930298719772404	0.9739952718676123	person	false	in=twitter l=Imma l=get l=on r=since r=u r=say
+0.2928216062544421	0.9739952718676123	person	false	in=Arizona l=they're l=coming l=to r=next r=year r=??
+0.29332386363636365	0.9763593380614657	person	true	in=BB l=left l=me l=and r=I r=would r=not
+0.2931156848828957	0.9763593380614657	person	false	in=Twitter l=to l=make l=a r=account r=? r=Love
+0.2929078014184397	0.9763593380614657	person	false	in=Verona l=back l=from r=:) r=Looking r=forward
+0.29270021261516654	0.9763593380614657	person	false	in=NYC l=flight l=back l=to
+0.29249291784702547	0.9763593380614657	person	false	in=office l=, l=antivirus l=and r=when r=i r=buy
+0.2922859164897382	0.9763593380614657	person	false	in=Liffey in=valley l=wanna l=go l=to r=tomorrow r=? r=:)
+0.29207920792079206	0.9763593380614657	person	false	in=Awakening in=Festival l=coming l=to l=the r=tonight r=? r=I'm
+0.29257950530035337	0.9787234042553191	person	true	in=eminem l=when l=im l=gone r=:)
+0.2923728813559322	0.9787234042553191	person	false	in=miami in=heat l=any l=new l=found r=fans r=...
+0.292166549047283	0.9787234042553191	person	false	in=Middle in=East l=fans l=in l=the r=:) r=hope r=to
+0.2926657263751763	0.9810874704491725	person	true	in=florence l=:) l=happy l=birthday r=&lt; r=3
+0.29245947850599013	0.9810874704491725	person	false	in=america l=luckiest l=guy l=in r=... r=soooo r=jealous
+0.29295774647887324	0.983451536643026	person	true	in=Justin l=to l=get l=all r=features r=! r=me
+0.2927515833919775	0.983451536643026	person	false	in=Ustream l=back l=live l=on r=later r=tonight
+0.29254571026722925	0.983451536643026	person	false	in=Ustream l=back l=live l=on r=later r=tonight
+0.29234012649332397	0.983451536643026	person	false	in=Ustream l=back l=live l=on r=later r=tonight
+0.29213483146067415	0.983451536643026	person	false	in=Ustream l=back l=live l=on r=later r=tonight
+0.2919298245614035	0.983451536643026	person	false	in=Ustream l=back l=live l=on r=later r=tonight
+0.2917251051893408	0.983451536643026	person	false	in=Paris l=come l=back l=in r=next r=week r=.
+0.29152067274001403	0.983451536643026	person	false	in=mothers in=day r=greeting r=cards r=:)
+0.2913165266106443	0.983451536643026	person	false	in=america l=i'm l=moving l=to r=when r=i'm r=at
+0.29111266620014	0.983451536643026	person	false	in=green in=day l=listen l=to l=that r=song r=.
+0.2916083916083916	0.9858156028368794	person	true	in=God l=... l=what l=do r=say r=day r="
+0.2921034241788959	0.9881796690307328	person	true	in=God l=... l=what l=do r=say r=day r="
+0.2918994413407821	0.9881796690307328	person	false	in=LA l=be l=back l=in r=tomorrow r=night r=!
+0.2916957431960921	0.9881796690307328	person	false	in=walmart l=address l=to l=the r=that r=@Treysongz r=is
+0.2914923291492329	0.9881796690307328	person	false	in=the in=Rza l=hang l=out l=with r=for r=a r=day
+0.2912891986062718	0.9881796690307328	person	false	in=bugatti in=V l=be l=to l=drive r=for r=a r=day
+0.29108635097493035	0.9881796690307328	person	false	in=facebook l=havent l=been l=on r=for r=a r=day
+0.290883785664579	0.9881796690307328	person	false	in=Radio in=1 l=your l=spot l=on r=the r=other r=day
+0.2906815020862309	0.9881796690307328	person	false	in=UP in=Diliman l=Join l=us l=at r=for r=a r=day
+0.2904794996525365	0.9881796690307328	person	false	in=Yom in=Kippur l=a l=halt l=for r=fasting r=day r=(
+0.2902777777777778	0.9881796690307328	person	false	in=Spain l=of l=Aragon l=, r=, r=day r=one
+0.2900763358778626	0.9881796690307328	person	false	in=1st in=Presbyterian l=c l=da l=pic r=all r=day r=lol
+0.289875173370319	0.9881796690307328	person	false	in=orlando l=you l=come l=in r=one r=day r=let
+0.29036729036729036	0.9905437352245863	person	true	in=Nina l=@divacoachdabney l=you l=made r='s r=day r=.
+0.2901662049861496	0.9905437352245863	person	false	in=A&amp;E l=Mikes l=been l=at r=all r=day r=and
+0.28996539792387543	0.9905437352245863	person	false	in=nightmare in=before in=christmas r=!!!
+0.2897648686030429	0.9905437352245863	person	false	in=christmas l=a l=baby l=after r=. r=Jemma r=;
+0.2902557014512785	0.9929078014184397	person	true	in=justin in=bieber l=" l=You l=and r=love r=story r=(
+0.2907458563535912	0.9952718676122931	person	true	in=justin l=need l=to l=know r=isnt r=the r=innocent
+0.2912353347135956	0.9976359338061466	person	true	in=justin in=bieber l=one l=time l=von r=und
+0.29172413793103447	1.0	person	true	in=justin in=bieber l=a l=picture l=of r=she r=said r=that

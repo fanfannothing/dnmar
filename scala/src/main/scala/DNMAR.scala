@@ -283,6 +283,69 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     postObs
   }
 
+  def fbObsScoreNER(ep:EntityPair):DenseVector[Double] = {
+    val postObs = DenseVector.zeros[Double](data.nRel)
+    val e1  = data.entityVocab(ep.e1id)
+    val e2  = data.entityVocab(ep.e2id)
+
+    var allSenseRels = Set[String]()
+
+    for(sense1 <- mid2name(e1).flatMap(x => mid2name(x))) {
+      for(sense2 <- mid2name(e2).flatMap(x => mid2name(x))) {
+	for(rel <- data.fbData.getRels(sense1, sense2)) {
+	  allSenseRels += rel
+	}
+      }
+    }
+
+    for(r <- 0 until data.nRel) {
+      if(r == data.relVocab("NA")) {
+	//postObs(r) = 0.0
+	postObs(r) = -0.0
+      } else if(ep.obs(r) == 0.0) {
+	//Simple missing data model
+	val rel = data.relVocab(r)
+	val values = data.fbData.getA2s(e1,rel);
+
+	postObs(r) = -100.0
+      } else {
+	val rel = data.relVocab(r)
+	println(rel)
+	if(rel == "/loction/location/contains" ||
+	   rel == "/people/person/place_lived" ||
+	   rel == "/people/person/nationality" ||
+	   rel == "/people/person/children" ||
+	   rel == "/location/neighborhood/neighborhood_of" ||
+	   rel == "/business/person/company") {
+	  //postObs(r) =  400.0
+	  postObs(r) =  1000.0
+	} else if(rel == "/location/country/capitol" ||
+		  rel == "/location/country/administrative_divisions" ||
+		  //rel == "/people/person/place_of_birth" ||
+		  rel == "/people/person/place_of_death" ||
+		  rel == "/location/us_state/capitol") {
+	  //postObs(r) =  50.0
+	  postObs(r) =  200.0
+	} else {
+	  //postObs(r) = 200.0
+	  postObs(r) = 500.0
+	}
+	//postObs(r) = 10000.0
+      }
+
+      //Scale based on the entity frequency...
+      //if(postObs(r) < 100) {
+      if(postObs(r) < 0) {
+	//postObs(r) *= 0.01 * (1.0 + math.min(data.fbData.entityFreq(e1), data.fbData.entityFreq(e2)))
+	postObs(r) *= 0.01 * (1.0 + math.min(data.fbData.entityFreq(e1), data.fbData.entityFreq(e2)))
+	//println(postObs(r))
+      }
+    }
+
+    //println(e1 + "\t" + e2 + "\t" + (0 until postObs.length).map(i => i + ":" + data.relVocab(i) + postObs(i)).mkString("\t").filter(x => x != -5))
+    postObs
+  }
+
   def fbObsScore(ep:EntityPair):DenseVector[Double] = {
     val postObs = DenseVector.zeros[Double](data.nRel)
     val e1  = data.entityVocab(ep.e1id)
@@ -489,10 +552,10 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     var bestScore                   = Double.NegativeInfinity
 
     //val postObs = simpleObsScore(ep)
-    val postObs = simpleObsScoreNER(ep)
+    //val postObs = simpleObsScoreNER(ep)
     //val postObs = fbObsScore(ep)
     //val postObs = fbObsScore2(ep)
-    //val postObs = fbObsScore3(ep)
+    val postObs = fbObsScore3(ep)
 
     for(n <- 0 until nRandomRestarts) {
       val z       = DenseVector.zeros[Int](postZ.numRows)
