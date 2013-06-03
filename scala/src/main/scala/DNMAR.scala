@@ -317,7 +317,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	  postObs(r) =  10000.0
 	} else {
 	  //postObs(r) = 200.0
-	  postObs(r) = 500.0
+	  postObs(r) = 1000.0
 	}
 	//postObs(r) = 10000.0
       }
@@ -326,11 +326,10 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       //if(postObs(r) < 100) {
       if(postObs(r) < 0) {
 	//postObs(r) *= 0.01 * (1.0 + math.min(data.fbData.entityFreq(e1), data.fbData.entityFreq(e2)))
-	postObs(r) *= 0.01 * (1.0 + math.min(data.fbData.entityFreq(e1), data.fbData.entityFreq(e2)))
+	postObs(r) *= 0.1 * (1.0 + math.min(data.fbData.entityFreq(e1), data.fbData.entityFreq(e2)))
 	//println(postObs(r))
       }
     }
-
     //println(e1 + "\t" + e2 + "\t" + (0 until postObs.length).map(i => i + ":" + data.relVocab(i) + postObs(i)).mkString("\t").filter(x => x != -5))
     postObs
   }
