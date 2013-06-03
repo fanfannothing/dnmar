@@ -310,22 +310,11 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	postObs(r) = -100.0
       } else {
 	val rel = data.relVocab(r)
-	println(rel)
-	if(rel == "/loction/location/contains" ||
-	   rel == "/people/person/place_lived" ||
-	   rel == "/people/person/nationality" ||
-	   rel == "/people/person/children" ||
-	   rel == "/location/neighborhood/neighborhood_of" ||
-	   rel == "/business/person/company") {
+	//println(rel)
+	if(rel == "person" ||
+	   rel == "geo-loc") {
 	  //postObs(r) =  400.0
-	  postObs(r) =  1000.0
-	} else if(rel == "/location/country/capitol" ||
-		  rel == "/location/country/administrative_divisions" ||
-		  //rel == "/people/person/place_of_birth" ||
-		  rel == "/people/person/place_of_death" ||
-		  rel == "/location/us_state/capitol") {
-	  //postObs(r) =  50.0
-	  postObs(r) =  200.0
+	  postObs(r) =  10000.0
 	} else {
 	  //postObs(r) = 200.0
 	  postObs(r) = 500.0
@@ -552,10 +541,11 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     var bestScore                   = Double.NegativeInfinity
 
     //val postObs = simpleObsScore(ep)
-    //val postObs = simpleObsScoreNER(ep)
     //val postObs = fbObsScore(ep)
     //val postObs = fbObsScore2(ep)
-    val postObs = fbObsScore3(ep)
+    //val postObs = fbObsScore3(ep)
+    val postObs = simpleObsScoreNER(ep)
+    //val postObs = fbObsScoreNER(ep)
 
     for(n <- 0 until nRandomRestarts) {
       val z       = DenseVector.zeros[Int](postZ.numRows)
