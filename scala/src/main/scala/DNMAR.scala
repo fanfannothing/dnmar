@@ -326,7 +326,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       //if(postObs(r) < 100) {
       if(postObs(r) < 0) {
 	//postObs(r) *= 0.01 * (1.0 + math.min(data.fbData.entityFreq(e1), data.fbData.entityFreq(e2)))
-	postObs(r) *= 0.1 * (1.0 + math.min(data.fbData.entityFreq(e1), data.fbData.entityFreq(e2)))
+	postObs(r) *= 1.0 * (1.0 + math.min(data.fbData.entityFreq(e1), data.fbData.entityFreq(e2)))
 	//println(postObs(r))
       }
     }
