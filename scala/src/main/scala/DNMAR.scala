@@ -307,7 +307,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	val rel = data.relVocab(r)
 	val values = data.fbData.getA2s(e1,rel);
 
-	postObs(r) = -10.0
+	postObs(r) = -5.0
       } else {
 	val rel = data.relVocab(r)
 	//println(rel)
@@ -326,7 +326,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
       //if(postObs(r) < 100) {
       if(postObs(r) < 0) {
 	//postObs(r) *= 0.01 * (1.0 + math.min(data.fbData.entityFreq(e1), data.fbData.entityFreq(e2)))
-	postObs(r) *= 0.5 * (1.0 + math.min(data.fbData.entityFreq(e1), data.fbData.entityFreq(e2)))
+	postObs(r) *= 0.1 * (1.0 + math.min(data.fbData.entityFreq(e1), data.fbData.entityFreq(e2)))
 	//println(postObs(r))
       }
     }
