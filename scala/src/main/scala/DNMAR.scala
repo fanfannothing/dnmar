@@ -307,7 +307,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	val rel = data.relVocab(r)
 	val values = data.fbData.getA2s(e1,rel);
 
-	postObs(r) = -40.0
+	postObs(r) = -50.0
       } else {
 	val rel = data.relVocab(r)
 	//println(rel)
