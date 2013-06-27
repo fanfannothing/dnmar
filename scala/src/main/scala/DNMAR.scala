@@ -163,6 +163,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 
   def simpleObsScore(ep:EntityPair):DenseVector[Double] = {
     val postObs     = DenseVector.zeros[Double](data.nRel)
+
     for(r <- 0 until data.nRel) {
       if(r == data.relVocab("NA")) {
 	//postObs(r) = -4.0
@@ -171,6 +172,25 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	postObs(r) = -0.0
       } else if(ep.obs(r) == 0.0) {
 	postObs(r) = -5.0
+      } else {
+	//postObs(r) = 100.0
+	postObs(r) = 10000.0
+      }
+    }
+    postObs
+  }
+
+  def simpleObsScoreKbp(ep:EntityPair):DenseVector[Double] = {
+    val postObs     = DenseVector.zeros[Double](data.nRel)
+
+    for(r <- 0 until data.nRel) {
+      if(r == data.relVocab("NA")) {
+	//postObs(r) = -4.0
+	//postObs(r) = -2.0
+	//postObs(r) = 0.0
+	postObs(r) = -0.0
+      } else if(ep.obs(r) == 0.0) {
+	postObs(r) = -100.0
       } else {
 	//postObs(r) = 100.0
 	postObs(r) = 10000.0
@@ -539,12 +559,13 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     var bestRel:DenseVectorRow[Double] = null
     var bestScore                   = Double.NegativeInfinity
 
-    //val postObs = simpleObsScore(ep)
+    val postObs = simpleObsScore(ep)
+    //val postObs = simpleObsScoreKbp(ep)
     //val postObs = fbObsScore(ep)
     //val postObs = fbObsScore2(ep)
     //val postObs = fbObsScore3(ep)
     //val postObs = simpleObsScoreNER(ep)
-    val postObs = fbObsScoreNER(ep)
+    //val postObs = fbObsScoreNER(ep)
 
     for(n <- 0 until nRandomRestarts) {
       val z       = DenseVector.zeros[Int](postZ.numRows)
@@ -812,9 +833,16 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	postZ(i,::) := (theta * ep.features(i)).toDense
       }
 
-      //TODO: normalize?
+      //Normalize
+      val logExpSum = MathUtils.LogExpSum(postZ(i,::).toArray)
+      postZ(i,::) -= logExpSum
+
       z(i) = postZ(i,::).argmax
       zScore(i) = postZ(i,::).max
+
+      //println(scalala.library.Library.exp(postZ(i,::)))
+      //println(z(i))
+      //println(math.exp(zScore(i)))
 
       //Set the aggregate variables
       rel(z(i)) = 1.0
@@ -823,7 +851,7 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     val postObs = DenseVector.zeros[Double](data.nRel)
     val newObs  = DenseVector.zeros[Double](data.nRel)
 
-    //TODO: not quite right here...
+    //NOTE: this doesn't really do anything now...
     for(r <- 0 until data.nRel) {
       if(rel(r) == 1.0) {
 	var s = 0.0

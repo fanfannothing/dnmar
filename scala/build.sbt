@@ -1,5 +1,7 @@
 name := "DNMAR"
 
+mainClass in (Compile, run) := Some("dnmar.Main")
+
 version := "0.1"
 
 libraryDependencies  ++= Seq(
@@ -17,4 +19,3 @@ resolvers ++= Seq(
 )
 
 scalaVersion := "2.9.2"
-

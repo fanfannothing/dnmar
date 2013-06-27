@@ -116,6 +116,10 @@ class MultiR(data:EntityPairData) extends Parameters(data) {
 	postZ(i) = theta * ep.features(i)
       }
 
+      //Normalize
+      val logExpSum = MathUtils.LogExpSum(postZ(i).toArray)
+      postZ(i) -= logExpSum      
+
       z(i) = postZ(i).argmax
       zScore(i) = postZ(i).max
 

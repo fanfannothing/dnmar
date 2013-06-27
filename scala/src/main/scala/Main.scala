@@ -14,6 +14,9 @@ import org.clapper.argot._
 
 import java.io._
 
+import edu.stanford.nlp.util.{StringUtils => StanfordStringUtils}
+import edu.stanford.nlp.kbp.slotfilling.classify._
+
 object Constants {
   var DEBUG = false
   var TIMING = true
@@ -38,6 +41,11 @@ object Main {
     (sValue, opt) => new NerData(sValue,null,null,null)
   }
 
+  val kbpTrain = parser.option[KbpData](List("trainKBP"), "n", "Training data (in KBP file format).") { 
+    println("Loading train")
+    (sValue, opt) => new KbpData(sValue,null,null,null)
+  }
+
   val test  = parser.option[ProtobufData](List("testProto"), "n", "Test data (in google protobuf format).") {
     println("Loading test")
     (sValue, opt) => new ProtobufData(sValue, 
@@ -53,6 +61,14 @@ object Main {
 				 nerTrain.value.getOrElse(null).entityVocab, 
 				 nerTrain.value.getOrElse(null).relVocab.lock, 
 				 nerTrain.value.getOrElse(null).featureVocab.lock)
+  }
+
+  val kbpTest  = parser.option[KbpData](List("testKBP"), "n", "Test data (in KBP format).") {
+    println("Loading test")
+    (sValue, opt) => new KbpData(sValue, 
+				 kbpTrain.value.getOrElse(null).entityVocab, 
+				 kbpTrain.value.getOrElse(null).relVocab.lock, 
+				 kbpTrain.value.getOrElse(null).featureVocab.lock)
   }
 
   val outDir = parser.option[String](List("outDir"), "n", "output directory") {
@@ -88,9 +104,12 @@ object Main {
     if(train.value.getOrElse(null) != null) {
       multir = new MultiR(train.value.getOrElse(null))
       dnmar  = new DNMAR(train.value.getOrElse(null))
-    } else {
+    } else if(nerTrain.value.getOrElse(null) != null) {
       multir = new MultiR(nerTrain.value.getOrElse(null))
       dnmar  = new DNMAR(nerTrain.value.getOrElse(null))
+    } else if(kbpTrain.value.getOrElse(null) != null) {
+      multir = new MultiR(kbpTrain.value.getOrElse(null))
+      dnmar  = new DNMAR(kbpTrain.value.getOrElse(null))      
     }
 
     if(filterFB.value.getOrElse(null) != null) {
@@ -130,7 +149,12 @@ object Main {
 	//Only for binary relation data (for now)
 	dnmar.dumpPredictions(outDir.value.getOrElse(null) + "/predictions/preds")
       }
+    } else if(algorithm.value.getOrElse(null) == "MIML") {
+      println("loading MIML model")
+      val props = StanfordStringUtils.argsToProperties(List("-props", "/home/aritter/dlvm/data/mimlre-2012-11-27/config/multir/multir_mimlre.properties").toArray)
+      val miml = JointBayesRelationExtractor.load("", props)
     }
+    
   }
 
   def EvalIterations(dnmar:Parameters, nIter:Int) {
@@ -139,9 +163,12 @@ object Main {
     if(train.value.getOrElse(null) != null) {
       nrel     = train.value.getOrElse(null).relVocab.size
       relVocab = train.value.getOrElse(null).relVocab
-    } else {
+    } else if(nerTrain.value.getOrElse(null) != null) {
       nrel     = nerTrain.value.getOrElse(null).relVocab.size
       relVocab = nerTrain.value.getOrElse(null).relVocab
+    } else if(kbpTrain.value.getOrElse(null) != null) {
+      nrel     = kbpTrain.value.getOrElse(null).relVocab.size
+      relVocab = kbpTrain.value.getOrElse(null).relVocab      
     }
 
     var fw:FileWriter = null
@@ -178,7 +205,6 @@ object Main {
       Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt")
       */
 
-      //if(i % 10 == 0 && i >= 10 || i == nIter) {
       if(i == nIter) {
 	println("*********************************************")
 	println("* averaged parameters")
@@ -196,8 +222,10 @@ object Main {
 	}
 	if(test.value.getOrElse(null) != null) {
 	  Eval.AggregateEval(dnmar, test.value.getOrElse(null), outFile)
-	} else {
+	} else if(nerTest.value.getOrElse(null) != null) {
 	  Eval.AggregateEval(dnmar, nerTest.value.getOrElse(null), outFile)
+	} else if(kbpTest.value.getOrElse(null) != null) {
+	  Eval.AggregateEval(dnmar, kbpTest.value.getOrElse(null), outDir.value.getOrElse(null))
 	}
 
 	println("Human annotated evaluation (averaged)")
@@ -209,8 +237,10 @@ object Main {
 	}
 	if(nerTrain.value.getOrElse(null) != null) {
 	  Eval.HumanEvalNer(dnmar, "/home/aritter/dlvm/data/ner/annotated", outFile)
-	} else {
+	} else if(train.value.getOrElse(null) != null) {
 	  Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt", outFile)
+	} else if(kbpTrain.value.getOrElse(null) != null) {
+	  Eval.KbpEval(dnmar, "/home/aritter/dlvm/data/mimlre-2012-11-27/corpora/kbp/test", "/home/aritter/dlvm/data/mimlre-2012-11-27/resources/kbp/test_combined/TAC_KBP_Regular-Slot_Assessments", outDir.value.getOrElse(null))
 	}
 	for(r <- 0 until nrel) {
 	  if(i == nIter) {
@@ -222,7 +252,7 @@ object Main {
 	  println(relVocab(r))
 	  if(nerTrain.value.getOrElse(null) != null) {
 	    Eval.HumanEvalNer(dnmar, "/home/aritter/dlvm/data/ner/annotated", r, outFile)
-	  } else {
+	  } else if(train.value.getOrElse(null) != null) {
 	    Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential-byrelation.txt", r, outFile)
 	  }
 	}

@@ -45,9 +45,122 @@ abstract class EntityPairData {
 
   val entityVocab:Vocab
   val relVocab:Vocab
-  val featureVocab:Vocab
+  var featureVocab:Vocab
 
   val fbData:FreebaseUtils.FreebaseData
+}
+
+class KbpData(inDir:String, evoc:Vocab, rvoc:Vocab, fvoc:Vocab) extends EntityPairData {
+  def this(inDir:String) = this(inDir, null, null, null)
+
+  var newVocab = true
+  val entityVocab  = if(evoc != null) { evoc } else { new Vocab }
+  val relVocab     = if(rvoc != null) { rvoc } else { new Vocab }
+  var featureVocab = if(fvoc != null) { newVocab=false; fvoc } else { new Vocab }
+
+  val fbData = new FreebaseUtils.FreebaseData("../data/freebase-datadump-quadruples.tsv.bz2.filtered")
+
+  val entityPair2features = new HashMap[Tuple2[Int,Int],List[Array[Int]]]
+  val entityPair2labels   = new HashMap[Tuple2[Int,Int],DenseVectorRow[Double]]
+
+  //Limit on the number of lines for debugging and to reduce memory usage
+  //val MAXLINES = 100
+  //val MAXLINES = 3000000
+  val MAXLINES = 5000000
+  //val MAXLINES = 20000000
+
+  //First pass: figure out vocabuarly sizes
+  var nLines = 0
+  for(file <- new java.io.File(inDir).listFiles) {
+    //if((file.getName contains "kb_part") && nLines < 5000000) {
+    //if((file.getName contains "kb_part") && nLines < 2000000) {
+    //if((file.getName contains "kb_part") && nLines < 100000) {
+    if((file.getName contains "kb_part") && nLines < MAXLINES) {
+      for(line <- scala.io.Source.fromFile(file).getLines()) {
+	nLines += 1
+	if(nLines % 10000 == 0) {
+	  println("pass 1 nLines =" + nLines)
+	}
+	val fields = line.trim.split("""\s+""")
+	if(fields.length > 5) {
+	  val Array(junk_eid, entType, neType, slotValue, concatenatedLabel) = fields.slice(0,5)
+	  //println(concatenatedLabel)
+	  val rels = concatenatedLabel.split("""\|""").filter(_ != "_NR").map(x => relVocab(x)) ++ Array(relVocab("NA"))
+	  val features = fields.slice(5,fields.length).map(x => featureVocab(x))
+	  val e1 = entityVocab(junk_eid)
+	  val e2 = entityVocab(slotValue)
+	}
+      }
+    }
+  }
+
+  //Only ues features with minimum count
+  featureVocab = featureVocab.getMinCountVocab
+
+  nLines = 0
+  for(file <- new java.io.File(inDir).listFiles) {
+    //if((file.getName contains "kb_part") && nLines < 5000000) {
+    //if((file.getName contains "kb_part") && nLines < 2000000) {
+    //if((file.getName contains "kb_part") && nLines < 100000) {
+    if((file.getName contains "kb_part") && nLines < MAXLINES) {
+      for(line <- scala.io.Source.fromFile(file).getLines()) {
+	nLines += 1
+	if(nLines % 10000 == 0) {
+	  println("pass 2 nLines =" + nLines)
+	}
+	val fields = line.trim.split("""\s+""")
+	if(fields.length > 5) {
+	  val Array(junk_eid, entType, neType, slotValue, concatenatedLabel) = fields.slice(0,5)
+	  //println(concatenatedLabel)
+	  val rels = concatenatedLabel.split("""\|""").filter(_ != "_NR").map(x => relVocab(x)) ++ Array(relVocab("NA"))
+	  val features = fields.slice(5,fields.length).map(x => featureVocab(x))
+	  val e1 = entityVocab(junk_eid)
+	  val e2 = entityVocab(slotValue)
+
+	  if(!entityPair2features.contains((e1,e2))) {
+	    entityPair2features += (e1,e2) -> List()
+	  }
+	  entityPair2features((e1,e2)) ::= features
+	  val relations = DenseVector.zeros[Double](relVocab.size)
+	  rels.foreach(
+	    {r =>
+	      relations(r) = 1.0
+	   })
+	  //TODO: need to debug? make sure relations are the same for each pair ...?
+	  entityPair2labels((e1,e2)) = relations.t
+	}
+      }
+    }
+  }
+
+  val data = new Array[EntityPair](entityPair2features.size)
+  //Second pass, create data structures
+  
+  var nEntityPairs = 0
+  for(((e1, e2), features) <- entityPair2features) {
+    val featureVectors = new Array[SparseVectorCol[Double]](features.length)
+    for(i <- 0 until features.length) {
+      featureVectors(i) = SparseVector.zeros[Double](featureVocab.size + 1)
+      featureVectors(i)(featureVocab.size) = 1.0	//Bias feature
+      features(i).filter(x => x >= 0).foreach(
+	{x =>
+	  featureVectors(i)(x) = 1.0
+       })
+    }
+    val relations = entityPair2labels((e1,e2))
+    data(nEntityPairs) = new EntityPair(e1, e2, featureVectors, relations)
+    nEntityPairs += 1
+  }
+
+  val nEntities = entityVocab.size
+  val nFeat        = featureVocab.size
+  val nRel         = relVocab.size
+
+  println("nRel:" + nRel)
+  println("feature vocab size: " + featureVocab.size)
+  println("# entity pairs:     " + nEntityPairs)
+  println("# relations:        " + relVocab.size)
+
 }
 
 class NerData(inDir:String, evoc:Vocab, rvoc:Vocab, fvoc:Vocab) extends EntityPairData {
@@ -56,7 +169,7 @@ class NerData(inDir:String, evoc:Vocab, rvoc:Vocab, fvoc:Vocab) extends EntityPa
   var newVocab = true
   val entityVocab  = if(evoc != null) { evoc } else { new Vocab }
   val relVocab     = if(rvoc != null) { rvoc } else { new Vocab }
-  val featureVocab = if(fvoc != null) { newVocab=false; fvoc } else { new Vocab }
+  var featureVocab = if(fvoc != null) { newVocab=false; fvoc } else { new Vocab }
 
   val fbData = new FreebaseUtils.FreebaseData("../data/freebase-datadump-quadruples.tsv.bz2.filtered")
 
@@ -126,7 +239,7 @@ class ProtobufData(inFile:String, evoc:Vocab, rvoc:Vocab, fvoc:Vocab, readSenten
   var newVocab = true
   val entityVocab  = if(evoc != null) { evoc } else { new Vocab }
   val relVocab     = if(rvoc != null) { rvoc } else { new Vocab }
-  val featureVocab = if(fvoc != null) { newVocab=false; fvoc } else { new Vocab }
+  var featureVocab = if(fvoc != null) { newVocab=false; fvoc } else { new Vocab }
 
   var is = new GZIPInputStream(new BufferedInputStream(new FileInputStream(inFile)))
   var r = Relation.parseDelimitedFrom(is);

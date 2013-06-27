@@ -1,5 +1,7 @@
 package dnmar;
 
+import edu.stanford.nlp.kbp.slotfilling;
+
 import scala.util.Random;
 
 import scalala.scalar._;
@@ -17,6 +19,8 @@ import scalala.operators.Implicits._;
 import scala.collection.mutable.ListBuffer
 
 import java.io._
+
+import java.util.HashSet;
 
 object Eval {
   //case class Prediction(val score:Double, val correct:Boolean) 
@@ -37,6 +41,142 @@ object Eval {
 
   def HumanEval(param:Parameters, test:EntityPairData, annotatedFile:String, outFile:String) {
     HumanEval(param, test, annotatedFile, -1, outFile)
+  }
+
+  def KbpEval(param:Parameters, testDir:String, slotAssesmentFile:String, outDir:String) {
+    Utils.Timer.start("KbpEval")
+
+    var nidOffset = 0
+
+    val candidates = new HashSet[String]
+
+    val queryIds = new HashSet[String]
+
+    /*
+    for(line <- scala.io.Source.fromInputStream(new FileInputStream(slotAssesmentFile))(io.Codec("iso-8859-1")).getLines()) {    
+      val fields = line.trim.split("\t")
+      //queryIds.add(fields(1))
+      //candidates.add(fields(1) + ":" + fields(8))
+    }
+    */
+
+    val responseFile = outDir + "/responseFile"
+    val prOutFile = new FileWriter(outDir + "/prOut")
+
+    var predictions = List[Tuple6[String,String,String,String,String,Double]]()
+
+    //var t = 1.0
+    //while(t >= 0.0) {
+
+    val fw = new FileWriter(responseFile)
+    for(file <- new java.io.File(testDir).listFiles.sortBy({x => x.getName})) {
+    //for(file <- new java.io.File(testDir).listFiles) {
+      val qid   = file.getName
+      var nid:String   = null
+      var nstr:String  = null
+      var etyp:String  = null
+      var vtyp:String  = null
+      var valu:String  = null
+      var docid:String = null
+      var feats:String = null
+
+      println(qid)
+
+      for(line <- scala.io.Source.fromFile(file).getLines()) {
+	if(line.startsWith("NIL")) {
+	  nid = line.trim
+	  nidOffset = 0
+	  
+	  if(feats != null) {
+	    queryIds.add(qid)
+	    candidates.add(qid + ":" + valu)
+
+	    //val features = SparseVector.zeros[Double](param.data.featureVocab.size + 1)
+	    val features = SparseVector.zeros[Double](param.nFeat + 1)
+	    //param.data.featureVocab.lock
+	    feats.split("\t").map(x => param.data.featureVocab(x)).filter(x => x >= 0).foreach(
+	      {x =>
+		features(x) = 1.0
+	     })
+
+	    var postZ:DenseVector[Double] = null
+	    if(useAveragedParameters) {
+	      postZ = (param.theta_average * features).toDense
+	    } else {
+	      postZ = (param.theta * features).toDense
+	    }
+	    val logExpSum = MathUtils.LogExpSum(postZ.toArray)
+	    postZ -= logExpSum
+	    val pNA = postZ(param.data.relVocab("NA"))
+	    postZ(param.data.relVocab("NA")) = Double.NegativeInfinity
+
+	    var predicted = postZ.argmax
+	    //println(feats.split("\t").mkString(","))
+	    //println(feats.split("\t").length)
+	    //println(postZ)
+	    //println(features.sum)
+	    //println(exp(postZ(predicted)))
+	    //fw.write(qid + "\t" + param.data.relVocab(predicted) + "\t" + "DNMAR" + "\t" + docid + "\t" + valu + "\n")
+	    predictions ::= (qid, param.data.relVocab(predicted), "DNMAR", docid, valu, postZ(predicted))
+
+	    feats = null
+	  }
+	} else if(nidOffset == 1) {
+	  nstr = line.trim
+	} else if(nidOffset == 2) {
+	  etyp = line.trim
+	} else if(nidOffset == 3) {
+	  vtyp = line.trim
+	} else if(nidOffset == 4) {
+	  valu = line.trim
+	} else if(nidOffset == 8) {
+	  docid = line.trim
+	} else if(nidOffset > 10 && line.startsWith("arg")) {
+	  feats = line.trim
+	}
+	nidOffset += 1
+      }
+    }
+
+    var t = 1.0
+    //while(t >= 0.0) {
+    //for(nPredictions <- 1000 to 1) {
+    var nPredictions = 1000
+    while(nPredictions > 0) {
+      println("nPredictions =" + nPredictions)
+
+      val rfName = responseFile + "." + nPredictions
+      val fw = new FileWriter(rfName)
+      
+      val sorted = predictions.sortBy({x => -x._6})
+      //for(i <- 0 until (t * sorted.length.toDouble).toInt) {
+      for(i <- 0 until nPredictions) {
+	fw.write(sorted(i)._1 + "\t" + sorted(i)._2 + "\t" + sorted(i)._3 + "\t" + sorted(i)._4 + "\t" + sorted(i)._5 + "\n")
+      }
+
+      fw.close
+
+      val os = new PrintStream("test_file")
+
+      //NOTE: uses anydoc scoring -> as best I can tell this is what mihai's code does too (not mentioned in properties file - see defaults in "Constants.java").
+      val pair = edu.stanford.nlp.kbp.slotfilling.SFScore.score(os, rfName, slotAssesmentFile, true, candidates, queryIds)
+      
+      //println(pair.first + "\t" + pair.second)
+      prOutFile.write(pair.first + "\t" + pair.second + "\t" + nPredictions + "\n")
+
+      // these increments are identical to those in MultiR.generatePRCurve() 
+      /*
+      if(t > 1.0) t -= 1.0;
+      else if(t > 0.99)   t  -= 0.0001;
+      else if(t > 0.95)   t  -= 0.001;
+      else t -= 0.01;
+      */
+      if(nPredictions < 100) nPredictions -= 1
+      else nPredictions -= 10
+    }
+    prOutFile.close
+
+    Utils.Timer.stop("KbpEval")
   }
 
   def HumanEval(param:Parameters, test:EntityPairData, annotatedFile:String, rel:Int, outFile:String) {
@@ -257,6 +397,7 @@ object Eval {
     var sortedPredictions = List[Prediction]()
     for(ep <- Random.shuffle(test.data.toList)) { 
       val predicted = param.inferAll(ep, useAveragedParameters)
+
 //      if(Constants.DEBUG) {
 //	println("predicted:\t" + Utils.bin2int(predicted.rel.toArray).map((r) => test.relVocab(r)))
 //	println("observed:\t"  + Utils.bin2int(ep.rel.toArray).map((r) => test.relVocab(r)))
