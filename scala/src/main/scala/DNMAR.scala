@@ -833,10 +833,10 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
 	postZ(i,::) := (theta * ep.features(i)).toDense
       }
 
-      //Normalize
-      val logExpSum = MathUtils.LogExpSum(postZ(i,::).toArray)
-      postZ(i,::) -= logExpSum
-
+      //Normalize?
+      //val logExpSum = MathUtils.LogExpSum(postZ(i,::).toArray)
+      //postZ(i,::) -= logExpSum
+      
       z(i) = postZ(i,::).argmax
       zScore(i) = postZ(i,::).max
 

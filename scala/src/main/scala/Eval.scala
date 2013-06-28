@@ -16,11 +16,16 @@ import scalala.library.Statistics._;
 import scalala.library.Plotting._;
 import scalala.operators.Implicits._;
 
+import scala.collection.JavaConversions._
+import scala.collection.mutable.ListBuffer
+
 import scala.collection.mutable.ListBuffer
 
 import java.io._
 
 import java.util.HashSet;
+
+import edu.stanford.nlp.kbp.slotfilling.classify._
 
 object Eval {
   //case class Prediction(val score:Double, val correct:Boolean) 
@@ -301,6 +306,107 @@ object Eval {
 
     if(Constants.TIMING) {
       Utils.Timer.stop("HumanEval")
+    }
+  }
+
+  def HumanEvalMiml(miml:JointBayesRelationExtractor, test:EntityPairData, annotatedFile:String, outFile:String) {
+    HumanEvalMiml(miml, test, annotatedFile, -1, outFile)
+  }
+
+  def HumanEvalMiml(miml:JointBayesRelationExtractor, test:EntityPairData, annotatedFile:String, rel:Int, outFile:String) {
+    if(Constants.TIMING) {
+      Utils.Timer.start("HumanEvalMiml")
+    }
+
+    /*
+     * Read in the features and labels
+     */
+    val features            = new ListBuffer[SparseVectorCol[Double]]
+    val aggregateScores     = new ListBuffer[Double]
+    val labels              = new ListBuffer[Int]
+    val tf                  = new ListBuffer[Boolean]
+    val sentences           = new ListBuffer[String]
+    val sentences_annotated = new ListBuffer[String]
+    for(line <- scala.io.Source.fromFile(annotatedFile).getLines()) {
+      var Array(e1id_str, e2id_str, i_dont_know_what_this_is, relation_str, is_mention_str, sentence_annotated, e1str, e2str, sentence) = line.trim.split("\t")
+      if(sentence(0) == '"') {
+	sentence = sentence.substring(1,sentence.length-1)	//strip quotes
+      }
+
+      if(relation_str != "/location/administrative_division/country") {
+	test.entityVocab.lock      
+	val e1id = test.entityVocab(e1id_str)
+	val e2id = test.entityVocab(e2id_str)
+
+	/*****************************************************************************************************************
+	 * OK, we can't assume a relation isn't true if just because the sentence is labeled with a different relation
+	 *****************************************************************************************************************
+	 */
+
+	val ep    = test.data.filter((ep) => ep.e1id == e1id && ep.e2id == e2id)(0)
+	//TODO: no need to find the actual test sentence if we'er using the aggregate scores?
+	//OK, now let's find the sentence in the test data, so we can get it's features
+	val index = ep.sentences.indexOf(sentence)
+	if(index >= 0) {
+	  features            += ep.features(index)
+	  labels              += test.relVocab(relation_str)
+	  sentences           += sentence
+	  tf                  += is_mention_str == "y" || is_mention_str == "indirect"
+	  sentences_annotated += sentence_annotated
+	} else {
+	  if(Constants.DEBUG) {
+	    println("Threw out an annotated example...")
+	    println(e1id_str + "\t" + e1id)
+	    println(e2id_str + "\t" + e2id)
+	    println(sentence)
+	    println(ep.sentences.toList)
+	    println(ep.sentences.indexOf(sentence))
+	  }
+	}
+      }
+    }
+
+    var sortedPredictions = List[Prediction]()
+
+    var maxRecall = 0.0
+    for(i <- 0 until features.length) {
+      //println(param.data.relVocab(predicted) + "\t" + sentences(i))
+      val stringFeatures = Utils.bin2int(features(i).toArray).map((f) => test.featureVocab(f))
+      //println(stringFeatures)
+      val predictions = JointBayesRelationExtractor.sortPredictions(miml.classifyLocally(asList(stringFeatures)))
+
+      if(tf(i) && labels(i) != test.relVocab("NA") && (rel == -1 || labels(i) == rel)) {
+	maxRecall += 1.0
+      }
+      
+      //if(predicted != test.relVocab("NA")) {
+      //NOTE: not just making max prediction (as done in original MultiR paper...)
+      for(j <- 0 until predictions.length) {
+	val predicted = test.relVocab(predictions.get(j).first)
+	if((rel == -1 || predicted == rel) && predicted != test.relVocab("NA")) {
+	  if(predicted == labels(i)) {
+	    if(tf(i)) {
+	      //True Positive
+	      sortedPredictions ::= new Prediction(predictions.get(j).second, true, predictions.get(j).first, sentences_annotated(i))
+	    } else {
+	      //False Positive
+	      sortedPredictions ::= new Prediction(predictions.get(j).second, false, predictions.get(j).first, sentences_annotated(i))
+	    }
+	  }
+	}
+      }
+    }
+
+    if(maxRecall > 0) {
+      if(outFile != null) {
+	println("dumping to " + outFile)
+	DumpPR(sortedPredictions, maxRecall, outFile)
+      }
+      PrintPR(sortedPredictions, maxRecall)
+    }
+
+    if(Constants.TIMING) {
+      Utils.Timer.stop("HumanEvalMiml")
     }
   }
 
