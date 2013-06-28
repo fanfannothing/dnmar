@@ -153,7 +153,7 @@ object Main {
     } else if(algorithm.value.getOrElse(null) == "MIML") {
       println("loading MIML model")
       val props = StanfordStringUtils.argsToProperties(List("-props", "/home/aritter/dlvm/data/mimlre-2012-11-27/config/multir/multir_mimlre.properties").toArray)
-      val miml = JointBayesRelationExtractor.load("/home/aritter/dlvm/data/mimlre-2012-11-27/corpora/multir/multir_JOINT_BAYES_T5_E15_NF5_Fall_M0_Istable_Ytrue_EPOCH14.ser", props)
+      val miml = JointBayesRelationExtractor.load("/home/aritter/dlvm/data/mimlre-2012-11-27/corpora/multir/multir_JOINT_BAYES_T5_E15_NF5_Fall_M0_Istable_Ytrue_EPOCH9.ser", props)
       val outFile = outDir.value.getOrElse(null) + "/out"
       Eval.HumanEvalMiml(miml, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt", outFile)
     }

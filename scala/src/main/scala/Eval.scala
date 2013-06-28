@@ -270,7 +270,7 @@ object Eval {
       val logExpSum = MathUtils.LogExpSum(postZ.toArray)
       postZ -= logExpSum
       val pNA = postZ(test.relVocab("NA"))
-      postZ(test.relVocab("NA")) = Double.NegativeInfinity
+      //postZ(test.relVocab("NA")) = Double.NegativeInfinity
 
       //println(param.data.relVocab(predicted) + "\t" + sentences(i))
 
@@ -383,14 +383,18 @@ object Eval {
       //NOTE: not just making max prediction (as done in original MultiR paper...)
       for(j <- 0 until predictions.length) {
 	val predicted = test.relVocab(predictions.get(j).first)
+	val confidence = predictions.get(j).second
+
+	//println(test.relVocab(predicted) + "\t" + confidence + "\t" + test.relVocab(labels(i)))
+
 	if((rel == -1 || predicted == rel) && predicted != test.relVocab("NA")) {
 	  if(predicted == labels(i)) {
 	    if(tf(i)) {
 	      //True Positive
-	      sortedPredictions ::= new Prediction(predictions.get(j).second, true, predictions.get(j).first, sentences_annotated(i))
+	      sortedPredictions ::= new Prediction(confidence, true, test.relVocab(predicted), sentences_annotated(i))
 	    } else {
 	      //False Positive
-	      sortedPredictions ::= new Prediction(predictions.get(j).second, false, predictions.get(j).first, sentences_annotated(i))
+	      sortedPredictions ::= new Prediction(confidence, false, test.relVocab(predicted), sentences_annotated(i))
 	    }
 	  }
 	}
@@ -560,7 +564,7 @@ object Eval {
       val r = tp / (tp + fn)
       //val f = 2 * p * r / (p + r)
 
-      fw.write(p + "\t" + r + "\t" + prediction.rel + "\t" + prediction.correct + "\t" + prediction.annotated_sentence + "\n")
+      fw.write(p + "\t" + r + "\t" + prediction.rel + "\t" + prediction.correct + "\t" + prediction.annotated_sentence + "\t" + prediction.score + "\n")
     }
 
     fw.close()
