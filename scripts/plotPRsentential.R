@@ -31,9 +31,18 @@ if(file.exists(file) && !file.info(file)$isdir && file.info(file)$size > 0) {
 } else {
   p3 = data.frame(p=numeric(0), r=numeric(0))
 }
+<<<<<<< HEAD
+file = paste('../scala/experiments/MultiR_XU/',f,sep="")
+if(file.exists(file) && !file.info(file)$isdir && file.info(file)$size > 0) {
+  p4 = read.csv(file, sep="\t", header=FALSE)
+} else {
+  p4 = data.frame(p=numeric(0), r=numeric(0))
+}
+=======
 
 file = paste('../scala/experiments_test/MIML/',f,sep="")
 p4 = read.csv(file, sep="\t", header=FALSE)
+>>>>>>> refs/remotes/milkhog.cs.washington.edu/master
 
 if(dim(p1)[1] > 20 && (sum(p1[,1] > 0) || sum(p2[,1] > 0))) {
                                         #plot(p1[,2], p1[,1], xlim=c(0,0.9), ylim=c(0,1), main=f, xlab='recall', ylab='precision')
@@ -42,12 +51,18 @@ if(dim(p1)[1] > 20 && (sum(p1[,1] > 0) || sum(p2[,1] > 0))) {
   } else {
     plot(p1[,2], p1[,1], xlim=c(0,1), ylim=c(0,1), xlab='recall', ylab='precision', type='l', lwd=3)
   }
+<<<<<<< HEAD
+  points(p2[,2], p2[,1], col='red', pch=2)
+  points(p3[,2], p3[,1], col='green', pch=3)
+  points(p4[,2], p4[,1], col='blue', pch=4)
+=======
   #points(p2[,2], p2[,1], col='red', pch=2)
   #points(p3[,2], p3[,1], col='green', pch=3)
   #points(p4[,2], p3[,1], col='blue', pch=4)
   lines(p2[,2], p2[,1], lty=2, lwd=3)
   lines(p3[,2], p3[,1], lty=3, lwd=3)
 
+>>>>>>> refs/remotes/milkhog.cs.washington.edu/master
 }
 
 #legend('bottomleft', c('MultiR', 'DNMAR', 'DNMAR*', 'MIML'), pch=c(2,1,3,4), col=c('red', 'black', 'green', 'blue'))
