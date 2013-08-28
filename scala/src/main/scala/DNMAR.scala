@@ -559,11 +559,11 @@ class DNMAR(data:EntityPairData) extends Parameters(data) {
     var bestRel:DenseVectorRow[Double] = null
     var bestScore                   = Double.NegativeInfinity
 
-    val postObs = simpleObsScore(ep)
+    //val postObs = simpleObsScore(ep)
     //val postObs = simpleObsScoreKbp(ep)
     //val postObs = fbObsScore(ep)
     //val postObs = fbObsScore2(ep)
-    //val postObs = fbObsScore3(ep)
+    val postObs = fbObsScore3(ep)
     //val postObs = simpleObsScoreNER(ep)
     //val postObs = fbObsScoreNER(ep)
 
