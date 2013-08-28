@@ -1,4 +1,4 @@
-pdf('PR_sentential.pdf', width=7, height=7)
+#pdf('PR_sentential.pdf', width=7, height=7)
 
 f = 'sentential'
 file = paste('../scala/experiments/DNMAR/',f,sep="")
@@ -41,5 +41,5 @@ if(dim(p1)[1] > 20 && (sum(p1[,1] > 0) || sum(p2[,1] > 0))) {
 
 legend('bottomleft', c('MultiR', 'DNMAR', 'DNMAR*'), pch=c(2,1,3), col=c('red', 'black', 'green'))
 
-dev.off()
+#dev.off()
 
