@@ -9,7 +9,7 @@ AUC <- function(p, r) {
 
 #pdf('PR_sentential_miml.pdf', width=7, height=7)
 #pdf('PR_sentential_miml.pdf', width=5, height=5)
-#pdf('PR_sentential.pdf', width=5, height=5)
+pdf('PR_sentential.pdf', width=5, height=5)
 
 f = 'sentential'
 file = paste('../scala/experiments/DNMAR/',f,sep="")
@@ -88,4 +88,4 @@ mimlauc = AUC(p5[,1], p5[,2])
 print(mimlauc)
 print((dnfbauc - mimlauc) / mimlauc)
 
-#dev.off()
+dev.off()
