@@ -37,18 +37,18 @@ for(f in files) {
     if(dim(p1)[1] > 20 && (sum(p1[,1] > 0) || sum(p2[,1] > 0))) {
       #plot(p1[,2], p1[,1], xlim=c(0,0.9), ylim=c(0,1), main=f, xlab='recall', ylab='precision')
       if(f == 'aggregate') {
-        plot(p1[,2], p1[,1], xlim=c(0,0.35), ylim=c(0,1), xlab='recall', ylab='precision', type='l', lwd=3)
+        plot(p1[,2], p1[,1], xlim=c(0,0.35), ylim=c(0,1), xlab='recall', ylab='precision', type='l', lwd=2)
       } else {
         plot(p1[,2], p1[,1], xlim=c(0,1), ylim=c(0,1), main=f, xlab='recall', ylab='precision')
       }
       #points(p2[,2], p2[,1], col='red', pch=2)
-      #points(p3[,2], p3[,1], col='green', pch=3)
-      lines(p2[,2], p2[,1], lty=2, lwd=3)
-      lines(p3[,2], p3[,1], lty=3, lwd=3)
+      #points(p3[,2], p3[,1], col='brown', pch=3)
+      lines(p2[,2], p2[,1], lty=2, lwd=2, col='red')
+      lines(p3[,2], p3[,1], lty=3, lwd=2, col='brown')
     }
   }
 }
 
-legend('topright', c('MultiR', 'DNMAR', 'DNMAR*'), lty=c(2,1,3), lwd=c(3,3,3))
-#legend('topright', c('MultiR', 'DNMAR', 'DNMAR*'), pch=c(2,1,3), col=c('red', 'black', 'green'))
+legend('topright', c('MultiR', 'DNMAR', 'DNMAR*'), lty=c(2,1,3), col=c('red', 'black', 'brown'), lwd=c(2,2,2))
+#legend('topright', c('MultiR', 'DNMAR', 'DNMAR*'), pch=c(2,1,3), col=c('red', 'black', 'brown'))
 dev.off()

@@ -1,4 +1,4 @@
-#pdf('PR_noSA.pdf', width=9, height=12)
+pdf('PR_noSA.pdf', width=9, height=12)
 
 #files = list.files('../scala/experiments/dnmar_sent')
 files = list.files('../scala/experiments/DNMAR')
@@ -47,11 +47,11 @@ for(f in files) {
         plot(p1[,2], p1[,1], xlim=c(0,1), ylim=c(0,1), main=sub('sentential__', '', f), xlab='recall', ylab='precision', type='l', lwd=2)
       }
       #points(p2[,2], p2[,1], col='red', pch=2)
-      #points(p3[,2], p3[,1], col='green', pch=3)
+      #points(p3[,2], p3[,1], col='brown', pch=3)
       lines(p2[,2], p2[,1], lty=2, lwd=2, col='red')
-      lines(p3[,2], p3[,1], lty=3, lwd=2, col='green')
+      lines(p3[,2], p3[,1], lty=3, lwd=2, col='brown')
       lines(p4[,2], p4[,1], lty=4, lwd=2, col='blue')
     }
   }
 }
-#dev.off()
+dev.off()
