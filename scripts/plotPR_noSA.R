@@ -2,8 +2,8 @@
 #pdf('PR_noSA.pdf', width=20, height=15)
 #pdf('PR_noSA.pdf', width=15, height=11.25)
 #pdf('PR_noSA.pdf', width=12, height=9)
-#pdf('PR_noSA.pdf', width=9, height=12)
-pdf('PR_noSA.pdf', width=9.9, height=13.2)
+pdf('PR_noSA.pdf', width=9, height=12)
+#pdf('PR_noSA.pdf', width=9.9, height=13.2)
 #files = list.files('../scala/experiments/dnmar_sent')
 files = list.files('../scala/experiments/DNMAR')
 #par(mfcol=c(3,4))
@@ -40,10 +40,13 @@ for(f in files) {
       if(f == 'aggregate') {
         plot(p1[,2], p1[,1], xlim=c(0,0.3), ylim=c(0.15,1), main=sub('sentential__', '', f), xlab='recall', ylab='precision')
       } else {
-        plot(p1[,2], p1[,1], xlim=c(0,1), ylim=c(0,1), main=sub('sentential__', '', f), xlab='recall', ylab='precision')
+        #plot(p1[,2], p1[,1], xlim=c(0,1), ylim=c(0,1), main=sub('sentential__', '', f), xlab='recall', ylab='precision')
+        plot(p1[,2], p1[,1], xlim=c(0,1), ylim=c(0,1), main=sub('sentential__', '', f), xlab='recall', ylab='precision', type='l', lwd=3)
       }
-      points(p2[,2], p2[,1], col='red', pch=2)
-      points(p3[,2], p3[,1], col='green', pch=3)
+      #points(p2[,2], p2[,1], col='red', pch=2)
+      #points(p3[,2], p3[,1], col='green', pch=3)
+      lines(p2[,2], p2[,1], lty=2, lwd=3)
+      lines(p3[,2], p3[,1], lty=3, lwd=3)
     }
   }
 }
