@@ -14,9 +14,6 @@ import org.clapper.argot._
 
 import java.io._
 
-import edu.stanford.nlp.util.{StringUtils => StanfordStringUtils}
-import edu.stanford.nlp.kbp.slotfilling.classify._
-
 object Constants {
   var DEBUG = false
   var TIMING = true
@@ -151,11 +148,11 @@ object Main {
 	dnmar.dumpPredictions(outDir.value.getOrElse(null) + "/predictions/preds")
       }
     } else if(algorithm.value.getOrElse(null) == "MIML") {
-      println("loading MIML model")
-      val props = StanfordStringUtils.argsToProperties(List("-props", "/home/aritter/dlvm/data/mimlre-2012-11-27/config/multir/multir_mimlre.properties").toArray)
-      val miml = JointBayesRelationExtractor.load("/home/aritter/dlvm/data/mimlre-2012-11-27/corpora/multir/multir_JOINT_BAYES_T5_E15_NF5_Fall_M0_Istable_Ytrue_EPOCH14.ser", props)
-      val outFile = outDir.value.getOrElse(null) + "/out"
-      Eval.HumanEvalMiml(miml, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt", outFile)
+      println("(not) loading MIML model")
+      //val props = StanfordStringUtils.argsToProperties(List("-props", "/home/aritter/dlvm/data/mimlre-2012-11-27/config/multir/multir_mimlre.properties").toArray)
+      //val miml = JointBayesRelationExtractor.load("/home/aritter/dlvm/data/mimlre-2012-11-27/corpora/multir/multir_JOINT_BAYES_T5_E15_NF5_Fall_M0_Istable_Ytrue_EPOCH14.ser", props)
+      //val outFile = outDir.value.getOrElse(null) + "/out"
+      //Eval.HumanEvalMiml(miml, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt", outFile)
     }
     
   }
@@ -243,7 +240,7 @@ object Main {
 	} else if(train.value.getOrElse(null) != null) {
 	  Eval.HumanEval(dnmar, test.value.getOrElse(null), "/home/aritter/dlvm/multir-release/annotations/sentential.txt", outFile)
 	} else if(kbpTrain.value.getOrElse(null) != null) {
-	  Eval.KbpEval(dnmar, "/home/aritter/dlvm/data/mimlre-2012-11-27/corpora/kbp/test", "/home/aritter/dlvm/data/mimlre-2012-11-27/resources/kbp/test_combined/TAC_KBP_Regular-Slot_Assessments", outDir.value.getOrElse(null))
+	  //Eval.KbpEval(dnmar, "/home/aritter/dlvm/data/mimlre-2012-11-27/corpora/kbp/test", "/home/aritter/dlvm/data/mimlre-2012-11-27/resources/kbp/test_combined/TAC_KBP_Regular-Slot_Assessments", outDir.value.getOrElse(null))
 	}
 	for(r <- 0 until nrel) {
 	  if(i == nIter) {
