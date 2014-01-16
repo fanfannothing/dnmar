@@ -1,7 +1,5 @@
 package dnmar;
 
-import edu.stanford.nlp.kbp.slotfilling;
-
 import scala.util.Random;
 
 import scalala.scalar._;
@@ -25,8 +23,6 @@ import java.io._
 
 import java.util.HashSet;
 
-import edu.stanford.nlp.kbp.slotfilling.classify._
-
 object Eval {
   //case class Prediction(val score:Double, val correct:Boolean) 
   class Prediction(val score:Double, val correct:Boolean, val rel:String, val annotated_sentence:String) {
@@ -48,6 +44,7 @@ object Eval {
     HumanEval(param, test, annotatedFile, -1, outFile)
   }
 
+  /*
   def KbpEval(param:Parameters, testDir:String, slotAssesmentFile:String, outDir:String) {
     Utils.Timer.start("KbpEval")
 
@@ -183,6 +180,7 @@ object Eval {
 
     Utils.Timer.stop("KbpEval")
   }
+  */
 
   def HumanEval(param:Parameters, test:EntityPairData, annotatedFile:String, rel:Int, outFile:String) {
     if(Constants.TIMING) {
@@ -309,6 +307,7 @@ object Eval {
     }
   }
 
+/*
   def HumanEvalMiml(miml:JointBayesRelationExtractor, test:EntityPairData, annotatedFile:String, outFile:String) {
     HumanEvalMiml(miml, test, annotatedFile, -1, outFile)
   }
@@ -413,6 +412,7 @@ object Eval {
       Utils.Timer.stop("HumanEvalMiml")
     }
   }
+ */
 
   def HumanEvalNer(param:Parameters, inDir:String, outFile:String) {
     HumanEvalNer(param, inDir, -1, outFile)
