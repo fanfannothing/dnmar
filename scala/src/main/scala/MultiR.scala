@@ -111,7 +111,7 @@ class MultiR(data:EntityPairData) extends Parameters(data) {
 
     for(i <- 0 until ep.features.length) {
       if(useAverage) {
-	postZ(i) = theta_average * ep.features(i)	
+	postZ(i) = theta_average * ep.features(i)
       } else {
 	postZ(i) = theta * ep.features(i)
       }
